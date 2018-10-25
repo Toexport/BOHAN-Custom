@@ -139,14 +139,14 @@
 		4DAF19ED2181FE1300B91F80 /* BOHAN-Custom */ = {
 			isa = PBXGroup;
 			children = (
-				4DAF1A202181FE2700B91F80 /* Main */,
 				4DAF1A2821820AA000B91F80 /* ViewController */,
-				4DAF1A3D21820ABC00B91F80 /* PrefixHeader.pch */,
+				4DAF1A202181FE2700B91F80 /* Main */,
 				4DAF19EE2181FE1300B91F80 /* AppDelegate.h */,
 				4DAF19EF2181FE1300B91F80 /* AppDelegate.m */,
 				4DAF19F12181FE1300B91F80 /* ViewController.h */,
 				4DAF19F22181FE1300B91F80 /* ViewController.m */,
 				4DAF19F42181FE1300B91F80 /* Main.storyboard */,
+				4DAF1A3D21820ABC00B91F80 /* PrefixHeader.pch */,
 				4DAF19F72181FE1400B91F80 /* Assets.xcassets */,
 				4DAF19F92181FE1400B91F80 /* LaunchScreen.storyboard */,
 				4DAF19FC2181FE1400B91F80 /* Info.plist */,
@@ -187,8 +187,8 @@
 		4DAF1A2821820AA000B91F80 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				4DAF1A2921820AA000B91F80 /* Management */,
 				4DAF1A2D21820AA000B91F80 /* List  */,
+				4DAF1A2921820AA000B91F80 /* Management */,
 				4DAF1A3121820AA000B91F80 /* Method */,
 			);
 			path = ViewController;
@@ -197,9 +197,9 @@
 		4DAF1A2921820AA000B91F80 /* Management */ = {
 			isa = PBXGroup;
 			children = (
+				4DAF1A2C21820AA000B91F80 /* ManagementViewController.h */,
 				4DAF1A2A21820AA000B91F80 /* ManagementViewController.m */,
 				4DAF1A2B21820AA000B91F80 /* ManagementViewController.xib */,
-				4DAF1A2C21820AA000B91F80 /* ManagementViewController.h */,
 			);
 			path = Management;
 			sourceTree = "<group>";
@@ -207,9 +207,9 @@
 		4DAF1A2D21820AA000B91F80 /* List  */ = {
 			isa = PBXGroup;
 			children = (
-				4DAF1A2E21820AA000B91F80 /* ListViewController.xib */,
-				4DAF1A2F21820AA000B91F80 /* ListViewController.m */,
 				4DAF1A3021820AA000B91F80 /* ListViewController.h */,
+				4DAF1A2F21820AA000B91F80 /* ListViewController.m */,
+				4DAF1A2E21820AA000B91F80 /* ListViewController.xib */,
 			);
 			path = "List ";
 			sourceTree = "<group>";
@@ -225,10 +225,10 @@
 		4DAF1A3221820AA000B91F80 /* GCDAsync */ = {
 			isa = PBXGroup;
 			children = (
-				4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */,
-				4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */,
 				4DAF1A3521820AA000B91F80 /* GCDAsyncUdpSocket.h */,
+				4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */,
 				4DAF1A3621820AA000B91F80 /* GCDAsyncSocket.h */,
+				4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */,
 			);
 			path = GCDAsync;
 			sourceTree = "<group>";
