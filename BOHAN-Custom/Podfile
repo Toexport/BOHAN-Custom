@@ -3,4 +3,5 @@ target 'BOHAN-Custom' do
 pod 'AFNetworking','~> 3.1.0'
 pod 'SVProgressHUD'
 pod 'IQKeyboardManager'
+pod 'SAMKeychain'
 end

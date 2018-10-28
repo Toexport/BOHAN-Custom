@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "BCTabBarController.h"
-
+#import "LoginViewController.h"
+#import "FileHeader.pch"
 @interface AppDelegate ()
 
 @end
@@ -17,10 +18,24 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window.rootViewController = [BCTabBarController new];
+//    self.window.rootViewController = [BCTabBarController new];
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
+    
+    LoginViewController *login = [[LoginViewController alloc] init];
+    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
+    
+    self.window.rootViewController = loginNav;
+self.window.rootViewController.view.backgroundColor = [UIColor whiteColor];
+
+[[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
+[[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
+
+[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+[[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor], nil] forKeys:[NSArray arrayWithObjects:NSForegroundColorAttributeName, nil]]];
+[[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
     return YES;
 }
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

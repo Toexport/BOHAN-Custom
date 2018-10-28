@@ -1,0 +1,49 @@
+//
+//  FileHeader.pch
+//  BOHAN-Custom
+//
+//  Created by summer on 2018/10/27.
+//  Copyright © 2018 张鹏. All rights reserved.
+//
+
+#ifndef FileHeader_pch
+#define FileHeader_pch
+#import "FileHeader.pch"
+#import "PrefixHeader.pch"
+
+
+
+
+
+#import <SVProgressHUD/SVProgressHUD.h>
+
+
+
+#import "GCDAsyncSocket.h"
+#import "ColorMacro.h"
+#import <Foundation/Foundation.h>
+
+
+#import "AppDelegate.h"
+#import "UIBarButtonItem+Button.h"
+#import "UIView+Frame.h"
+#import "UIViewController+NavigationBar.h"
+#import "UIColor+Extension.h"
+#import "UserInfoManager.h"
+#import "AdapationMacro.h"
+#import "NotificationMacro.h"
+
+
+//国际化
+#define Localize(key) NSLocalizedString(key,@"")
+
+// 弱引用
+#define MyWeakSelf __weak typeof(self) weakSelf = self;
+
+// 强引用
+#define MyStrongSelf __weak typeof(self) strongSelf = weakSelf;
+
+//主字体颜色
+#define kTextColor [UIColor getColor:@"5c5c5c"]
+
+#endif /* FileHeader_pch */

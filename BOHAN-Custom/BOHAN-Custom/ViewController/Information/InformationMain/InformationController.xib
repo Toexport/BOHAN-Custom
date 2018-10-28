@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InformationController">
+            <connections>
+                <outlet property="tableview" destination="d9n-Go-Zyj" id="QCU-aq-JzW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="d9n-Go-Zyj">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="602"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="6Ip-Eh-a4Q"/>
+                        <outlet property="delegate" destination="-1" id="BrG-Qc-mXF"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UtE-MH-q0z">
+                    <rect key="frame" x="0.0" y="602" width="375" height="65"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nhu-0w-wxt">
+                            <rect key="frame" x="60" y="10" width="255" height="40"/>
+                            <color key="backgroundColor" red="0.32393941279999999" green="0.54492551089999997" blue="0.91768991950000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="tUb-mo-72q"/>
+                            </constraints>
+                            <state key="normal" title="Binding Device">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColorFromUIColor">
+                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="BindingDevice:" destination="-1" eventType="touchUpInside" id="ShE-kk-mAr"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Nhu-0w-wxt" firstAttribute="leading" secondItem="UtE-MH-q0z" secondAttribute="leading" constant="60" id="dbk-lK-giU"/>
+                        <constraint firstAttribute="trailing" secondItem="Nhu-0w-wxt" secondAttribute="trailing" constant="60" id="ujk-rX-j4Y"/>
+                        <constraint firstItem="Nhu-0w-wxt" firstAttribute="top" secondItem="UtE-MH-q0z" secondAttribute="top" constant="10" id="y2g-cB-3tL"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="UtE-MH-q0z" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="0K9-wt-oNt"/>
+                <constraint firstItem="UtE-MH-q0z" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="2ze-gZ-dc2"/>
+                <constraint firstItem="d9n-Go-Zyj" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="IeB-Zr-mwF"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="d9n-Go-Zyj" secondAttribute="bottom" constant="65" id="McL-Mw-nYl"/>
+                <constraint firstItem="UtE-MH-q0z" firstAttribute="top" secondItem="d9n-Go-Zyj" secondAttribute="bottom" id="OC7-Tm-dK8"/>
+                <constraint firstItem="UtE-MH-q0z" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="fgt-A3-gUb"/>
+                <constraint firstItem="d9n-Go-Zyj" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="qBp-ff-Oab"/>
+                <constraint firstItem="d9n-Go-Zyj" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="vaP-Dw-QbT"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="138.40000000000001" y="138.98050974512745"/>
+        </view>
+    </objects>
+</document>

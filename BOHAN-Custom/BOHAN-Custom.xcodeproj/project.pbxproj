@@ -24,6 +24,34 @@
 		4DAF1A3B21820AA000B91F80 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */; };
 		4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */; };
 		4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */; };
+		C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C402185497500CD41A5 /* EdgetTextField.m */; };
+		C4604C692185546F00CD41A5 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C682185546F00CD41A5 /* LoginViewController.xib */; };
+		C4604C6C2185548000CD41A5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C6B2185548000CD41A5 /* LoginViewController.m */; };
+		C4604C71218556E800CD41A5 /* UserInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C70218556E800CD41A5 /* UserInfoManager.m */; };
+		C4604C8121855D4D00CD41A5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C7F21855D4D00CD41A5 /* RegisterViewController.m */; };
+		C4604C8221855D4D00CD41A5 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C8021855D4D00CD41A5 /* RegisterViewController.xib */; };
+		C4604C88218569FD00CD41A5 /* InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C86218569FD00CD41A5 /* InformationController.m */; };
+		C4604C89218569FD00CD41A5 /* InformationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C87218569FD00CD41A5 /* InformationController.xib */; };
+		C4604C8E21856A3700CD41A5 /* InformationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C8C21856A3700CD41A5 /* InformationViewCell.m */; };
+		C4604C8F21856A3700CD41A5 /* InformationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C8D21856A3700CD41A5 /* InformationViewCell.xib */; };
+		C4604C9421859FE100CD41A5 /* RegistrationAgreementController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C9221859FE100CD41A5 /* RegistrationAgreementController.xib */; };
+		C4604C9521859FE100CD41A5 /* RegistrationAgreementController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C9321859FE100CD41A5 /* RegistrationAgreementController.m */; };
+		C4604C9A2185C4EA00CD41A5 /* BindingDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C982185C4EA00CD41A5 /* BindingDeviceController.m */; };
+		C4604C9B2185C4EA00CD41A5 /* BindingDeviceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C992185C4EA00CD41A5 /* BindingDeviceController.xib */; };
+		C4AA868D2183F98B0013307D /* ManagementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA868B2183F98B0013307D /* ManagementCell.m */; };
+		C4AA868E2183F98B0013307D /* ManagementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA868C2183F98B0013307D /* ManagementCell.xib */; };
+		C4AA87C02184120C0013307D /* UIBarButtonItem+Button.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87BF2184120C0013307D /* UIBarButtonItem+Button.m */; };
+		C4AA87C42184122F0013307D /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87C32184122F0013307D /* UIView+Frame.m */; };
+		C4AA87C7218413060013307D /* UIViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87C6218413060013307D /* UIViewController+NavigationBar.m */; };
+		C4AA87CC218416320013307D /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87CB218416320013307D /* UIColor+Extension.m */; };
+		C4AA87E1218434BB0013307D /* BindingController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87DF218434BB0013307D /* BindingController.m */; };
+		C4AA87E2218434BB0013307D /* BindingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87E0218434BB0013307D /* BindingController.xib */; };
+		C4AA87E72184517B0013307D /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87E52184517B0013307D /* ListTableViewCell.m */; };
+		C4AA87E82184517B0013307D /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87E62184517B0013307D /* ListTableViewCell.xib */; };
+		C4AA87F3218463DC0013307D /* SingleListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87F1218463DC0013307D /* SingleListViewCell.m */; };
+		C4AA87F4218463DC0013307D /* SingleListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87F2218463DC0013307D /* SingleListViewCell.xib */; };
+		C4AA87F8218465810013307D /* SingleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87F6218465810013307D /* SingleListController.m */; };
+		C4AA87F9218465810013307D /* SingleListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87F7218465810013307D /* SingleListController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +105,55 @@
 		4DAF1A3E21820DE100B91F80 /* BCNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCNavigationController.h; sourceTree = "<group>"; };
 		4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCNavigationController.m; sourceTree = "<group>"; };
 		7D28760051FE06F93E146C73 /* libPods-BOHAN-Custom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BOHAN-Custom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4604C402185497500CD41A5 /* EdgetTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgetTextField.m; sourceTree = "<group>"; };
+		C4604C412185497500CD41A5 /* EdgetTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgetTextField.h; sourceTree = "<group>"; };
+		C4604C682185546F00CD41A5 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		C4604C6A2185548000CD41A5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		C4604C6B2185548000CD41A5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		C4604C6F218556E800CD41A5 /* UserInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoManager.h; sourceTree = "<group>"; };
+		C4604C70218556E800CD41A5 /* UserInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoManager.m; sourceTree = "<group>"; };
+		C4604C732185584900CD41A5 /* AdapationMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdapationMacro.h; sourceTree = "<group>"; };
+		C4604C7E21855D4D00CD41A5 /* RegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		C4604C7F21855D4D00CD41A5 /* RegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		C4604C8021855D4D00CD41A5 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		C4604C85218569FD00CD41A5 /* InformationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InformationController.h; sourceTree = "<group>"; };
+		C4604C86218569FD00CD41A5 /* InformationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InformationController.m; sourceTree = "<group>"; };
+		C4604C87218569FD00CD41A5 /* InformationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InformationController.xib; sourceTree = "<group>"; };
+		C4604C8B21856A3700CD41A5 /* InformationViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InformationViewCell.h; sourceTree = "<group>"; };
+		C4604C8C21856A3700CD41A5 /* InformationViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InformationViewCell.m; sourceTree = "<group>"; };
+		C4604C8D21856A3700CD41A5 /* InformationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InformationViewCell.xib; sourceTree = "<group>"; };
+		C4604C9121859FE100CD41A5 /* RegistrationAgreementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationAgreementController.h; sourceTree = "<group>"; };
+		C4604C9221859FE100CD41A5 /* RegistrationAgreementController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegistrationAgreementController.xib; sourceTree = "<group>"; };
+		C4604C9321859FE100CD41A5 /* RegistrationAgreementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationAgreementController.m; sourceTree = "<group>"; };
+		C4604C972185C4EA00CD41A5 /* BindingDeviceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BindingDeviceController.h; sourceTree = "<group>"; };
+		C4604C982185C4EA00CD41A5 /* BindingDeviceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BindingDeviceController.m; sourceTree = "<group>"; };
+		C4604C992185C4EA00CD41A5 /* BindingDeviceController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BindingDeviceController.xib; sourceTree = "<group>"; };
+		C4AA86872183E68F0013307D /* FileHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileHeader.pch; sourceTree = "<group>"; };
+		C4AA868A2183F98B0013307D /* ManagementCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManagementCell.h; sourceTree = "<group>"; };
+		C4AA868B2183F98B0013307D /* ManagementCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManagementCell.m; sourceTree = "<group>"; };
+		C4AA868C2183F98B0013307D /* ManagementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ManagementCell.xib; sourceTree = "<group>"; };
+		C4AA86A921840A650013307D /* ColorMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorMacro.h; sourceTree = "<group>"; };
+		C4AA87BE2184120C0013307D /* UIBarButtonItem+Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Button.h"; sourceTree = "<group>"; };
+		C4AA87BF2184120C0013307D /* UIBarButtonItem+Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Button.m"; sourceTree = "<group>"; };
+		C4AA87C22184122F0013307D /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
+		C4AA87C32184122F0013307D /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
+		C4AA87C5218413060013307D /* UIViewController+NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NavigationBar.h"; sourceTree = "<group>"; };
+		C4AA87C6218413060013307D /* UIViewController+NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NavigationBar.m"; sourceTree = "<group>"; };
+		C4AA87C9218416320013307D /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		C4AA87CA218416320013307D /* NotificationMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationMacro.h; sourceTree = "<group>"; };
+		C4AA87CB218416320013307D /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
+		C4AA87DE218434BB0013307D /* BindingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BindingController.h; sourceTree = "<group>"; };
+		C4AA87DF218434BB0013307D /* BindingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BindingController.m; sourceTree = "<group>"; };
+		C4AA87E0218434BB0013307D /* BindingController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BindingController.xib; sourceTree = "<group>"; };
+		C4AA87E42184517B0013307D /* ListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListTableViewCell.h; sourceTree = "<group>"; };
+		C4AA87E52184517B0013307D /* ListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListTableViewCell.m; sourceTree = "<group>"; };
+		C4AA87E62184517B0013307D /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
+		C4AA87F0218463DC0013307D /* SingleListViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SingleListViewCell.h; sourceTree = "<group>"; };
+		C4AA87F1218463DC0013307D /* SingleListViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SingleListViewCell.m; sourceTree = "<group>"; };
+		C4AA87F2218463DC0013307D /* SingleListViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleListViewCell.xib; sourceTree = "<group>"; };
+		C4AA87F5218465810013307D /* SingleListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SingleListController.h; sourceTree = "<group>"; };
+		C4AA87F6218465810013307D /* SingleListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SingleListController.m; sourceTree = "<group>"; };
+		C4AA87F7218465810013307D /* SingleListController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleListController.xib; sourceTree = "<group>"; };
 		D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOHAN-Custom.release.xcconfig"; path = "Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,7 +223,9 @@
 				4DAF19F12181FE1300B91F80 /* ViewController.h */,
 				4DAF19F22181FE1300B91F80 /* ViewController.m */,
 				4DAF19F42181FE1300B91F80 /* Main.storyboard */,
+				C4AA86872183E68F0013307D /* FileHeader.pch */,
 				4DAF1A3D21820ABC00B91F80 /* PrefixHeader.pch */,
+				C4AA86A921840A650013307D /* ColorMacro.h */,
 				4DAF19F72181FE1400B91F80 /* Assets.xcassets */,
 				4DAF19F92181FE1400B91F80 /* LaunchScreen.storyboard */,
 				4DAF19FC2181FE1400B91F80 /* Info.plist */,
@@ -187,6 +266,9 @@
 		4DAF1A2821820AA000B91F80 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C4604C362185451300CD41A5 /* LogRegister */,
+				C4604C83218569CE00CD41A5 /* Information */,
+				C4604C962185C4C900CD41A5 /* BindingDevice */,
 				4DAF1A2D21820AA000B91F80 /* List  */,
 				4DAF1A2921820AA000B91F80 /* Management */,
 				4DAF1A3121820AA000B91F80 /* Method */,
@@ -197,9 +279,7 @@
 		4DAF1A2921820AA000B91F80 /* Management */ = {
 			isa = PBXGroup;
 			children = (
-				4DAF1A2C21820AA000B91F80 /* ManagementViewController.h */,
-				4DAF1A2A21820AA000B91F80 /* ManagementViewController.m */,
-				4DAF1A2B21820AA000B91F80 /* ManagementViewController.xib */,
+				C4AA86882183F9360013307D /* ManagementMain */,
 			);
 			path = Management;
 			sourceTree = "<group>";
@@ -207,9 +287,9 @@
 		4DAF1A2D21820AA000B91F80 /* List  */ = {
 			isa = PBXGroup;
 			children = (
-				4DAF1A3021820AA000B91F80 /* ListViewController.h */,
-				4DAF1A2F21820AA000B91F80 /* ListViewController.m */,
-				4DAF1A2E21820AA000B91F80 /* ListViewController.xib */,
+				C4AA87CE218433FA0013307D /* Binding */,
+				C4AA87CD218433D90013307D /* ListMain */,
+				C4AA87E92184639A0013307D /* SingleListMain */,
 			);
 			path = "List ";
 			sourceTree = "<group>";
@@ -217,7 +297,13 @@
 		4DAF1A3121820AA000B91F80 /* Method */ = {
 			isa = PBXGroup;
 			children = (
+				C4604C722185583500CD41A5 /* Macro */,
+				C4604C3F2185490200CD41A5 /* Custom */,
+				C4AA87C8218416320013307D /* UIColor+Extension */,
+				C4AA87BD218411CD0013307D /* UIBarButtonItem+Button */,
+				C4AA87C1218412240013307D /* UIView+Frame */,
 				4DAF1A3221820AA000B91F80 /* GCDAsync */,
+				C4604C6E218556CD00CD41A5 /* Tools */,
 			);
 			path = Method;
 			sourceTree = "<group>";
@@ -240,6 +326,214 @@
 				D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C4604C362185451300CD41A5 /* LogRegister */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C3D2185453D00CD41A5 /* LogMain */,
+				C4604C3C2185453100CD41A5 /* RegisterMani */,
+				C4604C9021859FE100CD41A5 /* RegistrationAgreement */,
+			);
+			path = LogRegister;
+			sourceTree = "<group>";
+		};
+		C4604C3C2185453100CD41A5 /* RegisterMani */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C7E21855D4D00CD41A5 /* RegisterViewController.h */,
+				C4604C7F21855D4D00CD41A5 /* RegisterViewController.m */,
+				C4604C8021855D4D00CD41A5 /* RegisterViewController.xib */,
+			);
+			path = RegisterMani;
+			sourceTree = "<group>";
+		};
+		C4604C3D2185453D00CD41A5 /* LogMain */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C6A2185548000CD41A5 /* LoginViewController.h */,
+				C4604C6B2185548000CD41A5 /* LoginViewController.m */,
+				C4604C682185546F00CD41A5 /* LoginViewController.xib */,
+			);
+			path = LogMain;
+			sourceTree = "<group>";
+		};
+		C4604C3F2185490200CD41A5 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C412185497500CD41A5 /* EdgetTextField.h */,
+				C4604C402185497500CD41A5 /* EdgetTextField.m */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		C4604C6E218556CD00CD41A5 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C6F218556E800CD41A5 /* UserInfoManager.h */,
+				C4604C70218556E800CD41A5 /* UserInfoManager.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		C4604C722185583500CD41A5 /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C732185584900CD41A5 /* AdapationMacro.h */,
+			);
+			path = Macro;
+			sourceTree = "<group>";
+		};
+		C4604C83218569CE00CD41A5 /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C84218569E400CD41A5 /* InformationMain */,
+			);
+			path = Information;
+			sourceTree = "<group>";
+		};
+		C4604C84218569E400CD41A5 /* InformationMain */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C85218569FD00CD41A5 /* InformationController.h */,
+				C4604C86218569FD00CD41A5 /* InformationController.m */,
+				C4604C87218569FD00CD41A5 /* InformationController.xib */,
+				C4604C8A21856A1100CD41A5 /* InformationCell */,
+			);
+			path = InformationMain;
+			sourceTree = "<group>";
+		};
+		C4604C8A21856A1100CD41A5 /* InformationCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C8B21856A3700CD41A5 /* InformationViewCell.h */,
+				C4604C8C21856A3700CD41A5 /* InformationViewCell.m */,
+				C4604C8D21856A3700CD41A5 /* InformationViewCell.xib */,
+			);
+			path = InformationCell;
+			sourceTree = "<group>";
+		};
+		C4604C9021859FE100CD41A5 /* RegistrationAgreement */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C9121859FE100CD41A5 /* RegistrationAgreementController.h */,
+				C4604C9321859FE100CD41A5 /* RegistrationAgreementController.m */,
+				C4604C9221859FE100CD41A5 /* RegistrationAgreementController.xib */,
+			);
+			path = RegistrationAgreement;
+			sourceTree = "<group>";
+		};
+		C4604C962185C4C900CD41A5 /* BindingDevice */ = {
+			isa = PBXGroup;
+			children = (
+				C4604C972185C4EA00CD41A5 /* BindingDeviceController.h */,
+				C4604C982185C4EA00CD41A5 /* BindingDeviceController.m */,
+				C4604C992185C4EA00CD41A5 /* BindingDeviceController.xib */,
+			);
+			path = BindingDevice;
+			sourceTree = "<group>";
+		};
+		C4AA86882183F9360013307D /* ManagementMain */ = {
+			isa = PBXGroup;
+			children = (
+				4DAF1A2C21820AA000B91F80 /* ManagementViewController.h */,
+				4DAF1A2A21820AA000B91F80 /* ManagementViewController.m */,
+				4DAF1A2B21820AA000B91F80 /* ManagementViewController.xib */,
+				C4AA86892183F9680013307D /* ManagementCell */,
+			);
+			path = ManagementMain;
+			sourceTree = "<group>";
+		};
+		C4AA86892183F9680013307D /* ManagementCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA868A2183F98B0013307D /* ManagementCell.h */,
+				C4AA868B2183F98B0013307D /* ManagementCell.m */,
+				C4AA868C2183F98B0013307D /* ManagementCell.xib */,
+			);
+			path = ManagementCell;
+			sourceTree = "<group>";
+		};
+		C4AA87BD218411CD0013307D /* UIBarButtonItem+Button */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA87C5218413060013307D /* UIViewController+NavigationBar.h */,
+				C4AA87C6218413060013307D /* UIViewController+NavigationBar.m */,
+				C4AA87BE2184120C0013307D /* UIBarButtonItem+Button.h */,
+				C4AA87BF2184120C0013307D /* UIBarButtonItem+Button.m */,
+			);
+			path = "UIBarButtonItem+Button";
+			sourceTree = "<group>";
+		};
+		C4AA87C1218412240013307D /* UIView+Frame */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA87C22184122F0013307D /* UIView+Frame.h */,
+				C4AA87C32184122F0013307D /* UIView+Frame.m */,
+			);
+			path = "UIView+Frame";
+			sourceTree = "<group>";
+		};
+		C4AA87C8218416320013307D /* UIColor+Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA87CA218416320013307D /* NotificationMacro.h */,
+				C4AA87C9218416320013307D /* UIColor+Extension.h */,
+				C4AA87CB218416320013307D /* UIColor+Extension.m */,
+			);
+			path = "UIColor+Extension";
+			sourceTree = "<group>";
+		};
+		C4AA87CD218433D90013307D /* ListMain */ = {
+			isa = PBXGroup;
+			children = (
+				4DAF1A3021820AA000B91F80 /* ListViewController.h */,
+				4DAF1A2F21820AA000B91F80 /* ListViewController.m */,
+				4DAF1A2E21820AA000B91F80 /* ListViewController.xib */,
+				C4AA87E3218451570013307D /* ListCell */,
+			);
+			path = ListMain;
+			sourceTree = "<group>";
+		};
+		C4AA87CE218433FA0013307D /* Binding */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA87DE218434BB0013307D /* BindingController.h */,
+				C4AA87DF218434BB0013307D /* BindingController.m */,
+				C4AA87E0218434BB0013307D /* BindingController.xib */,
+			);
+			path = Binding;
+			sourceTree = "<group>";
+		};
+		C4AA87E3218451570013307D /* ListCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA87E42184517B0013307D /* ListTableViewCell.h */,
+				C4AA87E52184517B0013307D /* ListTableViewCell.m */,
+				C4AA87E62184517B0013307D /* ListTableViewCell.xib */,
+			);
+			path = ListCell;
+			sourceTree = "<group>";
+		};
+		C4AA87E92184639A0013307D /* SingleListMain */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA87F5218465810013307D /* SingleListController.h */,
+				C4AA87F6218465810013307D /* SingleListController.m */,
+				C4AA87F7218465810013307D /* SingleListController.xib */,
+				C4AA87EF218463C40013307D /* SingleListCell */,
+			);
+			path = SingleListMain;
+			sourceTree = "<group>";
+		};
+		C4AA87EF218463C40013307D /* SingleListCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA87F0218463DC0013307D /* SingleListViewCell.h */,
+				C4AA87F1218463DC0013307D /* SingleListViewCell.m */,
+				C4AA87F2218463DC0013307D /* SingleListViewCell.xib */,
+			);
+			path = SingleListCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,11 +641,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4AA87F4218463DC0013307D /* SingleListViewCell.xib in Resources */,
 				4DAF19FB2181FE1400B91F80 /* LaunchScreen.storyboard in Resources */,
+				C4604C692185546F00CD41A5 /* LoginViewController.xib in Resources */,
 				4DAF1A3821820AA000B91F80 /* ManagementViewController.xib in Resources */,
+				C4604C89218569FD00CD41A5 /* InformationController.xib in Resources */,
+				C4AA868E2183F98B0013307D /* ManagementCell.xib in Resources */,
+				C4604C9421859FE100CD41A5 /* RegistrationAgreementController.xib in Resources */,
 				4DAF1A3921820AA000B91F80 /* ListViewController.xib in Resources */,
 				4DAF19F82181FE1400B91F80 /* Assets.xcassets in Resources */,
+				C4AA87E82184517B0013307D /* ListTableViewCell.xib in Resources */,
+				C4AA87E2218434BB0013307D /* BindingController.xib in Resources */,
+				C4604C9B2185C4EA00CD41A5 /* BindingDeviceController.xib in Resources */,
 				4DAF19F62181FE1300B91F80 /* Main.storyboard in Resources */,
+				C4AA87F9218465810013307D /* SingleListController.xib in Resources */,
+				C4604C8221855D4D00CD41A5 /* RegisterViewController.xib in Resources */,
+				C4604C8F21856A3700CD41A5 /* InformationViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,11 +685,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom-resources.sh",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
+				"${PODS_ROOT}/SAMKeychain/Support/SAMKeychain.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SAMKeychain.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,15 +724,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4604C9521859FE100CD41A5 /* RegistrationAgreementController.m in Sources */,
+				C4AA87C42184122F0013307D /* UIView+Frame.m in Sources */,
 				4DAF1A242182061800B91F80 /* BCTabBarController.m in Sources */,
 				4DAF1A3721820AA000B91F80 /* ManagementViewController.m in Sources */,
+				C4AA87F3218463DC0013307D /* SingleListViewCell.m in Sources */,
+				C4604C71218556E800CD41A5 /* UserInfoManager.m in Sources */,
+				C4604C6C2185548000CD41A5 /* LoginViewController.m in Sources */,
+				C4AA87E1218434BB0013307D /* BindingController.m in Sources */,
+				C4AA87CC218416320013307D /* UIColor+Extension.m in Sources */,
+				C4AA868D2183F98B0013307D /* ManagementCell.m in Sources */,
+				C4604C8E21856A3700CD41A5 /* InformationViewCell.m in Sources */,
 				4DAF1A3A21820AA000B91F80 /* ListViewController.m in Sources */,
+				C4AA87C02184120C0013307D /* UIBarButtonItem+Button.m in Sources */,
+				C4604C8121855D4D00CD41A5 /* RegisterViewController.m in Sources */,
 				4DAF19F32181FE1300B91F80 /* ViewController.m in Sources */,
 				4DAF1A3B21820AA000B91F80 /* GCDAsyncUdpSocket.m in Sources */,
 				4DAF19FE2181FE1400B91F80 /* main.m in Sources */,
+				C4604C88218569FD00CD41A5 /* InformationController.m in Sources */,
 				4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */,
 				4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */,
+				C4AA87E72184517B0013307D /* ListTableViewCell.m in Sources */,
+				C4AA87F8218465810013307D /* SingleListController.m in Sources */,
+				C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */,
 				4DAF19F02181FE1300B91F80 /* AppDelegate.m in Sources */,
+				C4AA87C7218413060013307D /* UIViewController+NavigationBar.m in Sources */,
+				C4604C9A2185C4EA00CD41A5 /* BindingDeviceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +923,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AS4DPL2SAW;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BOHAN-Custom/PrefixHeader.pch";
 				INFOPLIST_FILE = "BOHAN-Custom/Info.plist";
@@ -619,6 +944,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AS4DPL2SAW;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BOHAN-Custom/PrefixHeader.pch";
 				INFOPLIST_FILE = "BOHAN-Custom/Info.plist";

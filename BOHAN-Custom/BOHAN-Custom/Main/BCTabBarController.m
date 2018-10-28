@@ -9,6 +9,7 @@
 #import "BCTabBarController.h"
 #import "ListViewController.h"
 #import "BCNavigationController.h"
+#import "FileHeader.pch"
 #import "ManagementViewController.h"
 
 @interface BCTabBarController ()
@@ -43,10 +44,9 @@
     //设置无渲染的图片
     vc.tabBarItem.image = [[UIImage imageNamed:imageName] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
     vc.tabBarItem.selectedImage = [[UIImage imageNamed:[NSString stringWithFormat:@"%@_select",imageName]] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
-    
     //设置文字颜色
-//    [vc.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor ck_colorWithHex:0xa6cdf3]} forState:UIControlStateSelected];
-//    [vc.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]} forState:UIControlStateNormal];
+    [vc.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"3c94f2"]} forState:UIControlStateSelected];
+    [vc.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]} forState:UIControlStateNormal];
 }
 
 /*
