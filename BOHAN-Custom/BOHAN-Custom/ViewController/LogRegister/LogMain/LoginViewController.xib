@@ -52,7 +52,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="y5g-BQ-K9C"/>
                     </constraints>
-                    <state key="normal" title="了解更多伯瀚:http://www.bohan-smartec.com/">
+                    <state key="normal" title="Learn More About Bohan:http://www.bohan-smartec.com/">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>

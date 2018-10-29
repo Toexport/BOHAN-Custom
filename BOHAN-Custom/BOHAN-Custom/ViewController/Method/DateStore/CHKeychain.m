@@ -21,6 +21,7 @@
             nil];
 }
 
+// 保存数据
 + (void)save:(NSString *)service data:(id)data {
     //Get search dictionary
     NSMutableDictionary *keychainQuery = [self getKeychainQuery:service];
@@ -32,6 +33,7 @@
     SecItemAdd((CFDictionaryRef)keychainQuery, NULL);
 }
 
+// 获取数据
 + (id)load:(NSString *)service {
     id ret = nil;
     NSMutableDictionary *keychainQuery = [self getKeychainQuery:service];
@@ -53,8 +55,10 @@
     return ret;
 }
 
+// 删除数据
 + (void)delete:(NSString *)service {
     NSMutableDictionary *keychainQuery = [self getKeychainQuery:service];
     SecItemDelete((CFDictionaryRef)keychainQuery);
 }
+
 @end

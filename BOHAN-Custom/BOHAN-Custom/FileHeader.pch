@@ -47,5 +47,7 @@
 //主字体颜色
 #define kTextColor [UIColor getColor:@"5c5c5c"]
 
+//通知常量
+static NSString *const LOGOUTNOTIFICATION = @"loginAccount";//退出登录通知
 
 #endif /* FileHeader_pch */

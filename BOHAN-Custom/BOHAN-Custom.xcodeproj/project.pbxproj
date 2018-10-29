@@ -53,6 +53,7 @@
 		C4AA87F8218465810013307D /* SingleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87F6218465810013307D /* SingleListController.m */; };
 		C4AA87F9218465810013307D /* SingleListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87F7218465810013307D /* SingleListController.xib */; };
 		C4C36AB42185F24A0079D6AE /* CHKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AB32185F24A0079D6AE /* CHKeychain.m */; };
+		C4C36AB72186FE170079D6AE /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AB62186FE170079D6AE /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +158,7 @@
 		C4C36AB22185F24A0079D6AE /* CHKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHKeychain.h; sourceTree = "<group>"; };
 		C4C36AB32185F24A0079D6AE /* CHKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHKeychain.m; sourceTree = "<group>"; };
 		C4C36AB52185F93B0079D6AE /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		C4C36AB62186FE170079D6AE /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOHAN-Custom.release.xcconfig"; path = "Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4C36AB72186FE170079D6AE /* libsqlite3.tbd in Frameworks */,
 				4A524449D0AB39E0BF560CDF /* libPods-BOHAN-Custom.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +192,7 @@
 		08C96659199A0D01D4425400 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C4C36AB62186FE170079D6AE /* libsqlite3.tbd */,
 				7D28760051FE06F93E146C73 /* libPods-BOHAN-Custom.a */,
 			);
 			name = Frameworks;

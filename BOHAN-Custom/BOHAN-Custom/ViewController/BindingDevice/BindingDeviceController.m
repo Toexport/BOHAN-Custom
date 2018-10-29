@@ -7,25 +7,85 @@
 //
 
 #import "BindingDeviceController.h"
-
+#import "FMDB.h"
 @interface BindingDeviceController ()
+
+@property(nonatomic,strong)FMDatabase *db;
 
 @end
 
 @implementation BindingDeviceController
+@synthesize socket;
+@synthesize IPTExtField;
+@synthesize PortTextField;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = Localize(@"Binding Device");
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
+    [self.view addGestureRecognizer:singleTap];
 }
+
+- (void)viewDidUnload {
+    [self setIPTExtField:nil];
+    [self setIPTExtField:nil];
+    [super viewDidUnload];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
 // 连接
 - (IBAction)ConnectBtn:(UIButton *)sender {
-    
+    socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    //socket.delegate = self;
+    NSError *err = nil;
+    if(![socket connectToHost:IPTExtField.text onPort:[PortTextField.text intValue] error:&err]) {
+        [SVProgressHUD showInfoWithStatus:(@"连接失败")];
+        NSLog(@"%@%@",IPTExtField.text,PortTextField.text);
+    }else {
+        NSLog(@"ok");
+        NSLog(@"%@%@",IPTExtField.text,PortTextField.text);
+    }
 }
+
+// 发送数据
+-(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
+    [socket readDataWithTimeout:-1 tag:0];
+}
+
+// 接收数据
+-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
+    NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@%@",sock.connectedHost,newMessage);
+    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
+    [socket readDataWithTimeout:-1 tag:0];
+}
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
+    NSLog(@"%@",error);
+}
+
 
 // 保存
 - (IBAction)SaceBtn:(UIButton *)sender {
-    
     if ([self.IPTExtField.text isEqualToString:@""]) {
         [SVProgressHUD showErrorWithStatus:Localize(@"请填写IP")];
     }else
@@ -54,27 +114,18 @@
 - (void)SaveData {
     NSMutableDictionary *usernamepasswordKVPairs = [NSMutableDictionary dictionary];
     [usernamepasswordKVPairs setObject:self.IPTExtField.text forKey:KEY_IP];
-    [CHKeychain save:self.IPTExtField.text data:usernamepasswordKVPairs];
-    
     [usernamepasswordKVPairs setObject:self.PortTextField.text forKey:KEY_PORT];
-    [CHKeychain save:self.PortTextField.text data:usernamepasswordKVPairs];
-    
     [usernamepasswordKVPairs setObject:self.TitleNameTextField.text forKey:KEY_TitleName];
-    [CHKeychain save:self.TitleNameTextField.text data:usernamepasswordKVPairs];
-    
     [usernamepasswordKVPairs setObject:self.Switch1Name.text forKey:KEY_Name1];
-    [CHKeychain save:self.Switch1Name.text data:usernamepasswordKVPairs];
-    
     [usernamepasswordKVPairs setObject:self.Switch2Name.text forKey:KEY_Name2];
-    [CHKeychain save:self.Switch2Name.text data:usernamepasswordKVPairs];
-    
     [usernamepasswordKVPairs setObject:self.Switch3Name.text forKey:KEY_Name3];
-    [CHKeychain save:self.Switch3Name.text data:usernamepasswordKVPairs];
-    
     [usernamepasswordKVPairs setObject:self.Switch4Name.text forKey:KEY_Name4];
-    [CHKeychain save:self.Switch4Name.text data:usernamepasswordKVPairs];
-    
+    [CHKeychain save:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4 data:usernamepasswordKVPairs];
     [SVProgressHUD showSuccessWithStatus:Localize(@"保存成功")];
+}
+
+- (void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
+    [self.view endEditing:YES];
 }
 
 @end

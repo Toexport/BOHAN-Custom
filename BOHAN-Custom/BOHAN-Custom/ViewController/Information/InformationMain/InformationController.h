@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FileHeader.pch"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InformationController : UIViewController
+@interface InformationController : UIViewController<GCDAsyncSocketDelegate,UITextFieldDelegate> {
+    GCDAsyncSocket * socket;
+}
+@property (strong) GCDAsyncSocket * socket;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

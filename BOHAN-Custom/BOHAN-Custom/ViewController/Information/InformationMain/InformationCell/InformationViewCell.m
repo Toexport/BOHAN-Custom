@@ -7,7 +7,7 @@
 //
 
 #import "InformationViewCell.h"
-
+#import "FileHeader.pch"
 @implementation InformationViewCell
 
 - (void)awakeFromNib {
@@ -16,6 +16,7 @@
 }
 
 - (IBAction)Switch1:(UISwitch *)sender {
+//     self.Switch1.backgroundColor = [UIColor colorWithHexString:@"e4e4e4"];
     
 }
 

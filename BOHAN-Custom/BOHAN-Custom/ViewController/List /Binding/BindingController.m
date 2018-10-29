@@ -67,6 +67,7 @@
         NSLog(@"ok");
     }
 }
+
 // 发送数据
 -(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
     NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
@@ -85,9 +86,6 @@
     NSLog(@"%@",error);
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
-}
 
 
 @end

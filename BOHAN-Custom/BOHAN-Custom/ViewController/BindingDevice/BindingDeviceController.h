@@ -10,7 +10,10 @@
 #import "FileHeader.pch"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BindingDeviceController : UIViewController
+@interface BindingDeviceController : UIViewController<GCDAsyncSocketDelegate,UITextFieldDelegate> {
+    GCDAsyncSocket * socket;
+}
+@property (strong) GCDAsyncSocket * socket;
 @property (weak, nonatomic) IBOutlet UITextField *IPTExtField;
 @property (weak, nonatomic) IBOutlet UITextField *PortTextField;
 @property (weak, nonatomic) IBOutlet UITextField *TitleNameTextField;
