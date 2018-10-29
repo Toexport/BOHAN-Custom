@@ -7,10 +7,8 @@
 //
 
 #import "BindingDeviceController.h"
-#import "FMDB.h"
 @interface BindingDeviceController ()
 
-@property(nonatomic,strong)FMDatabase *db;
 
 @end
 

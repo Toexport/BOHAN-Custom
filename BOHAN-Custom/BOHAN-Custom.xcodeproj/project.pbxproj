@@ -54,6 +54,18 @@
 		C4AA87F9218465810013307D /* SingleListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87F7218465810013307D /* SingleListController.xib */; };
 		C4C36AB42185F24A0079D6AE /* CHKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AB32185F24A0079D6AE /* CHKeychain.m */; };
 		C4C36AB72186FE170079D6AE /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AB62186FE170079D6AE /* libsqlite3.tbd */; };
+		C4C36ABA218711600079D6AE /* CountDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C36AB9218711600079D6AE /* CountDownViewController.xib */; };
+		C4C36ABD2187116B0079D6AE /* CountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36ABC2187116B0079D6AE /* CountDownViewController.m */; };
+		C4C36AC3218712020079D6AE /* STLoopProgressView+BaseConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AC0218712020079D6AE /* STLoopProgressView+BaseConfiguration.m */; };
+		C4C36AC4218712020079D6AE /* STLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AC2218712020079D6AE /* STLoopProgressView.m */; };
+		C4C36AC7218713460079D6AE /* CountdownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C36AC6218713460079D6AE /* CountdownView.xib */; };
+		C4C36ACA2187135E0079D6AE /* CountdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AC92187135E0079D6AE /* CountdownView.m */; };
+		C4C36ACE218714480079D6AE /* NSTimer+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36ACD218714480079D6AE /* NSTimer+Action.m */; };
+		C4C36ADB218716D80079D6AE /* WSDatePickerView.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4C36AD0218716D80079D6AE /* WSDatePickerView.strings */; };
+		C4C36ADC218716D80079D6AE /* WSDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C36AD6218716D80079D6AE /* WSDatePickerView.xib */; };
+		C4C36ADD218716D80079D6AE /* WSDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AD8218716D80079D6AE /* WSDatePickerView.m */; };
+		C4C36ADE218716D80079D6AE /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AD9218716D80079D6AE /* NSDate+Extension.m */; };
+		C4C36ADF218716D80079D6AE /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36ADA218716D80079D6AE /* UIView+Extension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +171,27 @@
 		C4C36AB32185F24A0079D6AE /* CHKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHKeychain.m; sourceTree = "<group>"; };
 		C4C36AB52185F93B0079D6AE /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		C4C36AB62186FE170079D6AE /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		C4C36AB9218711600079D6AE /* CountDownViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountDownViewController.xib; sourceTree = "<group>"; };
+		C4C36ABB2187116B0079D6AE /* CountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountDownViewController.h; sourceTree = "<group>"; };
+		C4C36ABC2187116B0079D6AE /* CountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountDownViewController.m; sourceTree = "<group>"; };
+		C4C36ABF218712020079D6AE /* STLoopProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLoopProgressView.h; sourceTree = "<group>"; };
+		C4C36AC0218712020079D6AE /* STLoopProgressView+BaseConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STLoopProgressView+BaseConfiguration.m"; sourceTree = "<group>"; };
+		C4C36AC1218712020079D6AE /* STLoopProgressView+BaseConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "STLoopProgressView+BaseConfiguration.h"; sourceTree = "<group>"; };
+		C4C36AC2218712020079D6AE /* STLoopProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STLoopProgressView.m; sourceTree = "<group>"; };
+		C4C36AC6218713460079D6AE /* CountdownView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountdownView.xib; sourceTree = "<group>"; };
+		C4C36AC82187135E0079D6AE /* CountdownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountdownView.h; sourceTree = "<group>"; };
+		C4C36AC92187135E0079D6AE /* CountdownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountdownView.m; sourceTree = "<group>"; };
+		C4C36ACC218714480079D6AE /* NSTimer+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Action.h"; sourceTree = "<group>"; };
+		C4C36ACD218714480079D6AE /* NSTimer+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Action.m"; sourceTree = "<group>"; };
+		C4C36AD1218716D80079D6AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/WSDatePickerView.strings"; sourceTree = "<group>"; };
+		C4C36AD2218716D80079D6AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WSDatePickerView.strings; sourceTree = "<group>"; };
+		C4C36AD3218716D80079D6AE /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
+		C4C36AD4218716D80079D6AE /* WSDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSDatePickerView.h; sourceTree = "<group>"; };
+		C4C36AD5218716D80079D6AE /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		C4C36AD7218716D80079D6AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WSDatePickerView.xib; sourceTree = "<group>"; };
+		C4C36AD8218716D80079D6AE /* WSDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSDatePickerView.m; sourceTree = "<group>"; };
+		C4C36AD9218716D80079D6AE /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
+		C4C36ADA218716D80079D6AE /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOHAN-Custom.release.xcconfig"; path = "Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -276,8 +309,10 @@
 				C4604C362185451300CD41A5 /* LogRegister */,
 				C4604C83218569CE00CD41A5 /* Information */,
 				C4604C962185C4C900CD41A5 /* BindingDevice */,
+				C4C36AB82187113B0079D6AE /* Countdown */,
 				4DAF1A2D21820AA000B91F80 /* List  */,
 				4DAF1A2921820AA000B91F80 /* Management */,
+				C4C36AC5218713350079D6AE /* View */,
 				4DAF1A3121820AA000B91F80 /* Method */,
 			);
 			path = ViewController;
@@ -304,6 +339,9 @@
 		4DAF1A3121820AA000B91F80 /* Method */ = {
 			isa = PBXGroup;
 			children = (
+				C4C36ACF218716D80079D6AE /* WSDaePickerView */,
+				C4C36ACB218714480079D6AE /* NSTimer */,
+				C4C36ABE218712020079D6AE /* STLoopProgressView */,
 				C4C36AB12185F2090079D6AE /* DateStore */,
 				C4604C722185583500CD41A5 /* Macro */,
 				C4604C3F2185490200CD41A5 /* Custom */,
@@ -553,6 +591,61 @@
 			path = DateStore;
 			sourceTree = "<group>";
 		};
+		C4C36AB82187113B0079D6AE /* Countdown */ = {
+			isa = PBXGroup;
+			children = (
+				C4C36ABB2187116B0079D6AE /* CountDownViewController.h */,
+				C4C36ABC2187116B0079D6AE /* CountDownViewController.m */,
+				C4C36AB9218711600079D6AE /* CountDownViewController.xib */,
+			);
+			path = Countdown;
+			sourceTree = "<group>";
+		};
+		C4C36ABE218712020079D6AE /* STLoopProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				C4C36ABF218712020079D6AE /* STLoopProgressView.h */,
+				C4C36AC0218712020079D6AE /* STLoopProgressView+BaseConfiguration.m */,
+				C4C36AC1218712020079D6AE /* STLoopProgressView+BaseConfiguration.h */,
+				C4C36AC2218712020079D6AE /* STLoopProgressView.m */,
+			);
+			path = STLoopProgressView;
+			sourceTree = "<group>";
+		};
+		C4C36AC5218713350079D6AE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C4C36AC82187135E0079D6AE /* CountdownView.h */,
+				C4C36AC92187135E0079D6AE /* CountdownView.m */,
+				C4C36AC6218713460079D6AE /* CountdownView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C4C36ACB218714480079D6AE /* NSTimer */ = {
+			isa = PBXGroup;
+			children = (
+				C4C36ACC218714480079D6AE /* NSTimer+Action.h */,
+				C4C36ACD218714480079D6AE /* NSTimer+Action.m */,
+			);
+			path = NSTimer;
+			sourceTree = "<group>";
+		};
+		C4C36ACF218716D80079D6AE /* WSDaePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				C4C36AD0218716D80079D6AE /* WSDatePickerView.strings */,
+				C4C36AD3218716D80079D6AE /* NSDate+Extension.h */,
+				C4C36AD9218716D80079D6AE /* NSDate+Extension.m */,
+				C4C36AD5218716D80079D6AE /* UIView+Extension.h */,
+				C4C36ADA218716D80079D6AE /* UIView+Extension.m */,
+				C4C36AD4218716D80079D6AE /* WSDatePickerView.h */,
+				C4C36AD8218716D80079D6AE /* WSDatePickerView.m */,
+				C4C36AD6218716D80079D6AE /* WSDatePickerView.xib */,
+			);
+			path = WSDaePickerView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -640,6 +733,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 4DAF19E22181FE1300B91F80;
 			productRefGroup = 4DAF19EC2181FE1300B91F80 /* Products */;
@@ -668,12 +762,16 @@
 				4DAF1A3921820AA000B91F80 /* ListViewController.xib in Resources */,
 				4DAF19F82181FE1400B91F80 /* Assets.xcassets in Resources */,
 				C4AA87E82184517B0013307D /* ListTableViewCell.xib in Resources */,
+				C4C36AC7218713460079D6AE /* CountdownView.xib in Resources */,
 				C4AA87E2218434BB0013307D /* BindingController.xib in Resources */,
+				C4C36ADB218716D80079D6AE /* WSDatePickerView.strings in Resources */,
 				C4604C9B2185C4EA00CD41A5 /* BindingDeviceController.xib in Resources */,
+				C4C36ADC218716D80079D6AE /* WSDatePickerView.xib in Resources */,
 				4DAF19F62181FE1300B91F80 /* Main.storyboard in Resources */,
 				C4AA87F9218465810013307D /* SingleListController.xib in Resources */,
 				C4604C8221855D4D00CD41A5 /* RegisterViewController.xib in Resources */,
 				C4604C8F21856A3700CD41A5 /* InformationViewCell.xib in Resources */,
+				C4C36ABA218711600079D6AE /* CountDownViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +849,8 @@
 				C4AA87E1218434BB0013307D /* BindingController.m in Sources */,
 				C4AA87CC218416320013307D /* UIColor+Extension.m in Sources */,
 				C4AA868D2183F98B0013307D /* ManagementCell.m in Sources */,
+				C4C36ADF218716D80079D6AE /* UIView+Extension.m in Sources */,
+				C4C36ADE218716D80079D6AE /* NSDate+Extension.m in Sources */,
 				C4604C8E21856A3700CD41A5 /* InformationViewCell.m in Sources */,
 				4DAF1A3A21820AA000B91F80 /* ListViewController.m in Sources */,
 				C4AA87C02184120C0013307D /* UIBarButtonItem+Button.m in Sources */,
@@ -758,13 +858,19 @@
 				4DAF19F32181FE1300B91F80 /* ViewController.m in Sources */,
 				4DAF1A3B21820AA000B91F80 /* GCDAsyncUdpSocket.m in Sources */,
 				4DAF19FE2181FE1400B91F80 /* main.m in Sources */,
+				C4C36ADD218716D80079D6AE /* WSDatePickerView.m in Sources */,
 				C4604C88218569FD00CD41A5 /* InformationController.m in Sources */,
 				4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */,
 				4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */,
 				C4AA87E72184517B0013307D /* ListTableViewCell.m in Sources */,
 				C4AA87F8218465810013307D /* SingleListController.m in Sources */,
+				C4C36ACE218714480079D6AE /* NSTimer+Action.m in Sources */,
 				C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */,
+				C4C36AC3218712020079D6AE /* STLoopProgressView+BaseConfiguration.m in Sources */,
 				4DAF19F02181FE1300B91F80 /* AppDelegate.m in Sources */,
+				C4C36ABD2187116B0079D6AE /* CountDownViewController.m in Sources */,
+				C4C36AC4218712020079D6AE /* STLoopProgressView.m in Sources */,
+				C4C36ACA2187135E0079D6AE /* CountdownView.m in Sources */,
 				C4AA87C7218413060013307D /* UIViewController+NavigationBar.m in Sources */,
 				C4C36AB42185F24A0079D6AE /* CHKeychain.m in Sources */,
 				C4604C9A2185C4EA00CD41A5 /* BindingDeviceController.m in Sources */,
@@ -817,6 +923,23 @@
 				4DAF19FA2181FE1400B91F80 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		C4C36AD0218716D80079D6AE /* WSDatePickerView.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4C36AD1218716D80079D6AE /* zh-Hans */,
+				C4C36AD2218716D80079D6AE /* en */,
+			);
+			name = WSDatePickerView.strings;
+			sourceTree = "<group>";
+		};
+		C4C36AD6218716D80079D6AE /* WSDatePickerView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4C36AD7218716D80079D6AE /* Base */,
+			);
+			name = WSDatePickerView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

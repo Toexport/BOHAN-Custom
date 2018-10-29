@@ -11,6 +11,7 @@
 #import "InformationViewCell.h"
 #import "BindingDeviceController.h"
 #import "LoginViewController.h"
+#import "CountDownViewController.h"
 @interface InformationController ()<UITableViewDelegate, UITableViewDataSource>
 
 @end
@@ -100,6 +101,13 @@
 // cell的大小
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 250;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    CountDownViewController * CountDown = [[CountDownViewController alloc]init];
+    [self.navigationController pushViewController:CountDown animated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
