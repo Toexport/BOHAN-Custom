@@ -11,6 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
             <connections>
+                <outlet property="DetermineBtn" destination="hyj-ph-Dn8" id="g9d-Rp-XxL"/>
+                <outlet property="PassWordTextField" destination="2rn-Vx-zg8" id="S2y-8M-gX0"/>
+                <outlet property="UserNameTextField" destination="52T-k7-1Wm" id="jKp-ZQ-TCJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -109,6 +112,9 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="DetermineBtn:" destination="-1" eventType="touchUpInside" id="m5a-ln-tYA"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.98038941621780396" green="0.9803740382194519" blue="0.98039311170578003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

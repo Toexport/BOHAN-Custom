@@ -52,6 +52,7 @@
 		C4AA87F4218463DC0013307D /* SingleListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87F2218463DC0013307D /* SingleListViewCell.xib */; };
 		C4AA87F8218465810013307D /* SingleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87F6218465810013307D /* SingleListController.m */; };
 		C4AA87F9218465810013307D /* SingleListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87F7218465810013307D /* SingleListController.xib */; };
+		C4C36AB42185F24A0079D6AE /* CHKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AB32185F24A0079D6AE /* CHKeychain.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,7 +102,6 @@
 		4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		4DAF1A3521820AA000B91F80 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
 		4DAF1A3621820AA000B91F80 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
-		4DAF1A3D21820ABC00B91F80 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4DAF1A3E21820DE100B91F80 /* BCNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCNavigationController.h; sourceTree = "<group>"; };
 		4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCNavigationController.m; sourceTree = "<group>"; };
 		7D28760051FE06F93E146C73 /* libPods-BOHAN-Custom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BOHAN-Custom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +154,9 @@
 		C4AA87F5218465810013307D /* SingleListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SingleListController.h; sourceTree = "<group>"; };
 		C4AA87F6218465810013307D /* SingleListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SingleListController.m; sourceTree = "<group>"; };
 		C4AA87F7218465810013307D /* SingleListController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleListController.xib; sourceTree = "<group>"; };
+		C4C36AB22185F24A0079D6AE /* CHKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHKeychain.h; sourceTree = "<group>"; };
+		C4C36AB32185F24A0079D6AE /* CHKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHKeychain.m; sourceTree = "<group>"; };
+		C4C36AB52185F93B0079D6AE /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOHAN-Custom.release.xcconfig"; path = "Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,7 +227,7 @@
 				4DAF19F22181FE1300B91F80 /* ViewController.m */,
 				4DAF19F42181FE1300B91F80 /* Main.storyboard */,
 				C4AA86872183E68F0013307D /* FileHeader.pch */,
-				4DAF1A3D21820ABC00B91F80 /* PrefixHeader.pch */,
+				C4C36AB52185F93B0079D6AE /* PrefixHeader.pch */,
 				C4AA86A921840A650013307D /* ColorMacro.h */,
 				4DAF19F72181FE1400B91F80 /* Assets.xcassets */,
 				4DAF19F92181FE1400B91F80 /* LaunchScreen.storyboard */,
@@ -297,6 +300,7 @@
 		4DAF1A3121820AA000B91F80 /* Method */ = {
 			isa = PBXGroup;
 			children = (
+				C4C36AB12185F2090079D6AE /* DateStore */,
 				C4604C722185583500CD41A5 /* Macro */,
 				C4604C3F2185490200CD41A5 /* Custom */,
 				C4AA87C8218416320013307D /* UIColor+Extension */,
@@ -536,6 +540,15 @@
 			path = SingleListCell;
 			sourceTree = "<group>";
 		};
+		C4C36AB12185F2090079D6AE /* DateStore */ = {
+			isa = PBXGroup;
+			children = (
+				C4C36AB22185F24A0079D6AE /* CHKeychain.h */,
+				C4C36AB32185F24A0079D6AE /* CHKeychain.m */,
+			);
+			path = DateStore;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -749,6 +762,7 @@
 				C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */,
 				4DAF19F02181FE1300B91F80 /* AppDelegate.m in Sources */,
 				C4AA87C7218413060013307D /* UIViewController+NavigationBar.m in Sources */,
+				C4C36AB42185F24A0079D6AE /* CHKeychain.m in Sources */,
 				C4604C9A2185C4EA00CD41A5 /* BindingDeviceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

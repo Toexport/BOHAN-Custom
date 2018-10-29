@@ -9,18 +9,18 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
-//测试用这个
-#ifdef DEBUG
-#if TARGET_IPHONE_SIMULATOR//模拟器
-
-#define ZPLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
-
-#elif TARGET_OS_IPHONE//真机
-
-#define ZPLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
-
-#endif
-#endif
+////测试用这个
+//#ifdef DEBUG
+//#if TARGET_IPHONE_SIMULATOR//模拟器
+//
+//#define ZPLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+//
+//#elif TARGET_OS_IPHONE//真机
+//
+//#define ZPLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+//
+//#endif
+//#endif
 
 ////正式发布
 //#else
@@ -48,6 +48,20 @@
 //尺寸
 #define ZP_Width [UIScreen mainScreen].bounds .size.width
 #define ZP_height [UIScreen mainScreen].bounds .size.height
+// 登录注册
+#define KEY_USERNAME_PASSWORD  @"com.company.app.usernamepassword"
+#define KEY_USERNAME  @"com.company.app.username"
+#define KEY_PASSWORD  @"com.company.app.password"
+// 添加设备
+#define KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4  @"com.company.app.titlenameipportname1name2name3name4"
+#define KEY_TitleName  @"com.company.app.titlename"
+#define KEY_IP  @"com.company.app.ip"
+#define KEY_PORT  @"com.company.app.port"
+#define KEY_Name1  @"com.company.app.name1"
+#define KEY_Name2  @"com.company.app.name2"
+#define KEY_Name3  @"com.company.app.name3"
+#define KEY_Name4  @"com.company.app.name4"
+
 
 
 #define iPhone4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)

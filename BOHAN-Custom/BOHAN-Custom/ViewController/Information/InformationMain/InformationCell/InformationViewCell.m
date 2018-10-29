@@ -16,6 +16,7 @@
 }
 
 - (IBAction)Switch1:(UISwitch *)sender {
+    
 }
 
 - (IBAction)Switch2:(UISwitch *)sender {

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "BCTabBarController.h"
 #import "LoginViewController.h"
+#import "InformationController.h"
 #import "FileHeader.pch"
 @interface AppDelegate ()
 
@@ -18,22 +19,23 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    self.window.rootViewController = [BCTabBarController new];
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
-    
     LoginViewController *login = [[LoginViewController alloc] init];
-    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
+    UINavigationController *nav;
+    if ([login autoLogin]) {
+        nav = [[UINavigationController alloc] initWithRootViewController:[InformationController new]];
+    } else {
+        nav = [[UINavigationController alloc] initWithRootViewController:login];
+    }
+    self.window.rootViewController = nav;
+    self.window.rootViewController.view.backgroundColor = [UIColor whiteColor];
     
-    self.window.rootViewController = loginNav;
-self.window.rootViewController.view.backgroundColor = [UIColor whiteColor];
-
-[[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
-[[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
-
-[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-[[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor], nil] forKeys:[NSArray arrayWithObjects:NSForegroundColorAttributeName, nil]]];
-[[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
+    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor], nil] forKeys:[NSArray arrayWithObjects:NSForegroundColorAttributeName, nil]]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
     return YES;
 }
 

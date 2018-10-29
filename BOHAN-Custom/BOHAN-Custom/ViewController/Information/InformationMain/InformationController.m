@@ -51,10 +51,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     InformationViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"InformationViewCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;  //取消Cell点击变灰效果
+    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    cell.TitleNameLabel.text = [usernamepasswordKVPairs objectForKey:KEY_TitleName];
+    cell.IPLabel.text = [usernamepasswordKVPairs objectForKey:[NSString stringWithFormat:@"%@:%@",KEY_IP,KEY_PORT]];
+    cell.NameLabel1.text = [usernamepasswordKVPairs objectForKey:KEY_Name1];
+    cell.NameLabel2.text = [usernamepasswordKVPairs objectForKey:KEY_Name2];
+    cell.NameLabel3.text = [usernamepasswordKVPairs objectForKey:KEY_Name3];
+    cell.NameLabel4.text = [usernamepasswordKVPairs objectForKey:KEY_Name4];
     return cell;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
-}
 @end

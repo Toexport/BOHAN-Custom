@@ -31,6 +31,7 @@
 #import "UIColor+Extension.h"
 #import "UserInfoManager.h"
 #import "AdapationMacro.h"
+#import "CHKeychain.h"
 #import "NotificationMacro.h"
 
 
@@ -45,5 +46,6 @@
 
 //主字体颜色
 #define kTextColor [UIColor getColor:@"5c5c5c"]
+
 
 #endif /* FileHeader_pch */

@@ -10,4 +10,6 @@
 #import "EdgetTextField.h"
 @interface LoginViewController : UIViewController
 
+- (BOOL)autoLogin;
+
 @end

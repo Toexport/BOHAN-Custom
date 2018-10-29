@@ -80,11 +80,27 @@
 
 #pragma mark - action
 
+- (BOOL)autoLogin {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"loginAccount"]) {
+        return YES;
+    }
+    return NO;
+}
+
 - (IBAction)loginAction {
-    InformationController * Information = [[InformationController alloc]init];
-    [self.navigationController pushViewController:Information animated:YES];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
+    if ([self cheakError]) {
+        NSDictionary *dict = [CHKeychain load:accountTF.text];
+        if ([dict[KEY_USERNAME] isEqualToString:accountTF.text] &&
+            [dict[KEY_PASSWORD] isEqualToString:passwordTF.text]) {
+//            记录上次的登录账号,下载可自动登录,退出登录需要删除此信息
+            [[NSUserDefaults standardUserDefaults] setObject:accountTF.text forKey:@"loginAccount"];
+            [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[InformationController new]];
+            [SVProgressHUD showSuccessWithStatus:@"登陆成功"];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"密码错误"];
+        }
+    }
+    
     //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ISLOGIN"];
 //    if ([accountTF.text rangeOfString:@"@"].location != NSNotFound) {
 //        ZPLog(@"包含");
@@ -110,6 +126,19 @@
 //            [HintView showHint:Localize(@"请输入正确手机号")];
 //        }
 //    }
+}
+
+- (BOOL)cheakError {
+    if (!accountTF.text.length) {
+        [SVProgressHUD showInfoWithStatus:@"请输入账号"];
+        return NO;
+    }
+    if (!passwordTF.text.length) {
+        [SVProgressHUD showInfoWithStatus:@"请输入密码"];
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (IBAction)showAction:(UIButton *)sender {
