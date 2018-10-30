@@ -81,7 +81,6 @@
     NSLog(@"%@",error);
 }
 
-
 // 保存
 - (IBAction)SaceBtn:(UIButton *)sender {
     if ([self.IPTExtField.text isEqualToString:@""]) {
@@ -89,24 +88,24 @@
     }else
         if ([self.PortTextField.text isEqualToString:@""]) {
             [SVProgressHUD showErrorWithStatus:Localize(@"请填写端口")];
-        }else
-            if ([self.TitleNameTextField.text isEqualToString:@""]) {
-                [SVProgressHUD showErrorWithStatus:Localize(@"请填写设备名称")];
-            }else
-                if ([self.Switch1Name.text isEqualToString:@""]) {
-                    [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关1名称")];
-                }else
-                    if ([self.Switch2Name.text isEqualToString:@""]) {
-                        [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关2名称")];
-                    }else
-                        if ([self.Switch3Name.text isEqualToString:@""]) {
-                            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关3名称")];
-                        }else
-                            if ([self.Switch4Name.text isEqualToString:@""]) {
-                                [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关4名称")];
-                            }else {
-                                [self SaveData];
-                            }
+    }else
+        if ([self.TitleNameTextField.text isEqualToString:@""]) {
+            [SVProgressHUD showErrorWithStatus:Localize(@"请填写设备名称")];
+    }else
+        if ([self.Switch1Name.text isEqualToString:@""]) {
+            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关1名称")];
+    }else
+        if ([self.Switch2Name.text isEqualToString:@""]) {
+            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关2名称")];
+    }else
+        if ([self.Switch3Name.text isEqualToString:@""]) {
+            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关3名称")];
+    }else
+        if ([self.Switch4Name.text isEqualToString:@""]) {
+            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关4名称")];
+    }else {
+            [self SaveData];
+    }
 }
 
 - (void)SaveData {

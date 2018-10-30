@@ -66,6 +66,11 @@
 		C4C36ADD218716D80079D6AE /* WSDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AD8218716D80079D6AE /* WSDatePickerView.m */; };
 		C4C36ADE218716D80079D6AE /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AD9218716D80079D6AE /* NSDate+Extension.m */; };
 		C4C36ADF218716D80079D6AE /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36ADA218716D80079D6AE /* UIView+Extension.m */; };
+		C4C36AE321872B470079D6AE /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AE221872B470079D6AE /* UserModel.m */; };
+		C4C36AE72187D8310079D6AE /* BindingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AE62187D8310079D6AE /* BindingModel.m */; };
+		C4C36AE9218838830079D6AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AE8218838830079D6AE /* UIKit.framework */; };
+		C4C36AEB218838A60079D6AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AEA218838A60079D6AE /* Foundation.framework */; };
+		C4C36AED218838BC0079D6AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AEC218838BC0079D6AE /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +197,13 @@
 		C4C36AD8218716D80079D6AE /* WSDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSDatePickerView.m; sourceTree = "<group>"; };
 		C4C36AD9218716D80079D6AE /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		C4C36ADA218716D80079D6AE /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		C4C36AE121872B470079D6AE /* UserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		C4C36AE221872B470079D6AE /* UserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		C4C36AE52187D8310079D6AE /* BindingModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BindingModel.h; sourceTree = "<group>"; };
+		C4C36AE62187D8310079D6AE /* BindingModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BindingModel.m; sourceTree = "<group>"; };
+		C4C36AE8218838830079D6AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C4C36AEA218838A60079D6AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C4C36AEC218838BC0079D6AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOHAN-Custom.release.xcconfig"; path = "Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -200,6 +212,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4C36AED218838BC0079D6AE /* CoreGraphics.framework in Frameworks */,
+				C4C36AEB218838A60079D6AE /* Foundation.framework in Frameworks */,
+				C4C36AE9218838830079D6AE /* UIKit.framework in Frameworks */,
 				C4C36AB72186FE170079D6AE /* libsqlite3.tbd in Frameworks */,
 				4A524449D0AB39E0BF560CDF /* libPods-BOHAN-Custom.a in Frameworks */,
 			);
@@ -225,6 +240,9 @@
 		08C96659199A0D01D4425400 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C4C36AEC218838BC0079D6AE /* CoreGraphics.framework */,
+				C4C36AEA218838A60079D6AE /* Foundation.framework */,
+				C4C36AE8218838830079D6AE /* UIKit.framework */,
 				C4C36AB62186FE170079D6AE /* libsqlite3.tbd */,
 				7D28760051FE06F93E146C73 /* libPods-BOHAN-Custom.a */,
 			);
@@ -390,6 +408,7 @@
 				C4604C7E21855D4D00CD41A5 /* RegisterViewController.h */,
 				C4604C7F21855D4D00CD41A5 /* RegisterViewController.m */,
 				C4604C8021855D4D00CD41A5 /* RegisterViewController.xib */,
+				C4C36AE021872B320079D6AE /* UserModel */,
 			);
 			path = RegisterMani;
 			sourceTree = "<group>";
@@ -475,6 +494,7 @@
 				C4604C972185C4EA00CD41A5 /* BindingDeviceController.h */,
 				C4604C982185C4EA00CD41A5 /* BindingDeviceController.m */,
 				C4604C992185C4EA00CD41A5 /* BindingDeviceController.xib */,
+				C4C36AE42187D81E0079D6AE /* BindingModel */,
 			);
 			path = BindingDevice;
 			sourceTree = "<group>";
@@ -646,6 +666,24 @@
 			path = WSDaePickerView;
 			sourceTree = "<group>";
 		};
+		C4C36AE021872B320079D6AE /* UserModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4C36AE121872B470079D6AE /* UserModel.h */,
+				C4C36AE221872B470079D6AE /* UserModel.m */,
+			);
+			path = UserModel;
+			sourceTree = "<group>";
+		};
+		C4C36AE42187D81E0079D6AE /* BindingModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4C36AE52187D8310079D6AE /* BindingModel.h */,
+				C4C36AE62187D8310079D6AE /* BindingModel.m */,
+			);
+			path = BindingModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -800,12 +838,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom-resources.sh",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SAMKeychain/Support/SAMKeychain.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SAMKeychain.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
@@ -843,6 +883,7 @@
 				C4AA87C42184122F0013307D /* UIView+Frame.m in Sources */,
 				4DAF1A242182061800B91F80 /* BCTabBarController.m in Sources */,
 				4DAF1A3721820AA000B91F80 /* ManagementViewController.m in Sources */,
+				C4C36AE72187D8310079D6AE /* BindingModel.m in Sources */,
 				C4AA87F3218463DC0013307D /* SingleListViewCell.m in Sources */,
 				C4604C71218556E800CD41A5 /* UserInfoManager.m in Sources */,
 				C4604C6C2185548000CD41A5 /* LoginViewController.m in Sources */,
@@ -865,6 +906,7 @@
 				C4AA87E72184517B0013307D /* ListTableViewCell.m in Sources */,
 				C4AA87F8218465810013307D /* SingleListController.m in Sources */,
 				C4C36ACE218714480079D6AE /* NSTimer+Action.m in Sources */,
+				C4C36AE321872B470079D6AE /* UserModel.m in Sources */,
 				C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */,
 				C4C36AC3218712020079D6AE /* STLoopProgressView+BaseConfiguration.m in Sources */,
 				4DAF19F02181FE1300B91F80 /* AppDelegate.m in Sources */,
@@ -1068,6 +1110,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BOHAN-Custom/PrefixHeader.pch";
 				INFOPLIST_FILE = "BOHAN-Custom/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1089,6 +1132,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BOHAN-Custom/PrefixHeader.pch";
 				INFOPLIST_FILE = "BOHAN-Custom/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

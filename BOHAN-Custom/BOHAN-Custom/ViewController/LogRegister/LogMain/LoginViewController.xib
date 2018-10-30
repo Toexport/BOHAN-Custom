@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -148,7 +149,6 @@
                 <constraint firstAttribute="bottom" secondItem="YBO-67-01W" secondAttribute="bottom" id="0Ux-hF-kPg"/>
                 <constraint firstItem="aCt-og-cik" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="4Bc-ec-O1H"/>
                 <constraint firstItem="9If-vx-s7n" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="750" constant="70" id="9Td-BH-qX0"/>
-                <constraint firstItem="odr-mq-5gr" firstAttribute="top" secondItem="amr-hY-kEp" secondAttribute="bottom" constant="20" id="9uc-oe-yMA"/>
                 <constraint firstItem="9If-vx-s7n" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="ALJ-aJ-vib"/>
                 <constraint firstItem="amr-hY-kEp" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="EDE-BM-i2l"/>
                 <constraint firstItem="HVx-TU-7XN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="FgP-cV-6sa"/>
@@ -158,6 +158,7 @@
                 <constraint firstItem="kxY-Ni-lw4" firstAttribute="leading" secondItem="aCt-og-cik" secondAttribute="leading" id="Naq-Q0-zTz"/>
                 <constraint firstItem="YBO-67-01W" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="PAq-nh-aVR"/>
                 <constraint firstAttribute="trailing" secondItem="YBO-67-01W" secondAttribute="trailing" id="Qtp-EA-cgJ"/>
+                <constraint firstItem="odr-mq-5gr" firstAttribute="top" secondItem="amr-hY-kEp" secondAttribute="bottom" constant="20" id="TTz-JM-456"/>
                 <constraint firstItem="aCt-og-cik" firstAttribute="top" secondItem="odr-mq-5gr" secondAttribute="bottom" constant="30" id="Vde-MC-oke"/>
                 <constraint firstItem="amr-hY-kEp" firstAttribute="top" secondItem="9If-vx-s7n" secondAttribute="bottom" constant="10" id="XLv-9H-6QT"/>
                 <constraint firstItem="YBO-67-01W" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YSY-Mk-Z5q"/>

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F0DD55CEE5EC6FD61ECEB30F4B2C23FF"
+               BlueprintIdentifier = "47E64A4E36D98BB95DD9435F992A294A"
                BlueprintName = "SAMKeychain"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libSAMKeychain.a">

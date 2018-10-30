@@ -22,6 +22,8 @@
 #import "GCDAsyncSocket.h"
 #import "ColorMacro.h"
 #import <Foundation/Foundation.h>
+#import <CommonCrypto/CommonDigest.h>
+#import <CoreText/CoreText.h>
 
 
 #import "AppDelegate.h"

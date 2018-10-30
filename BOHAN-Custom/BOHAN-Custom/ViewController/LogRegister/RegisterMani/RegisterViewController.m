@@ -8,7 +8,8 @@
 
 #import "RegisterViewController.h"
 #import "FileHeader.pch"
-
+#import "RLMRealm.h"
+#import "UserModel/UserModel.h"
 @interface RegisterViewController ()
 
 @end
@@ -24,22 +25,58 @@
 
 - (IBAction)DetermineBtn:(UIButton *)sender {
     //删除
-//    [CHKeychain delete:KEY_USERNAME_PASSWORD];
-    if ([CHKeychain load:self.UserNameTextField.text]) {
-        [SVProgressHUD showInfoWithStatus:@"用户已注册"];
-    } else {
-        NSMutableDictionary *usernamepasswordKVPairs = [NSMutableDictionary dictionary];
-        [usernamepasswordKVPairs setObject:self.UserNameTextField.text forKey:KEY_USERNAME];
+    [CHKeychain delete:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    if ([self cheakError]) {
+    // 获取
+    RLMRealm *realm = [RLMRealm defaultRealm];
+//    删除所有数据 [realm beginWriteTransaction]; [realm deleteAllObjects];[realm commitWriteTransaction];
+    RLMResults *results = [UserModel allObjectsInRealm:realm];
+    NSArray * arr = [NSArray arrayWithObject:results];
+    for (UserModel * model in arr) {
+        if ([self.UserNameTextField.text isEqualToString:model.UserName]) {
+                [SVProgressHUD showErrorWithStatus:(Localize(@"账号已注册"))];
+        }else {
+                UserModel *model = [[UserModel alloc]init];
+                model.UserName = self.UserNameTextField.text;
+                model.PassWord = [self md5:self.PassWordTextField.text];
+    //        存储 单个数据
+                [realm beginWriteTransaction];
+                [realm addObject:model];
+                [realm commitWriteTransaction];
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"注册成功"))];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }
+     }
+}
 
-        [usernamepasswordKVPairs setObject:self.PassWordTextField.text forKey:KEY_PASSWORD];
-        [CHKeychain save:self.UserNameTextField.text data:usernamepasswordKVPairs];
-        [SVProgressHUD showSuccessWithStatus:(Localize(@"注册成功"))];
-        [self.navigationController popViewControllerAnimated:YES];
+- (BOOL)cheakError {
+    if (!self.UserNameTextField.text.length) {
+        [SVProgressHUD showInfoWithStatus:@"请输入账号"];
+        return NO;
     }
+    if (!self.PassWordTextField.text.length) {
+        [SVProgressHUD showInfoWithStatus:@"请输入密码"];
+        return NO;
+    }
+    return YES;
 }
 
 
 - (void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
     [self.view endEditing:YES];
+}
+
+//  MD5加密方法
+-(NSString *)md5:(NSString *)input {
+    const char * cStr = [input UTF8String];
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    //    CC_MD5(cStr, strlen(cStr),digest); // This is the md5 call
+    CC_MD5(cStr, (CC_LONG)strlen(cStr),digest); // This is the md5 call
+    NSMutableString * output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH *2];
+    for (int i = 0; i<CC_MD5_DIGEST_LENGTH; i ++) {
+        [output appendFormat:@"%02x",digest[i]];
+    }
+    return output;
 }
 @end

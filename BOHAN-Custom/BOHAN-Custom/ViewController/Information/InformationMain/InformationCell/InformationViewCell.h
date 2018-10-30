@@ -21,7 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UISwitch *Switch2;
 @property (weak, nonatomic) IBOutlet UISwitch *Switch3;
 @property (weak, nonatomic) IBOutlet UISwitch *Switch4;
+@property (weak, nonatomic) IBOutlet UIButton *CountdownBtn;
 
+typedef void (^CountdownBtnBlock)(id CountdownBtn);
+@property (nonatomic , copy) CountdownBtnBlock countdownBtnBlock;
 @end
 
 NS_ASSUME_NONNULL_END

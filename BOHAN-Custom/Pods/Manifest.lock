@@ -16,6 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - IQKeyboardManager (6.0.6)
   - Masonry (1.0.2)
+  - MJRefresh (3.1.15.3)
   - Realm (3.7.4):
     - Realm/Headers (= 3.7.4)
   - Realm/Headers (3.7.4)
@@ -26,6 +27,7 @@ DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
   - IQKeyboardManager
   - Masonry (= 1.0.2)
+  - MJRefresh
   - Realm
   - SAMKeychain
   - SVProgressHUD
@@ -35,6 +37,7 @@ SPEC REPOS:
     - AFNetworking
     - IQKeyboardManager
     - Masonry
+    - MJRefresh
     - Realm
     - SAMKeychain
     - SVProgressHUD
@@ -43,10 +46,11 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   IQKeyboardManager: 6b4ecd3e59cf55a26133d802d4678721d7f88499
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: e37d09cb642b3ad8b84018d019c71284fd2b635a
+PODFILE CHECKSUM: af0f432386054fea2f33e28f430bfafd247d36d7
 
 COCOAPODS: 1.5.3

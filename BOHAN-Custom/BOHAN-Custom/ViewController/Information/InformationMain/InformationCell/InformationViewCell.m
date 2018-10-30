@@ -32,4 +32,8 @@
     
 }
 
+- (IBAction)CountdownBtn:(UIButton *)sender {
+    self.countdownBtnBlock(self.CountdownBtn);
+}
+
 @end

@@ -11,6 +11,7 @@
 #import "RegistrationAgreementController.h"
 #import "RegisterViewController.h"
 #import "InformationController.h"
+#import "UserModel.h"
 #import "FileHeader.pch"
 @interface LoginViewController ()<UITextFieldDelegate> {
     __weak IBOutlet EdgetTextField *accountTF;
@@ -56,12 +57,12 @@
     accountTF.rightViewMode = UITextFieldViewModeWhileEditing;
     passwordTF.rightViewMode = UITextFieldViewModeAlways;
     
-    if (USERNAME) {
-        accountTF.text = USERNAME;
-    }
-    if (PASSWORD) {
-        passwordTF.text = PASSWORD;
-    }
+//    if (USERNAME) {
+//        accountTF.text = USERNAME;
+//    }
+//    if (PASSWORD) {
+//        passwordTF.text = PASSWORD;
+//    }
     
     NSString *moreStr = Localize(@"了解更多伯瀚:");
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:moreInfoBtn.titleLabel.text];
@@ -72,10 +73,10 @@
     [self.view addGestureRecognizer:singleTap];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//}
 
 #pragma mark - action
 - (BOOL)autoLogin {
@@ -119,6 +120,7 @@
 
 - (IBAction)registAction {
     RegisterViewController * Register = [[RegisterViewController alloc] init];
+    Register.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:Register animated:YES];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字

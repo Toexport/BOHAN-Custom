@@ -100,14 +100,7 @@
 
 // cell的大小
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 250;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    CountDownViewController * CountDown = [[CountDownViewController alloc]init];
-    [self.navigationController pushViewController:CountDown animated:YES];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
+    return 242;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -120,29 +113,39 @@
     cell.NameLabel2.text = [usernamepasswordKVPairs objectForKey:KEY_Name2];
     cell.NameLabel3.text = [usernamepasswordKVPairs objectForKey:KEY_Name3];
     cell.NameLabel4.text = [usernamepasswordKVPairs objectForKey:KEY_Name4];
+    cell.countdownBtnBlock = ^(id  _Nonnull CountdownBtn) {
+        CountDownViewController * CountDown = [[CountDownViewController alloc]init];
+        [self.navigationController pushViewController:CountDown animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
+    };
     return cell;
 }
 
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//
+//}
+
 // 注销登录
 - (void)LogOut {
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"提示", nil) message: NSLocalizedString(@"确定要注销登录吗?", nil)preferredStyle:UIAlertControllerStyleActionSheet];
-    //  设置popover指向的item
-    alert.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
-    //  確定按钮
-    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"确定", nil)  style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        //        清除所有的数据
-        [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[LoginViewController new]];
-        NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
-        [UserLoginState removeObjectForKey:LOGOUTNOTIFICATION];
-        [UserLoginState synchronize];
-        
-        NSLog(@"点击了确定按钮");
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"取消",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        NSLog(@"点击了取消按钮");
-    }]];
-    [self presentViewController:alert animated:YES completion:nil];
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:Localize(@"提示") message:Localize(@"确定要注销登录吗？") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:Localize(@"取消") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            NSLog(@"action = %@", action);
+            
+        }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            //            清除所有的数据
+            [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[LoginViewController new]];
+            NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
+            [UserLoginState removeObjectForKey:LOGOUTNOTIFICATION];
+            [UserLoginState synchronize];
+            
+        }];
+        [alert addAction:defaultAction];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
 }
+
 
 
 @end
