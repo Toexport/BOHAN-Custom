@@ -20,8 +20,9 @@
 
 @implementation InformationController
 @synthesize socket;
-NSString * string = @"+RECV:0,E7";
-NSString * stringg = @"00130001";
+NSString * HeadStr = @"+RECV:0,E7";
+NSString * instruction = @"00130001";
+NSString * queryStr = @"00020000";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,43 +53,16 @@ NSString * stringg = @"00130001";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
-
-- (void)PostData {
-    socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    //socket.delegate = self;
-    NSError *err = nil;
-    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-    if(![socket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
-        [SVProgressHUD showInfoWithStatus:(@"连接失败")];
-    }else {
-        NSLog(@"ok");
-        NSLog(@"%@:%@",KEY_PORT,KEY_IP);
-    }
-    
-
+// x查询
+- (void)QueryData {
+    NSString * Str = [NSString stringWithFormat:@"%@%@",self->StrId,queryStr];
+    NSLog(@"%@",Str);
+    //       NSString * stringg = [Utils getBinaryByHex:Str]; // 进制转换
+    NSString * String = @"00B00D";
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self->StrId,queryStr,String];
+    [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [self->socket readDataWithTimeout:-1 tag:0];
 }
-
-// 发送数据
--(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
-    [socket readDataWithTimeout:-1 tag:0];
-}
-
-// 接收数据
--(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-    NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSString * String = [newMessage substringWithRange:NSMakeRange(15, 12)];
-    NSLog(@"%@%@",sock.connectedHost,newMessage);
-    NSLog(@"%@",String);
-    StrId = String;
-    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
-    [socket readDataWithTimeout:-1 tag:0];
-}
-
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    NSLog(@"%@",error);
-}
-
 
 // 新增设备
 - (IBAction)BindingDevice:(UIButton *)sender {
@@ -128,44 +102,69 @@ NSString * stringg = @"00130001";
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
     };
-    
-
-//    + (NSString *)getHexByDecimal:(NSInteger)decimal;
-//
-//    + (NSNumber *)numberHexString:(NSString *)aHexString;
-//
-//    + (NSString *)getBinaryByHex:(NSString *)hex;
-//
-//
-//    + (NSString *)toBinarySystemWithDecimalSystem:(NSInteger)decimal;
-//
-//    + (NSString *)getHexByBinary:(NSString *)binary;
-//
-//    + (NSString *)hexStringFromString:(NSString *)string;
-    
-    
     cell.extractButBlock = ^(id  _Nonnull ExtractBut) {
-        NSString * Str = [NSString stringWithFormat:@"%@%@",StrId,stringg];
+        NSString * Str = [NSString stringWithFormat:@"%@%@",self->StrId,instruction];
         NSLog(@"%@",Str);
-       NSString * stringg = [Utils getBinaryByHex:Str]; // 进制转换
-        
-        NSString * Strr = [NSString stringWithFormat:@"%@%@%@",string,StrId,stringg];
-        
-        [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-        [socket readDataWithTimeout:-1 tag:0];
+//       NSString * stringg = [Utils getBinaryByHex:Str]; // 进制转换
+        NSString * String = @"00C20D";
+        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self->StrId,instruction,String];
+        [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+        [self->socket readDataWithTimeout:-1 tag:0];
         NSLog(@"%@",Strr);
-        
-        NSLog(@"开");
     };
+    
     cell.sxtractButBlock = ^(id  _Nonnull SxtractBut) {
-        NSLog(@"关");
+        NSString * Str = [NSString stringWithFormat:@"%@%@",self->StrId,instruction];
+        NSLog(@"%@",Str);
+//       NSString * stringg = [Utils getBinaryByHex:Str]; // 进制转换
+        NSString * String = @"01C30D";
+        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self->StrId,instruction,String];
+        
+        [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+        [self->socket readDataWithTimeout:-1 tag:0];
+        NSLog(@"%@",Strr);
     };
     return cell;
 }
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//
-//}
+
+- (void)PostData {
+    socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    //socket.delegate = self;
+    NSError *err = nil;
+    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    if(![socket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
+        [SVProgressHUD showInfoWithStatus:(@"连接失败")];
+    }else {
+        NSLog(@"ok");
+        NSLog(@"%@:%@",KEY_PORT,KEY_IP);
+    }
+}
+
+// 发送数据
+-(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
+    [socket readDataWithTimeout:-1 tag:0];
+}
+
+// 接收数据
+-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
+    NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString * String = [newMessage substringWithRange:NSMakeRange(15, 12)];
+    NSLog(@"%@%@",sock.connectedHost,newMessage);
+    NSLog(@"%@",String);
+    StrId = String;
+    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
+    [socket readDataWithTimeout:-1 tag:0];
+}
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
+    NSLog(@"%@",error);
+    [SVProgressHUD showInfoWithStatus:(@"连接失败")];
+}
+
+
+
 
 // 注销登录
 - (void)LogOut {

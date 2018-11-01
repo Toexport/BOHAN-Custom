@@ -94,6 +94,12 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Kxs-Cg-Wxs"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="Switch1:" destination="KGk-i7-Jjw" eventType="valueChanged" id="576-Ck-0Y0"/>
                         </connections>
@@ -104,7 +110,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="90" id="m25-Ym-jZH"/>
                         </constraints>
-                        <state key="normal" title="倒计时">
+                        <state key="normal" title="Countdown">
                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
@@ -123,6 +129,12 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="2dG-5f-2TS"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="Switch2:" destination="KGk-i7-Jjw" eventType="valueChanged" id="vES-jD-NsD"/>
                         </connections>
@@ -133,7 +145,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="90" id="F1u-bD-N1b"/>
                         </constraints>
-                        <state key="normal" title="倒计时">
+                        <state key="normal" title="Countdown">
                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
@@ -152,6 +164,12 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="JRv-JB-oN7"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="Switch3:" destination="KGk-i7-Jjw" eventType="valueChanged" id="g2l-Yy-9cz"/>
                         </connections>
@@ -162,7 +180,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="90" id="FEX-Gj-EfO"/>
                         </constraints>
-                        <state key="normal" title="倒计时">
+                        <state key="normal" title="Countdown">
                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
@@ -181,6 +199,12 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="41f-gt-QAB"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="Switch4:" destination="KGk-i7-Jjw" eventType="valueChanged" id="PYZ-w9-KtC"/>
                         </connections>
@@ -191,7 +215,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="90" id="KgM-xk-Pgn"/>
                         </constraints>
-                        <state key="normal" title="倒计时">
+                        <state key="normal" title="Countdown">
                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
