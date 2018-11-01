@@ -25,6 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^CountdownBtnBlock)(id CountdownBtn);
 @property (nonatomic , copy) CountdownBtnBlock countdownBtnBlock;
+
+typedef void (^ExtractButBlock)(id ExtractBut);
+@property (nonatomic , copy) ExtractButBlock extractButBlock;
+
+typedef void (^SxtractButBlock)(id SxtractBut);
+@property (nonatomic , copy) SxtractButBlock sxtractButBlock;
 @end
 
 NS_ASSUME_NONNULL_END

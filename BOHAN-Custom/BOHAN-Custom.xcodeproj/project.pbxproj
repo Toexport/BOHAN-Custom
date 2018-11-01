@@ -71,6 +71,7 @@
 		C4C36AE9218838830079D6AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AE8218838830079D6AE /* UIKit.framework */; };
 		C4C36AEB218838A60079D6AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AEA218838A60079D6AE /* Foundation.framework */; };
 		C4C36AED218838BC0079D6AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AEC218838BC0079D6AE /* CoreGraphics.framework */; };
+		C4C40A162189E82400233497 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C40A142189E82400233497 /* Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,6 +205,8 @@
 		C4C36AE8218838830079D6AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C4C36AEA218838A60079D6AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C4C36AEC218838BC0079D6AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C4C40A142189E82400233497 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		C4C40A152189E82400233497 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOHAN-Custom.release.xcconfig"; path = "Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -325,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				C4604C362185451300CD41A5 /* LogRegister */,
+				C4C36AE021872B320079D6AE /* UserModel */,
 				C4604C83218569CE00CD41A5 /* Information */,
 				C4604C962185C4C900CD41A5 /* BindingDevice */,
 				C4C36AB82187113B0079D6AE /* Countdown */,
@@ -408,7 +412,6 @@
 				C4604C7E21855D4D00CD41A5 /* RegisterViewController.h */,
 				C4604C7F21855D4D00CD41A5 /* RegisterViewController.m */,
 				C4604C8021855D4D00CD41A5 /* RegisterViewController.xib */,
-				C4C36AE021872B320079D6AE /* UserModel */,
 			);
 			path = RegisterMani;
 			sourceTree = "<group>";
@@ -435,6 +438,8 @@
 		C4604C6E218556CD00CD41A5 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				C4C40A152189E82400233497 /* Utils.h */,
+				C4C40A142189E82400233497 /* Utils.m */,
 				C4604C6F218556E800CD41A5 /* UserInfoManager.h */,
 				C4604C70218556E800CD41A5 /* UserInfoManager.m */,
 			);
@@ -890,6 +895,7 @@
 				C4AA87E1218434BB0013307D /* BindingController.m in Sources */,
 				C4AA87CC218416320013307D /* UIColor+Extension.m in Sources */,
 				C4AA868D2183F98B0013307D /* ManagementCell.m in Sources */,
+				C4C40A162189E82400233497 /* Utils.m in Sources */,
 				C4C36ADF218716D80079D6AE /* UIView+Extension.m in Sources */,
 				C4C36ADE218716D80079D6AE /* NSDate+Extension.m in Sources */,
 				C4604C8E21856A3700CD41A5 /* InformationViewCell.m in Sources */,

@@ -12,6 +12,7 @@
 #import "RegisterViewController.h"
 #import "InformationController.h"
 #import "UserModel.h"
+#import "RLMRealm.h"
 #import "FileHeader.pch"
 @interface LoginViewController ()<UITextFieldDelegate> {
     __weak IBOutlet EdgetTextField *accountTF;
@@ -88,16 +89,29 @@
 
 - (IBAction)loginAction {
     if ([self cheakError]) {
-        NSDictionary *dict = [CHKeychain load:accountTF.text];
-        if ([dict[KEY_USERNAME] isEqualToString:accountTF.text] &&
-            [dict[KEY_PASSWORD] isEqualToString:passwordTF.text]) {
+        //        NSDictionary *dict = [CHKeychain load:accountTF.text];
+        // 获取
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        //    删除所有数据 [realm beginWriteTransaction]; [realm deleteAllObjects];[realm commitWriteTransaction];
+        RLMResults *results = [UserModel allObjectsInRealm:realm];
+        NSArray * arr = [NSArray arrayWithObject:results];
+        for (NSDictionary * dict in arr) {
+            
+            for (UserModel * model in dict) {
+                
+                if ([accountTF.text isEqualToString:model[@"UserName"]] &&
+                    [[self md5:passwordTF.text] isEqualToString:model[@"PassWord"]]) {
+                    
 //            记录上次的登录账号,下载可自动登录,退出登录需要删除此信息
-            [[NSUserDefaults standardUserDefaults] setObject:accountTF.text forKey:LOGOUTNOTIFICATION];
-            [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[InformationController new]];
-            [SVProgressHUD showSuccessWithStatus:@"登陆成功"];
-        } else {
-            [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+                    [[NSUserDefaults standardUserDefaults] setObject:accountTF.text forKey:LOGOUTNOTIFICATION];
+                    [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[InformationController new]];
+                    [SVProgressHUD showSuccessWithStatus:@"登陆成功"];
+                } else {
+                    [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+                }
+            }
         }
+        
     }
 }
 
@@ -136,6 +150,20 @@
 
 - (void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
     [self.view endEditing:YES];
+}
+
+//
+//  MD5加密方法
+- (NSString *)md5:(NSString *)input {
+    const char * cStr = [input UTF8String];
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    //    CC_MD5(cStr, strlen(cStr),digest); // This is the md5 call
+    CC_MD5(cStr, (CC_LONG)strlen(cStr),digest); // This is the md5 call
+    NSMutableString * output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH *2];
+    for (int i = 0; i<CC_MD5_DIGEST_LENGTH; i ++) {
+        [output appendFormat:@"%02x",digest[i]];
+    }
+    return output;
 }
 
 @end

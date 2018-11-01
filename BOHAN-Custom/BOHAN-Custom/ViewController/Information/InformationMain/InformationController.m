@@ -12,12 +12,16 @@
 #import "BindingDeviceController.h"
 #import "LoginViewController.h"
 #import "CountDownViewController.h"
-@interface InformationController ()<UITableViewDelegate, UITableViewDataSource>
+@interface InformationController ()<UITableViewDelegate, UITableViewDataSource> {
+    NSString * StrId;
+}
 
 @end
 
 @implementation InformationController
 @synthesize socket;
+NSString * string = @"+RECV:0,E7";
+NSString * stringg = @"00130001";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,13 +57,15 @@
     socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     //socket.delegate = self;
     NSError *err = nil;
-    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
     if(![socket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
         [SVProgressHUD showInfoWithStatus:(@"连接失败")];
     }else {
         NSLog(@"ok");
         NSLog(@"%@:%@",KEY_PORT,KEY_IP);
     }
+    
+
 }
 
 // 发送数据
@@ -71,7 +77,10 @@
 // 接收数据
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString * String = [newMessage substringWithRange:NSMakeRange(15, 12)];
     NSLog(@"%@%@",sock.connectedHost,newMessage);
+    NSLog(@"%@",String);
+    StrId = String;
     [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
     [socket readDataWithTimeout:-1 tag:0];
 }
@@ -119,6 +128,38 @@
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
     };
+    
+
+//    + (NSString *)getHexByDecimal:(NSInteger)decimal;
+//
+//    + (NSNumber *)numberHexString:(NSString *)aHexString;
+//
+//    + (NSString *)getBinaryByHex:(NSString *)hex;
+//
+//
+//    + (NSString *)toBinarySystemWithDecimalSystem:(NSInteger)decimal;
+//
+//    + (NSString *)getHexByBinary:(NSString *)binary;
+//
+//    + (NSString *)hexStringFromString:(NSString *)string;
+    
+    
+    cell.extractButBlock = ^(id  _Nonnull ExtractBut) {
+        NSString * Str = [NSString stringWithFormat:@"%@%@",StrId,stringg];
+        NSLog(@"%@",Str);
+       NSString * stringg = [Utils getBinaryByHex:Str]; // 进制转换
+        
+        NSString * Strr = [NSString stringWithFormat:@"%@%@%@",string,StrId,stringg];
+        
+        [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+        [socket readDataWithTimeout:-1 tag:0];
+        NSLog(@"%@",Strr);
+        
+        NSLog(@"开");
+    };
+    cell.sxtractButBlock = ^(id  _Nonnull SxtractBut) {
+        NSLog(@"关");
+    };
     return cell;
 }
 
@@ -139,7 +180,6 @@
             NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
             [UserLoginState removeObjectForKey:LOGOUTNOTIFICATION];
             [UserLoginState synchronize];
-            
         }];
         [alert addAction:defaultAction];
         [alert addAction:cancelAction];

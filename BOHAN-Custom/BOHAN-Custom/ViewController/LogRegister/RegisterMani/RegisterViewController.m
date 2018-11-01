@@ -9,7 +9,7 @@
 #import "RegisterViewController.h"
 #import "FileHeader.pch"
 #import "RLMRealm.h"
-#import "UserModel/UserModel.h"
+#import "UserModel.h"
 @interface RegisterViewController ()
 
 @end
@@ -24,30 +24,40 @@
 }
 
 - (IBAction)DetermineBtn:(UIButton *)sender {
-    //删除
-    [CHKeychain delete:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
     if ([self cheakError]) {
-    // 获取
-    RLMRealm *realm = [RLMRealm defaultRealm];
-//    删除所有数据 [realm beginWriteTransaction]; [realm deleteAllObjects];[realm commitWriteTransaction];
-    RLMResults *results = [UserModel allObjectsInRealm:realm];
-    NSArray * arr = [NSArray arrayWithObject:results];
-    for (UserModel * model in arr) {
-        if ([self.UserNameTextField.text isEqualToString:model.UserName]) {
-                [SVProgressHUD showErrorWithStatus:(Localize(@"账号已注册"))];
-        }else {
-                UserModel *model = [[UserModel alloc]init];
-                model.UserName = self.UserNameTextField.text;
-                model.PassWord = [self md5:self.PassWordTextField.text];
-    //        存储 单个数据
-                [realm beginWriteTransaction];
-                [realm addObject:model];
-                [realm commitWriteTransaction];
-                [SVProgressHUD showSuccessWithStatus:(Localize(@"注册成功"))];
-                [self.navigationController popViewControllerAnimated:YES];
+        // 获取
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        //    删除所有数据[realm beginWriteTransaction]; [realm deleteAllObjects];[realm commitWriteTransaction];
+        RLMResults *results = [UserModel allObjectsInRealm:realm];
+        
+        NSArray * arr = [NSArray arrayWithObject:results];
+        
+        for (NSDictionary * dict in arr) {
+            
+            for (UserModel * model in dict) {
+            
+                if ([self.UserNameTextField.text isEqualToString:model[@"UserName"]]) {
+
+                    NSLog(@"111");
+                    [SVProgressHUD showErrorWithStatus:(Localize(@"账号已注册"))];
+
+                }else
+                    if ([self.UserNameTextField.text isEqualToString:model[@"nil"]]) {
+                        NSLog(@"222");
+                        RLMRealm *realm = [RLMRealm defaultRealm];
+                        UserModel *model = [[UserModel alloc]init];
+                        model.UserName = self.UserNameTextField.text;
+                        model.PassWord = [self md5:self.PassWordTextField.text];
+                        //        存储单个数据
+                        [realm beginWriteTransaction];
+                        [realm addObject:model];
+                        [realm commitWriteTransaction];
+                        [SVProgressHUD showSuccessWithStatus:(Localize(@"注册成功"))];
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
             }
         }
-     }
+    }
 }
 
 - (BOOL)cheakError {
@@ -62,13 +72,12 @@
     return YES;
 }
 
-
 - (void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
     [self.view endEditing:YES];
 }
 
 //  MD5加密方法
--(NSString *)md5:(NSString *)input {
+- (NSString *)md5:(NSString *)input {
     const char * cStr = [input UTF8String];
     unsigned char digest[CC_MD5_DIGEST_LENGTH];
     //    CC_MD5(cStr, strlen(cStr),digest); // This is the md5 call

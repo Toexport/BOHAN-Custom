@@ -17,6 +17,17 @@
 
 - (IBAction)Switch1:(UISwitch *)sender {
 //     self.Switch1.backgroundColor = [UIColor colorWithHexString:@"e4e4e4"];
+    if (sender.isOn) {
+        self.Switch1.backgroundColor = [UIColor colorWithHexString:@"54d76a"];
+//        self.ExtractButBlock(self.Switch1);
+        self.extractButBlock(self.Switch1);
+        NSLog(@"开");
+    }else {
+        self.Switch1.backgroundColor = [UIColor redColor];
+        self.sxtractButBlock(self.Switch1);
+        NSLog(@"关");
+    }
+    
     
 }
 
