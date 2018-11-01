@@ -24,41 +24,57 @@
 }
 
 - (IBAction)DetermineBtn:(UIButton *)sender {
-    if ([self cheakError]) {
-        // 获取
-        RLMRealm *realm = [RLMRealm defaultRealm];
-        //    删除所有数据[realm beginWriteTransaction]; [realm deleteAllObjects];[realm commitWriteTransaction];
-        RLMResults *results = [UserModel allObjectsInRealm:realm];
+    //删除
+    //    [CHKeychain delete:KEY_USERNAME_PASSWORD];
+    if ([CHKeychain load:self.UserNameTextField.text]) {
+        [SVProgressHUD showInfoWithStatus:@"用户已注册"];
+    } else {
+        NSMutableDictionary *usernamepasswordKVPairs = [NSMutableDictionary dictionary];
+        [usernamepasswordKVPairs setObject:self.UserNameTextField.text forKey:KEY_USERNAME];
         
-        NSArray * arr = [NSArray arrayWithObject:results];
-        
-        for (NSDictionary * dict in arr) {
-            
-            for (UserModel * model in dict) {
-            
-                if ([self.UserNameTextField.text isEqualToString:model[@"UserName"]]) {
-
-                    NSLog(@"111");
-                    [SVProgressHUD showErrorWithStatus:(Localize(@"账号已注册"))];
-
-                }else
-                    if ([self.UserNameTextField.text isEqualToString:model[@"nil"]]) {
-                        NSLog(@"222");
-                        RLMRealm *realm = [RLMRealm defaultRealm];
-                        UserModel *model = [[UserModel alloc]init];
-                        model.UserName = self.UserNameTextField.text;
-                        model.PassWord = [self md5:self.PassWordTextField.text];
-                        //        存储单个数据
-                        [realm beginWriteTransaction];
-                        [realm addObject:model];
-                        [realm commitWriteTransaction];
-                        [SVProgressHUD showSuccessWithStatus:(Localize(@"注册成功"))];
-                        [self.navigationController popViewControllerAnimated:YES];
-                    }
-            }
-        }
+        [usernamepasswordKVPairs setObject:self.PassWordTextField.text forKey:KEY_PASSWORD];
+        [CHKeychain save:self.UserNameTextField.text data:usernamepasswordKVPairs];
+        [SVProgressHUD showSuccessWithStatus:(Localize(@"注册成功"))];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
+//- (IBAction)DetermineBtn:(UIButton *)sender {
+//    if ([self cheakError]) {
+//        // 获取
+//        RLMRealm *realm = [RLMRealm defaultRealm];
+//        //    删除所有数据[realm beginWriteTransaction]; [realm deleteAllObjects];[realm commitWriteTransaction];
+//        RLMResults *results = [UserModel allObjectsInRealm:realm];
+//
+//        NSArray * arr = [NSArray arrayWithObject:results];
+//
+//        for (NSDictionary * dict in arr) {
+//
+//            for (UserModel * model in dict) {
+//
+//                if ([self.UserNameTextField.text isEqualToString:model[@"UserName"]]) {
+//
+//                    NSLog(@"111");
+//                    [SVProgressHUD showErrorWithStatus:(Localize(@"账号已注册"))];
+//
+//                }else
+//                    if ([self.UserNameTextField.text isEqualToString:model[@"nil"]]) {
+//                        NSLog(@"222");
+//                        RLMRealm *realm = [RLMRealm defaultRealm];
+//                        UserModel *model = [[UserModel alloc]init];
+//                        model.UserName = self.UserNameTextField.text;
+//                        model.PassWord = [self md5:self.PassWordTextField.text];
+//                        //        存储单个数据
+//                        [realm beginWriteTransaction];
+//                        [realm addObject:model];
+//                        [realm commitWriteTransaction];
+//                        [SVProgressHUD showSuccessWithStatus:(Localize(@"注册成功"))];
+//                        [self.navigationController popViewControllerAnimated:YES];
+//                    }
+//            }
+//        }
+//    }
+//}
 
 - (BOOL)cheakError {
     if (!self.UserNameTextField.text.length) {

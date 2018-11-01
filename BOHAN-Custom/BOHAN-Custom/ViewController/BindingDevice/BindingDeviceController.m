@@ -79,6 +79,7 @@
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
     NSLog(@"%@",error);
+    [SVProgressHUD showInfoWithStatus:(@"连接失败")];
 }
 
 // 保存

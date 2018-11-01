@@ -31,11 +31,13 @@ NSString * queryStr = @"00020000";
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
     [self PostData];
+    [self QueryData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableview reloadData];
+    [self PostData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -53,7 +55,7 @@ NSString * queryStr = @"00020000";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
-// x查询
+// 查询
 - (void)QueryData {
     NSString * Str = [NSString stringWithFormat:@"%@%@",self->StrId,queryStr];
     NSLog(@"%@",Str);
@@ -105,7 +107,9 @@ NSString * queryStr = @"00020000";
     cell.extractButBlock = ^(id  _Nonnull ExtractBut) {
         NSString * Str = [NSString stringWithFormat:@"%@%@",self->StrId,instruction];
         NSLog(@"%@",Str);
-//       NSString * stringg = [Utils getBinaryByHex:Str]; // 进制转换
+//       NSString * stringg = [Utils hexStringFromString:Str]; // 进制转换
+        NSString * string = [Utils hexStringFromString:Str];
+        
         NSString * String = @"00C20D";
         NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self->StrId,instruction,String];
         [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
@@ -162,8 +166,6 @@ NSString * queryStr = @"00020000";
     NSLog(@"%@",error);
     [SVProgressHUD showInfoWithStatus:(@"连接失败")];
 }
-
-
 
 
 // 注销登录

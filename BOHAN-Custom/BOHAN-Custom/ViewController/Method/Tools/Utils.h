@@ -168,6 +168,13 @@ CGSize getTextSizeWithAttributes(UIFont *font,NSString *text, CGFloat maxWidth, 
 + (UIImage *)fixOrientation:(UIImage *)aImage;
 
 /**
+ 转换十六进制
+ @return 十六进制数
+ */
++ (NSString *)hexStringFromString:(NSString *)string;
+
+
+/**
  十进制转换十六进制
  
  @param decimal 十进制数
@@ -192,7 +199,7 @@ CGSize getTextSizeWithAttributes(UIFont *font,NSString *text, CGFloat maxWidth, 
 
 + (NSString *)getHexByBinary:(NSString *)binary;
 
-+ (NSString *)hexStringFromString:(NSString *)string;
+//+ (NSString *)hexStringFromString:(NSString *)string;
 
 //时间间隔时分秒
 + (NSString *)gapDateFrom:(NSDate *)fromDate toDate:(NSDate *)toDate;
