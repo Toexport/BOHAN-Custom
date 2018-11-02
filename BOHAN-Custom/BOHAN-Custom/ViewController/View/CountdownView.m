@@ -107,34 +107,34 @@
     [formatters setDateFormat:@"yyyy-MM-dd HH:mm"];
     WSDatePickerView *datepicker = [[WSDatePickerView alloc] initWithDateStyle:DateStyleShowYearMonthDayHourMinute scrollToDate:[formatters dateFromString:string] CompleteBlock:^(NSDate *selectDate) {
         [self yyyyMMddHHmm];
-        [formatters setDateFormat:@"yyyy"];// 解决问题
-        [YearTextField setText:[formatters stringFromDate:selectDate]];
-        self.string1 = YearTextField.text;
-        YearTextField.text = [NSString stringWithString:self.string1];
+        [self->formatters setDateFormat:@"yyyy"];// 解决问题
+        [self->YearTextField setText:[self->formatters stringFromDate:selectDate]];
+        self.string1 = self->YearTextField.text;
+        self->YearTextField.text = [NSString stringWithString:self.string1];
         
-        [formatters setDateFormat:@"MM"];
-        [MonthTextField setText:[formatters stringFromDate:selectDate]];
-        self.string2 = MonthTextField.text;
-        MonthTextField.text = [NSString stringWithString:self.string2];
+        [self->formatters setDateFormat:@"MM"];
+        [self->MonthTextField setText:[self->formatters stringFromDate:selectDate]];
+        self.string2 = self->MonthTextField.text;
+        self->MonthTextField.text = [NSString stringWithString:self.string2];
         
-        [formatters setDateFormat:@"dd"];
-        [DayTextField setText:[formatters stringFromDate:selectDate]];
-        self.string3 = DayTextField.text;
-        DayTextField.text = [NSString stringWithString:self.string3];
+        [self->formatters setDateFormat:@"dd"];
+        [self->DayTextField setText:[self->formatters stringFromDate:selectDate]];
+        self.string3 = self->DayTextField.text;
+        self->DayTextField.text = [NSString stringWithString:self.string3];
         
-        [formatters setDateFormat:@"HH"];
-        [HoursTextField setText:[formatters stringFromDate:selectDate]];
-        self.string4 = HoursTextField.text;
-        HoursTextField.text = [NSString stringWithString:self.string4];
+        [self->formatters setDateFormat:@"HH"];
+        [self->HoursTextField setText:[self->formatters stringFromDate:selectDate]];
+        self.string4 = self->HoursTextField.text;
+        self->HoursTextField.text = [NSString stringWithString:self.string4];
         
-        [formatters setDateFormat:@"mm"];
-        [MinutesTextField setText:[formatters stringFromDate:selectDate]];
-        self.string5 = MinutesTextField.text;
-        MinutesTextField.text = [NSString stringWithString:self.string5];
-        NSString * string1 = [NSString stringWithFormat:@"%@%@%@%@%@",YearTextField.text,MonthTextField.text,DayTextField.text,HoursTextField.text,MinutesTextField.text];
-        str2 = [NSString stringWithFormat:@"%@",string1];
-        NSLog(@"%@",str2);
-        [self pleaseInsertStarTimeo:str1 andInsertEndTime:str2];
+        [self->formatters setDateFormat:@"mm"];
+        [self->MinutesTextField setText:[self->formatters stringFromDate:selectDate]];
+        self.string5 = self->MinutesTextField.text;
+        self->MinutesTextField.text = [NSString stringWithString:self.string5];
+        NSString * string1 = [NSString stringWithFormat:@"%@%@%@%@%@",self->YearTextField.text,self->MonthTextField.text,DayTextField.text,HoursTextField.text,MinutesTextField.text];
+        self->str2 = [NSString stringWithFormat:@"%@",string1];
+        NSLog(@"%@",self->str2);
+        [self pleaseInsertStarTimeo:self->str1 andInsertEndTime:self->str2];
         
     }];
     datepicker.hideBackgroundYearLabel = YES;

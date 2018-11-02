@@ -372,9 +372,9 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
                 [tableView reloadData];
             }
             
-            [formatter setDateFormat:@"HH:mm:ss"];
-            NSString *string = [formatter stringFromDate:selectDate];
-            [time setText:string];
+            [self->formatter setDateFormat:@"HH:mm:ss"];
+            NSString *string = [self->formatter stringFromDate:selectDate];
+            [self->time setText:string];
 
         }];
         datepicker.hideBackgroundYearLabel = YES;

@@ -12,24 +12,32 @@
 #import "BindingDeviceController.h"
 #import "LoginViewController.h"
 #import "CountDownViewController.h"
-@interface InformationController ()<UITableViewDelegate, UITableViewDataSource> {
-    NSString * StrId;
-}
-
+#import "CommandModel.h"
+@interface InformationController ()<UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) NSString * Strid;
+@property (nonatomic, strong) NSString * Switch1;
 @end
 
 @implementation InformationController
 @synthesize socket;
 NSString * HeadStr = @"+RECV:0,E7";
-NSString * instruction = @"00130001";
+NSString * instruction = @"0013000100";
+NSString * instructionS = @"0013000101";
 NSString * queryStr = @"00020000";
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.tableview.hidden = YES;
     self.title = Localize(@"Device List");
     [self rightBarTitle:Localize(@"登出") action:@selector(LogOut)];
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
+    [self PostData];
+//    [self QueryData];
+}
+
+- (IBAction)GetData:(UIButton *)sender {
     [self PostData];
     [self QueryData];
 }
@@ -37,7 +45,7 @@ NSString * queryStr = @"00020000";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableview reloadData];
-    [self PostData];
+//    [self PostData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -55,15 +63,19 @@ NSString * queryStr = @"00020000";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
+
 // 查询
 - (void)QueryData {
-    NSString * Str = [NSString stringWithFormat:@"%@%@",self->StrId,queryStr];
-    NSLog(@"%@",Str);
-    //       NSString * stringg = [Utils getBinaryByHex:Str]; // 进制转换
-    NSString * String = @"00B00D";
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self->StrId,queryStr,String];
-    [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-    [self->socket readDataWithTimeout:-1 tag:0];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{ // 单例方法
+        NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,queryStr];
+        NSString * hexString = [Utils hexStringFromString:Str];
+        NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
+        NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
+        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,queryStr,string];
+        [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+        [self->socket readDataWithTimeout:-1 tag:0];
+    });
 }
 
 // 新增设备
@@ -105,25 +117,21 @@ NSString * queryStr = @"00020000";
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
     };
     cell.extractButBlock = ^(id  _Nonnull ExtractBut) {
-        NSString * Str = [NSString stringWithFormat:@"%@%@",self->StrId,instruction];
-        NSLog(@"%@",Str);
-//       NSString * stringg = [Utils hexStringFromString:Str]; // 进制转换
+        NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,instruction];
         NSString * string = [Utils hexStringFromString:Str];
-        
-        NSString * String = @"00C20D";
-        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self->StrId,instruction,String];
+        NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+        NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,instruction,stRR];
         [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
         [self->socket readDataWithTimeout:-1 tag:0];
         NSLog(@"%@",Strr);
     };
-    
     cell.sxtractButBlock = ^(id  _Nonnull SxtractBut) {
-        NSString * Str = [NSString stringWithFormat:@"%@%@",self->StrId,instruction];
-        NSLog(@"%@",Str);
-//       NSString * stringg = [Utils getBinaryByHex:Str]; // 进制转换
-        NSString * String = @"01C30D";
-        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self->StrId,instruction,String];
-        
+        NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,instructionS];
+        NSString * string = [Utils hexStringFromString:Str];
+        NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+        NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,instructionS,stRR];
         [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
         [self->socket readDataWithTimeout:-1 tag:0];
         NSLog(@"%@",Strr);
@@ -134,7 +142,6 @@ NSString * queryStr = @"00020000";
 
 - (void)PostData {
     socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    //socket.delegate = self;
     NSError *err = nil;
     NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
     if(![socket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
@@ -146,37 +153,51 @@ NSString * queryStr = @"00020000";
 }
 
 // 发送数据
--(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
     NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
     [socket readDataWithTimeout:-1 tag:0];
 }
 
 // 接收数据
--(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSString * String = [newMessage substringWithRange:NSMakeRange(15, 12)];
     NSLog(@"%@%@",sock.connectedHost,newMessage);
     NSLog(@"%@",String);
-    StrId = String;
+    self.Strid = String;
+//     开关状态
+    NSString * Switch1 = [newMessage substringWithRange:NSMakeRange(37, 2)];
+    NSLog(@"%@",Switch1);
+    self.Switch1 = Switch1;
     [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
+//    InformationViewCell * cell = [[InformationViewCell alloc]init];
+//    if ([self.Switch1 containsString:@"00"]) {
+//        cell.Switch1.on = YES;
+//        [self.tableview reloadData];
+//    }else
+//        if ([self.Switch1 containsString:@"01"]) {
+//        cell.Switch1.on = NO;
+//        [self.tableview reloadData];
+//    }
+    
+    [self QueryData];
     [socket readDataWithTimeout:-1 tag:0];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
     NSLog(@"%@",error);
     [SVProgressHUD showInfoWithStatus:(@"连接失败")];
+    self.tableview.hidden = YES;
 }
-
 
 // 注销登录
 - (void)LogOut {
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:Localize(@"提示") message:Localize(@"确定要注销登录吗？") preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:Localize(@"取消") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             NSLog(@"action = %@", action);
-            
         }];
         UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            //            清除所有的数据
+//            清除所有的数据
             [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[LoginViewController new]];
             NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
             [UserLoginState removeObjectForKey:LOGOUTNOTIFICATION];
@@ -186,7 +207,5 @@ NSString * queryStr = @"00020000";
         [alert addAction:cancelAction];
         [self presentViewController:alert animated:YES completion:nil];
 }
-
-
 
 @end

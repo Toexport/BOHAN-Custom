@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 @property (strong) GCDAsyncSocket * socket;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UIView *titleView;
 
 @end
 

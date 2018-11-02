@@ -12,11 +12,15 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.Switch1.backgroundColor = [UIColor redColor];
+    self.Switch2.backgroundColor = [UIColor redColor];
+    self.Switch3.backgroundColor = [UIColor redColor];
+    self.Switch4.backgroundColor = [UIColor redColor];
 }
 
 - (IBAction)Switch1:(UISwitch *)sender {
 //     self.Switch1.backgroundColor = [UIColor colorWithHexString:@"e4e4e4"];
+    
     if (sender.isOn) {
         self.Switch1.backgroundColor = [UIColor colorWithHexString:@"54d76a"];
 //        self.ExtractButBlock(self.Switch1);

@@ -89,7 +89,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ies-A8-r3O">
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ies-A8-r3O">
                         <rect key="frame" x="214" y="57" width="51" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Kxs-Cg-Wxs"/>
@@ -124,7 +124,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="cc7-Wt-gGt"/>
                         </constraints>
                     </view>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1eg-4G-30M">
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1eg-4G-30M">
                         <rect key="frame" x="214" y="107" width="51" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="2dG-5f-2TS"/>
@@ -159,7 +159,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="1l5-WM-eiW"/>
                         </constraints>
                     </view>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QD-tLT">
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QD-tLT">
                         <rect key="frame" x="214" y="157" width="51" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="JRv-JB-oN7"/>
@@ -194,7 +194,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="S5L-YH-OLL"/>
                         </constraints>
                     </view>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Buh-iv-zcR">
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Buh-iv-zcR">
                         <rect key="frame" x="214" y="207" width="51" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="41f-gt-QAB"/>

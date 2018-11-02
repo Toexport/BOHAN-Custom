@@ -24,6 +24,7 @@
 		4DAF1A3B21820AA000B91F80 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */; };
 		4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */; };
 		4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */; };
+		C442EE38218B53900071ADE3 /* CommandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C442EE37218B53900071ADE3 /* CommandModel.m */; };
 		C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C402185497500CD41A5 /* EdgetTextField.m */; };
 		C4604C692185546F00CD41A5 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C682185546F00CD41A5 /* LoginViewController.xib */; };
 		C4604C6C2185548000CD41A5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C6B2185548000CD41A5 /* LoginViewController.m */; };
@@ -124,6 +125,8 @@
 		4DAF1A3E21820DE100B91F80 /* BCNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCNavigationController.h; sourceTree = "<group>"; };
 		4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCNavigationController.m; sourceTree = "<group>"; };
 		7D28760051FE06F93E146C73 /* libPods-BOHAN-Custom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BOHAN-Custom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C442EE36218B53900071ADE3 /* CommandModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommandModel.h; sourceTree = "<group>"; };
+		C442EE37218B53900071ADE3 /* CommandModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommandModel.m; sourceTree = "<group>"; };
 		C4604C402185497500CD41A5 /* EdgetTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgetTextField.m; sourceTree = "<group>"; };
 		C4604C412185497500CD41A5 /* EdgetTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgetTextField.h; sourceTree = "<group>"; };
 		C4604C682185546F00CD41A5 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -383,6 +386,8 @@
 				4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */,
 				4DAF1A3621820AA000B91F80 /* GCDAsyncSocket.h */,
 				4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */,
+				C442EE36218B53900071ADE3 /* CommandModel.h */,
+				C442EE37218B53900071ADE3 /* CommandModel.m */,
 			);
 			path = GCDAsync;
 			sourceTree = "<group>";
@@ -910,6 +915,7 @@
 				4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */,
 				4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */,
 				C4AA87E72184517B0013307D /* ListTableViewCell.m in Sources */,
+				C442EE38218B53900071ADE3 /* CommandModel.m in Sources */,
 				C4AA87F8218465810013307D /* SingleListController.m in Sources */,
 				C4C36ACE218714480079D6AE /* NSTimer+Action.m in Sources */,
 				C4C36AE321872B470079D6AE /* UserModel.m in Sources */,
