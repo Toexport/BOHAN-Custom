@@ -33,8 +33,8 @@ NSString * queryStr = @"00020000";
     [self rightBarTitle:Localize(@"登出") action:@selector(LogOut)];
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
+
     [self PostData];
-//    [self QueryData];
 }
 
 - (IBAction)GetData:(UIButton *)sender {
@@ -110,6 +110,12 @@ NSString * queryStr = @"00020000";
     cell.NameLabel2.text = [usernamepasswordKVPairs objectForKey:KEY_Name2];
     cell.NameLabel3.text = [usernamepasswordKVPairs objectForKey:KEY_Name3];
     cell.NameLabel4.text = [usernamepasswordKVPairs objectForKey:KEY_Name4];
+    if ([self.Switch1 containsString:@"00"]) {
+        cell.Switch1.on = YES;
+    }else
+        if ([self.Switch1 containsString:@"01"]) {
+            cell.Switch1.on = NO;
+        }
     cell.countdownBtnBlock = ^(id  _Nonnull CountdownBtn) {
         CountDownViewController * CountDown = [[CountDownViewController alloc]init];
         [self.navigationController pushViewController:CountDown animated:YES];
@@ -170,15 +176,6 @@ NSString * queryStr = @"00020000";
     NSLog(@"%@",Switch1);
     self.Switch1 = Switch1;
     [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
-//    InformationViewCell * cell = [[InformationViewCell alloc]init];
-//    if ([self.Switch1 containsString:@"00"]) {
-//        cell.Switch1.on = YES;
-//        [self.tableview reloadData];
-//    }else
-//        if ([self.Switch1 containsString:@"01"]) {
-//        cell.Switch1.on = NO;
-//        [self.tableview reloadData];
-//    }
     
     [self QueryData];
     [socket readDataWithTimeout:-1 tag:0];

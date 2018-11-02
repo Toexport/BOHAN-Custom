@@ -54,22 +54,6 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 }
 
 
-//- (void)updateViewConstraints {
-//    [super updateViewConstraints];
-//    if (iPhone4) {
-//        _ViewLayoutHeight.constant += 90;
-//    }
-//    if (iPhone5) {
-//        _ViewLayoutHeight.constant += 90;
-//    }
-//    if (iPhone6) {
-//        _ViewLayoutHeight.constant += 45;
-//    }
-//    if (iPhone6splus) {
-//        _PatchViewLayoutConstraint.constant = 30;
-//    }
-//}
-
 - (void)loadData {
 //    WebSocket *socket = [WebSocket socketManager];
 //    CommandModel *model = [[CommandModel alloc] init];
@@ -262,7 +246,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 - (void)startAction {
     NSString *content = [time.text stringByReplacingOccurrencesOfString:@":" withString:@""];
     if ([content isEqualToString:@"000000"]) {
-        [SVProgressHUD showInfoWithStatus:Localize(@"请输入账号")];
+//        [SVProgressHUD showInfoWithStatus:Localize(@"请输入账号")];
         return;
     }
 //    WebSocket *socket = [WebSocket socketManager];
