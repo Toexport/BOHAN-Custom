@@ -13,6 +13,8 @@
 #import "LoginViewController.h"
 #import "CountDownViewController.h"
 #import "CommandModel.h"
+#import "WebSocket.h"
+#import <Foundation/Foundation.h>
 @interface InformationController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSString * Strid;
 @property (nonatomic, strong) NSString * Switch1;
@@ -45,7 +47,6 @@ NSString * queryStr = @"00020000";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableview reloadData];
-//    [self PostData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -110,14 +111,10 @@ NSString * queryStr = @"00020000";
     cell.NameLabel2.text = [usernamepasswordKVPairs objectForKey:KEY_Name2];
     cell.NameLabel3.text = [usernamepasswordKVPairs objectForKey:KEY_Name3];
     cell.NameLabel4.text = [usernamepasswordKVPairs objectForKey:KEY_Name4];
-    if ([self.Switch1 containsString:@"00"]) {
-        cell.Switch1.on = YES;
-    }else
-        if ([self.Switch1 containsString:@"01"]) {
-            cell.Switch1.on = NO;
-        }
+
     cell.countdownBtnBlock = ^(id  _Nonnull CountdownBtn) {
         CountDownViewController * CountDown = [[CountDownViewController alloc]init];
+        CountDown.deviceNo = self.Strid;
         [self.navigationController pushViewController:CountDown animated:YES];
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
@@ -144,7 +141,6 @@ NSString * queryStr = @"00020000";
     };
     return cell;
 }
-
 
 - (void)PostData {
     socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
@@ -176,6 +172,14 @@ NSString * queryStr = @"00020000";
     NSLog(@"%@",Switch1);
     self.Switch1 = Switch1;
     [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
+    InformationViewCell * cell = [[InformationViewCell alloc]init];
+    if ([self.Switch1 containsString:@"00"]) {
+        cell.Switch1.on = YES;
+    }else
+        if ([self.Switch1 containsString:@"01"]) {
+            cell.Switch1.on = NO;
+        }
+    ZPLog(@"%@",self.Switch1);
     
     [self QueryData];
     [socket readDataWithTimeout:-1 tag:0];
@@ -189,14 +193,14 @@ NSString * queryStr = @"00020000";
 
 // 注销登录
 - (void)LogOut {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:Localize(@"提示") message:Localize(@"确定要注销登录吗？") preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:Localize(@"取消") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:Localize(@"提示") message:Localize(@"确定要注销登录吗？") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:Localize(@"取消") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             NSLog(@"action = %@", action);
         }];
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-//            清除所有的数据
-            [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[LoginViewController new]];
-            NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//        清除所有的数据
+    [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[LoginViewController new]];
+    NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
             [UserLoginState removeObjectForKey:LOGOUTNOTIFICATION];
             [UserLoginState synchronize];
         }];
@@ -204,5 +208,6 @@ NSString * queryStr = @"00020000";
         [alert addAction:cancelAction];
         [self presentViewController:alert animated:YES completion:nil];
 }
+
 
 @end

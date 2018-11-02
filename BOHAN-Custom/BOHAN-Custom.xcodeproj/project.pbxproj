@@ -24,7 +24,15 @@
 		4DAF1A3B21820AA000B91F80 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */; };
 		4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */; };
 		4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */; };
-		C442EE38218B53900071ADE3 /* CommandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C442EE37218B53900071ADE3 /* CommandModel.m */; };
+		C442325F218C1DD00071ADE3 /* SocketRocketUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C4423252218C1DD00071ADE3 /* SocketRocketUtility.m */; };
+		C4423260218C1DD00071ADE3 /* CommandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4423253218C1DD00071ADE3 /* CommandModel.m */; };
+		C4423261218C1DD00071ADE3 /* NetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4423255218C1DD00071ADE3 /* NetworkRequest.m */; };
+		C4423262218C1DD00071ADE3 /* NetworkRequest+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C4423256218C1DD00071ADE3 /* NetworkRequest+Utils.m */; };
+		C4423263218C1DD00071ADE3 /* WebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C442325D218C1DD00071ADE3 /* WebSocket.m */; };
+		C4423264218C1DD00071ADE3 /* WebSocket+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C442325E218C1DD00071ADE3 /* WebSocket+Utils.m */; };
+		C4423268218C1E260071ADE3 /* NSError+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = C4423266218C1E260071ADE3 /* NSError+Message.m */; };
+		C442326B218C3FD80071ADE3 /* SoapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C442326A218C3FD80071ADE3 /* SoapManager.m */; };
+		C442326E218C40E70071ADE3 /* XMLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C442326D218C40E60071ADE3 /* XMLUtil.m */; };
 		C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C402185497500CD41A5 /* EdgetTextField.m */; };
 		C4604C692185546F00CD41A5 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C682185546F00CD41A5 /* LoginViewController.xib */; };
 		C4604C6C2185548000CD41A5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C6B2185548000CD41A5 /* LoginViewController.m */; };
@@ -125,8 +133,24 @@
 		4DAF1A3E21820DE100B91F80 /* BCNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCNavigationController.h; sourceTree = "<group>"; };
 		4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCNavigationController.m; sourceTree = "<group>"; };
 		7D28760051FE06F93E146C73 /* libPods-BOHAN-Custom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BOHAN-Custom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C442EE36218B53900071ADE3 /* CommandModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommandModel.h; sourceTree = "<group>"; };
-		C442EE37218B53900071ADE3 /* CommandModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommandModel.m; sourceTree = "<group>"; };
+		C4423252218C1DD00071ADE3 /* SocketRocketUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketRocketUtility.m; sourceTree = "<group>"; };
+		C4423253218C1DD00071ADE3 /* CommandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandModel.m; sourceTree = "<group>"; };
+		C4423255218C1DD00071ADE3 /* NetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkRequest.m; sourceTree = "<group>"; };
+		C4423256218C1DD00071ADE3 /* NetworkRequest+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetworkRequest+Utils.m"; sourceTree = "<group>"; };
+		C4423257218C1DD00071ADE3 /* NetworkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkRequest.h; sourceTree = "<group>"; };
+		C4423258218C1DD00071ADE3 /* NetworkRequest+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetworkRequest+Utils.h"; sourceTree = "<group>"; };
+		C4423259218C1DD00071ADE3 /* WebSocket+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebSocket+Utils.h"; sourceTree = "<group>"; };
+		C442325A218C1DD00071ADE3 /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
+		C442325B218C1DD00071ADE3 /* CommandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandModel.h; sourceTree = "<group>"; };
+		C442325C218C1DD00071ADE3 /* SocketRocketUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketRocketUtility.h; sourceTree = "<group>"; };
+		C442325D218C1DD00071ADE3 /* WebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebSocket.m; sourceTree = "<group>"; };
+		C442325E218C1DD00071ADE3 /* WebSocket+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebSocket+Utils.m"; sourceTree = "<group>"; };
+		C4423266218C1E260071ADE3 /* NSError+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Message.m"; sourceTree = "<group>"; };
+		C4423267218C1E260071ADE3 /* NSError+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Message.h"; sourceTree = "<group>"; };
+		C4423269218C3FD80071ADE3 /* SoapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoapManager.h; sourceTree = "<group>"; };
+		C442326A218C3FD80071ADE3 /* SoapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoapManager.m; sourceTree = "<group>"; };
+		C442326C218C40E60071ADE3 /* XMLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLUtil.h; sourceTree = "<group>"; };
+		C442326D218C40E60071ADE3 /* XMLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLUtil.m; sourceTree = "<group>"; };
 		C4604C402185497500CD41A5 /* EdgetTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgetTextField.m; sourceTree = "<group>"; };
 		C4604C412185497500CD41A5 /* EdgetTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgetTextField.h; sourceTree = "<group>"; };
 		C4604C682185546F00CD41A5 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -364,6 +388,7 @@
 		4DAF1A3121820AA000B91F80 /* Method */ = {
 			isa = PBXGroup;
 			children = (
+				C4423251218C1DD00071ADE3 /* WebSocket */,
 				C4C36ACF218716D80079D6AE /* WSDaePickerView */,
 				C4C36ACB218714480079D6AE /* NSTimer */,
 				C4C36ABE218712020079D6AE /* STLoopProgressView */,
@@ -386,8 +411,6 @@
 				4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */,
 				4DAF1A3621820AA000B91F80 /* GCDAsyncSocket.h */,
 				4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */,
-				C442EE36218B53900071ADE3 /* CommandModel.h */,
-				C442EE37218B53900071ADE3 /* CommandModel.m */,
 			);
 			path = GCDAsync;
 			sourceTree = "<group>";
@@ -399,6 +422,43 @@
 				D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C4423251218C1DD00071ADE3 /* WebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				C442325C218C1DD00071ADE3 /* SocketRocketUtility.h */,
+				C4423252218C1DD00071ADE3 /* SocketRocketUtility.m */,
+				C442325A218C1DD00071ADE3 /* WebSocket.h */,
+				C442325D218C1DD00071ADE3 /* WebSocket.m */,
+				C4423259218C1DD00071ADE3 /* WebSocket+Utils.h */,
+				C442325E218C1DD00071ADE3 /* WebSocket+Utils.m */,
+				C442325B218C1DD00071ADE3 /* CommandModel.h */,
+				C4423253218C1DD00071ADE3 /* CommandModel.m */,
+				C4423254218C1DD00071ADE3 /* NetworkRequest */,
+				C4423265218C1E260071ADE3 /* NSError */,
+			);
+			path = WebSocket;
+			sourceTree = "<group>";
+		};
+		C4423254218C1DD00071ADE3 /* NetworkRequest */ = {
+			isa = PBXGroup;
+			children = (
+				C4423258218C1DD00071ADE3 /* NetworkRequest+Utils.h */,
+				C4423256218C1DD00071ADE3 /* NetworkRequest+Utils.m */,
+				C4423257218C1DD00071ADE3 /* NetworkRequest.h */,
+				C4423255218C1DD00071ADE3 /* NetworkRequest.m */,
+			);
+			path = NetworkRequest;
+			sourceTree = "<group>";
+		};
+		C4423265218C1E260071ADE3 /* NSError */ = {
+			isa = PBXGroup;
+			children = (
+				C4423267218C1E260071ADE3 /* NSError+Message.h */,
+				C4423266218C1E260071ADE3 /* NSError+Message.m */,
+			);
+			path = NSError;
 			sourceTree = "<group>";
 		};
 		C4604C362185451300CD41A5 /* LogRegister */ = {
@@ -445,6 +505,10 @@
 			children = (
 				C4C40A152189E82400233497 /* Utils.h */,
 				C4C40A142189E82400233497 /* Utils.m */,
+				C442326C218C40E60071ADE3 /* XMLUtil.h */,
+				C442326D218C40E60071ADE3 /* XMLUtil.m */,
+				C4423269218C3FD80071ADE3 /* SoapManager.h */,
+				C442326A218C3FD80071ADE3 /* SoapManager.m */,
 				C4604C6F218556E800CD41A5 /* UserInfoManager.h */,
 				C4604C70218556E800CD41A5 /* UserInfoManager.m */,
 			);
@@ -890,6 +954,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4604C9521859FE100CD41A5 /* RegistrationAgreementController.m in Sources */,
+				C442325F218C1DD00071ADE3 /* SocketRocketUtility.m in Sources */,
 				C4AA87C42184122F0013307D /* UIView+Frame.m in Sources */,
 				4DAF1A242182061800B91F80 /* BCTabBarController.m in Sources */,
 				4DAF1A3721820AA000B91F80 /* ManagementViewController.m in Sources */,
@@ -900,34 +965,41 @@
 				C4AA87E1218434BB0013307D /* BindingController.m in Sources */,
 				C4AA87CC218416320013307D /* UIColor+Extension.m in Sources */,
 				C4AA868D2183F98B0013307D /* ManagementCell.m in Sources */,
+				C442326B218C3FD80071ADE3 /* SoapManager.m in Sources */,
+				C4423262218C1DD00071ADE3 /* NetworkRequest+Utils.m in Sources */,
 				C4C40A162189E82400233497 /* Utils.m in Sources */,
 				C4C36ADF218716D80079D6AE /* UIView+Extension.m in Sources */,
+				C442326E218C40E70071ADE3 /* XMLUtil.m in Sources */,
 				C4C36ADE218716D80079D6AE /* NSDate+Extension.m in Sources */,
 				C4604C8E21856A3700CD41A5 /* InformationViewCell.m in Sources */,
 				4DAF1A3A21820AA000B91F80 /* ListViewController.m in Sources */,
 				C4AA87C02184120C0013307D /* UIBarButtonItem+Button.m in Sources */,
 				C4604C8121855D4D00CD41A5 /* RegisterViewController.m in Sources */,
+				C4423268218C1E260071ADE3 /* NSError+Message.m in Sources */,
 				4DAF19F32181FE1300B91F80 /* ViewController.m in Sources */,
 				4DAF1A3B21820AA000B91F80 /* GCDAsyncUdpSocket.m in Sources */,
 				4DAF19FE2181FE1400B91F80 /* main.m in Sources */,
 				C4C36ADD218716D80079D6AE /* WSDatePickerView.m in Sources */,
 				C4604C88218569FD00CD41A5 /* InformationController.m in Sources */,
+				C4423261218C1DD00071ADE3 /* NetworkRequest.m in Sources */,
 				4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */,
 				4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */,
 				C4AA87E72184517B0013307D /* ListTableViewCell.m in Sources */,
-				C442EE38218B53900071ADE3 /* CommandModel.m in Sources */,
 				C4AA87F8218465810013307D /* SingleListController.m in Sources */,
 				C4C36ACE218714480079D6AE /* NSTimer+Action.m in Sources */,
 				C4C36AE321872B470079D6AE /* UserModel.m in Sources */,
 				C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */,
 				C4C36AC3218712020079D6AE /* STLoopProgressView+BaseConfiguration.m in Sources */,
 				4DAF19F02181FE1300B91F80 /* AppDelegate.m in Sources */,
+				C4423263218C1DD00071ADE3 /* WebSocket.m in Sources */,
+				C4423260218C1DD00071ADE3 /* CommandModel.m in Sources */,
 				C4C36ABD2187116B0079D6AE /* CountDownViewController.m in Sources */,
 				C4C36AC4218712020079D6AE /* STLoopProgressView.m in Sources */,
 				C4C36ACA2187135E0079D6AE /* CountdownView.m in Sources */,
 				C4AA87C7218413060013307D /* UIViewController+NavigationBar.m in Sources */,
 				C4C36AB42185F24A0079D6AE /* CHKeychain.m in Sources */,
 				C4604C9A2185C4EA00CD41A5 /* BindingDeviceController.m in Sources */,
+				C4423264218C1DD00071ADE3 /* WebSocket+Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

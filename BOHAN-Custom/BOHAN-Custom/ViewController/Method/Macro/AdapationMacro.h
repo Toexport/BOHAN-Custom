@@ -36,11 +36,38 @@
 #define BohanID    @"1384571471"
 
 
+//测试用这个
 #ifdef DEBUG
-# define DBLog(format,...) NSLog((@"[%s][%s][%d]" format), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-#else
-# define DBLog(...);
+#if TARGET_IPHONE_SIMULATOR//模拟器
+
+#define ZPLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+
+#elif TARGET_OS_IPHONE//真机
+
+#define ZPLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+
 #endif
+#endif
+
+////正式发布
+//#else
+//#ifdef zhengShiFaBu
+//
+//#define NSLog(...)
+//
+//#else
+//
+//#define NSLog(...) NSLog(__VA_ARGS__)
+//
+//#endif
+//
+//#endif
+//
+//#ifdef DEBUG // 调试状态, 打开LOG功能
+//#define ZPLog(...) NSLog(__VA_ARGS__)
+//#else // 发布状态, 关闭LOG功能
+//#define ZPLog(...)
+
 
 //国际化
 #define Localize(key) NSLocalizedString(key,@"")
