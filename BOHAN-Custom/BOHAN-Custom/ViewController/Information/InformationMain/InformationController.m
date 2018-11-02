@@ -32,10 +32,9 @@ NSString * queryStr = @"00020000";
     [super viewDidLoad];
 //    self.tableview.hidden = YES;
     self.title = Localize(@"Device List");
-    [self rightBarTitle:Localize(@"登出") action:@selector(LogOut)];
+    [self rightBarTitle:Localize(@"Exit") action:@selector(LogOut)];
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
-
     [self PostData];
 }
 
@@ -63,20 +62,6 @@ NSString * queryStr = @"00020000";
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
-// 查询
-- (void)QueryData {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ // 单例方法
-        NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,queryStr];
-        NSString * hexString = [Utils hexStringFromString:Str];
-        NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
-        NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
-        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,queryStr,string];
-        [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-        [self->socket readDataWithTimeout:-1 tag:0];
-    });
 }
 
 // 新增设备
@@ -111,7 +96,6 @@ NSString * queryStr = @"00020000";
     cell.NameLabel2.text = [usernamepasswordKVPairs objectForKey:KEY_Name2];
     cell.NameLabel3.text = [usernamepasswordKVPairs objectForKey:KEY_Name3];
     cell.NameLabel4.text = [usernamepasswordKVPairs objectForKey:KEY_Name4];
-
     cell.countdownBtnBlock = ^(id  _Nonnull CountdownBtn) {
         CountDownViewController * CountDown = [[CountDownViewController alloc]init];
         CountDown.deviceNo = self.Strid;
@@ -120,43 +104,17 @@ NSString * queryStr = @"00020000";
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
     };
     cell.extractButBlock = ^(id  _Nonnull ExtractBut) {
-        NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,instruction];
-        NSString * string = [Utils hexStringFromString:Str];
-        NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-        NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,instruction,stRR];
-        [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-        [self->socket readDataWithTimeout:-1 tag:0];
-        NSLog(@"%@",Strr);
+        [self Switch1oN];
     };
     cell.sxtractButBlock = ^(id  _Nonnull SxtractBut) {
-        NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,instructionS];
-        NSString * string = [Utils hexStringFromString:Str];
-        NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-        NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,instructionS,stRR];
-        [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-        [self->socket readDataWithTimeout:-1 tag:0];
-        NSLog(@"%@",Strr);
+        [self Switch1Off];
     };
     return cell;
 }
 
-- (void)PostData {
-    socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    NSError *err = nil;
-    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-    if(![socket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
-        [SVProgressHUD showInfoWithStatus:(@"连接失败")];
-    }else {
-        NSLog(@"ok");
-        NSLog(@"%@:%@",KEY_PORT,KEY_IP);
-    }
-}
-
 // 发送数据
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
+    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
     [socket readDataWithTimeout:-1 tag:0];
 }
 
@@ -164,14 +122,38 @@ NSString * queryStr = @"00020000";
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSString * String = [newMessage substringWithRange:NSMakeRange(15, 12)];
-    NSLog(@"%@%@",sock.connectedHost,newMessage);
-    NSLog(@"%@",String);
+    ZPLog(@"%@%@",sock.connectedHost,newMessage);
+    ZPLog(@"%@",String);
     self.Strid = String;
 //     开关状态
     NSString * Switch1 = [newMessage substringWithRange:NSMakeRange(37, 2)];
-    NSLog(@"%@",Switch1);
+    ZPLog(@"%@",Switch1);
     self.Switch1 = Switch1;
-    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{ // 单例方法
+        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
+    });
+    [socket readDataWithTimeout:-1 tag:0];
+    [self socketS]; //设置开关状态
+    [self QueryData]; // 查询开关状态
+}
+
+// 查询
+- (void)QueryData {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{ // 单例方法
+        NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,queryStr];
+        NSString * hexString = [Utils hexStringFromString:Str];
+        NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
+        NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
+        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,queryStr,string];
+        [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+        [self->socket readDataWithTimeout:-1 tag:0];
+    });
+}
+
+// 获取开关状态
+- (void)socketS {
     InformationViewCell * cell = [[InformationViewCell alloc]init];
     if ([self.Switch1 containsString:@"00"]) {
         cell.Switch1.on = YES;
@@ -180,24 +162,66 @@ NSString * queryStr = @"00020000";
             cell.Switch1.on = NO;
         }
     ZPLog(@"%@",self.Switch1);
-    
-    [self QueryData];
-    [socket readDataWithTimeout:-1 tag:0];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    NSLog(@"%@",error);
-    [SVProgressHUD showInfoWithStatus:(@"连接失败")];
+    ZPLog(@"%@",error);
+    [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
     self.tableview.hidden = YES;
 }
 
+// 开关1开启
+- (void)Switch1oN {
+    NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,instruction];
+    NSString * string = [Utils hexStringFromString:Str];
+    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,instruction,stRR];
+    [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [self->socket readDataWithTimeout:-1 tag:0];
+    ZPLog(@"%@",Strr);
+}
+
+// 开关1关闭
+- (void)Switch1Off {
+    NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,instructionS];
+    NSString * string = [Utils hexStringFromString:Str];
+    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,instructionS,stRR];
+    [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [self->socket readDataWithTimeout:-1 tag:0];
+    ZPLog(@"%@",Strr);
+}
+
+// 启动加载Sock
+- (void)PostData {
+    socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    NSError *err = nil;
+    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    if(![socket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
+        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
+    }else {
+        [SVProgressHUD showWithStatus:@"Loading..."];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+//        1.view的背景颜色
+        [SVProgressHUD setBackgroundColor:[UIColor orangeColor]];
+//        2.view上面的旋转小图标的 颜色
+        [SVProgressHUD setForegroundColor:[UIColor blueColor]];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        NSLog(@"ok");
+        NSLog(@"%@:%@",KEY_PORT,KEY_IP);
+    }
+}
+
+
 // 注销登录
 - (void)LogOut {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:Localize(@"提示") message:Localize(@"确定要注销登录吗？") preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:Localize(@"取消") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:Localize(@"Prompt") message:Localize(@"Are you sure you want to log out?") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:Localize(@"Cancel") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             NSLog(@"action = %@", action);
         }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"Determine") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 //        清除所有的数据
     [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[LoginViewController new]];
     NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
@@ -208,6 +232,5 @@ NSString * queryStr = @"00020000";
         [alert addAction:cancelAction];
         [self presentViewController:alert animated:YES completion:nil];
 }
-
 
 @end
