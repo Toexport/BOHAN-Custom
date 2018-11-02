@@ -30,6 +30,7 @@
     BOOL open;
     
 }
+
 @property (weak, nonatomic) IBOutlet UITableView *mainTable;
 @property (copy, nonatomic) NSArray *datas;
 @property (assign, nonatomic) NSInteger selectedItemIndex;
@@ -39,7 +40,9 @@
 static NSString *countCellIdentifier = @"countCellIdentifier";
 
 @implementation CountDownViewController
-
+@synthesize socket;
+//NSString * HeadStr = @"+RECV:0,E7";
+//NSString * instructionS = @"002F00";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = Localize(@"倒计时");
@@ -49,142 +52,218 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     _mainTable.tintColor = [UIColor colorWithHexString:@"f03c4c"];
     [progressView setPersentage:0];
     [self rightBarTitle:Localize(@"取消") color:[UIColor whiteColor] action:@selector(canceOperation)];
-    [self getStatus];
+//    [self getStatus];
     [self loadData];
-    [self UI];
+//    [self UI];
 }
+
 
 - (void)loadData {
-    WebSocket *socket = [WebSocket socketManager];
-    CommandModel *model = [[CommandModel alloc] init];
-    model.command = @"002F"; // 查询定时状态以及结束时间
-    model.deviceNo = self.deviceNo;
-    //    MyWeakSelf
-    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
-        if (!error) {
-            if (((NSString *)response).length == 120) {
-                NSString *content = [response substringWithRange:NSMakeRange(((NSString *)response).length - 96, 92)];
-                NSString *electrictyModel = [content substringFromIndex:content.length - 2];
-                if ([electrictyModel isEqualToString:@"00"] || [electrictyModel isEqualToString:@"01"]) {
-                    [self countDownTime];
-                }
-            }
-        }else {
-        }
-        ZPLog(@"--------%@",response);
-    }];
+    socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    NSError *err = nil;
+    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    if(![socket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
+        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
+    }else {
+        [SVProgressHUD showWithStatus:@"Loading..."];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+        //        1.view的背景颜色
+        [SVProgressHUD setBackgroundColor:[UIColor orangeColor]];
+        //        2.view上面的旋转小图标的 颜色
+        [SVProgressHUD setForegroundColor:[UIColor blueColor]];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        ZPLog(@"ok");
+        ZPLog(@"%@:%@",KEY_PORT,KEY_IP);
+    }
 }
 
-- (void)countDownTime {
-    WebSocket *socket = [WebSocket socketManager];
-    CommandModel *model = [[CommandModel alloc] init];
-    model.command = @"0012";
-    model.deviceNo = self.deviceNo;
-    //    [self.view startLoading];
-    
-    MyWeakSelf
-    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
-        //        [weakSelf.view stopLoading];
-        if (!error) {
-            NSString *statusStr = [response substringWithRange:NSMakeRange(((NSString *)response).length - 18, 2)];
-            
-            NSString *content = [response substringWithRange:NSMakeRange(((NSString *)response).length - 16, 12)];
-            if ([content hasPrefix:@"00"]) {
-                return ;
-            }
-            [self->formatter setDateFormat:@"yyMMddHHmmss"];
-            self->startDate = [self->formatter dateFromString:content];
-            if (!self->startDate) {
-                return ;
-            }
-            if ([statusStr isEqualToString:@"00"]) {
-                [self->status setText:Localize(@"设备关闭")];
-                
-            }else {
-                [self->status setText:Localize(@"设备打开")];
-            }
-            
-            self->totalSecend = MAX(0, [self->startDate timeIntervalSinceDate:[NSDate date]]);
-            [weakSelf showConfig];
-            [self setUpTimer];
-        }
-        
-        ZPLog(@"--------%@",response);
-    }];
+// 查询倒计时
+- (void)QueryCountdownStatus {
+//    NSString * 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 发送数据
+-(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
+    [socket readDataWithTimeout:-1 tag:0];
+}
+
+// 接收数据
+-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
+    NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    ZPLog(@"%@%@",sock.connectedHost,newMessage);
+    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
+    [socket readDataWithTimeout:-1 tag:0];
+}
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
+    ZPLog(@"%@",error);
+    [SVProgressHUD showInfoWithStatus:(@"连接失败")];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+//    WebSocket *socket = [WebSocket socketManager];
+//    CommandModel *model = [[CommandModel alloc] init];
+//    model.command = @"002F"; // 查询定时状态以及结束时间
+//    model.deviceNo = self.deviceNo;
+//    //    MyWeakSelf
+//    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
+//        if (!error) {
+//            if (((NSString *)response).length == 120) {
+//                NSString *content = [response substringWithRange:NSMakeRange(((NSString *)response).length - 96, 92)];
+//                NSString *electrictyModel = [content substringFromIndex:content.length - 2];
+//                if ([electrictyModel isEqualToString:@"00"] || [electrictyModel isEqualToString:@"01"]) {
+//                    [self countDownTime];
+//                }
+//            }
+//        }else {
+//        }
+//        ZPLog(@"--------%@",response);
+//    }];
+//}
+//
+//- (void)countDownTime {
+//    WebSocket *socket = [WebSocket socketManager];
+//    CommandModel *model = [[CommandModel alloc] init];
+//    model.command = @"0012";
+//    model.deviceNo = self.deviceNo;
+//    //    [self.view startLoading];
+//
+//    MyWeakSelf
+//    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
+//        //        [weakSelf.view stopLoading];
+//        if (!error) {
+//            NSString *statusStr = [response substringWithRange:NSMakeRange(((NSString *)response).length - 18, 2)];
+//
+//            NSString *content = [response substringWithRange:NSMakeRange(((NSString *)response).length - 16, 12)];
+//            if ([content hasPrefix:@"00"]) {
+//                return ;
+//            }
+//            [self->formatter setDateFormat:@"yyMMddHHmmss"];
+//            self->startDate = [self->formatter dateFromString:content];
+//            if (!self->startDate) {
+//                return ;
+//            }
+//            if ([statusStr isEqualToString:@"00"]) {
+//                [self->status setText:Localize(@"设备关闭")];
+//
+//            }else {
+//                [self->status setText:Localize(@"设备打开")];
+//            }
+//
+//            self->totalSecend = MAX(0, [self->startDate timeIntervalSinceDate:[NSDate date]]);
+//            [weakSelf showConfig];
+//            [self setUpTimer];
+//        }
+//
+//        ZPLog(@"--------%@",response);
+//    }];
+//}
+//
 - (void)getStatus {
-    WebSocket *socket = [WebSocket socketManager];
-    CommandModel *model = [[CommandModel alloc] init];
-    model.command = @"0002";
-    model.deviceNo = self.deviceNo;
-    //    [self.view startLoading];
-    MyWeakSelf
-    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
-//        [weakSelf.view stopLoading];
-        if (!error) {
-            if (((NSString *)response).length>26) {
-                NSString *status = [response substringWithRange:NSMakeRange(24, 2)];
-                NSString *binary = [Utils getBinaryByHex:status];
-                NSString *left = [binary substringWithRange:NSMakeRange(binary.length - 3, 1)];
-                NSString *center = [binary substringWithRange:NSMakeRange(binary.length - 2, 1)];
-                NSString *right = [binary substringFromIndex:binary.length - 1];
-                //一位插座
-                if ([self.deviceNo hasPrefix:@"61"]) {
-                    if ([center isEqualToString:@"0"]) {
-                        self->open = NO;
-                    }else {
-                        self->open = YES;
-                    }
-                    //二位插座
-                }else if ([self.deviceNo hasPrefix:@"62"]) {
-                    if ([left isEqualToString:@"0"] || [right isEqualToString:@"0"]) {
-                        self->open = NO;
-                    }else {
-                        self->open = YES;
-                    }
-                    //三位插座
-                }else if ([self.deviceNo hasPrefix:@"63"]) {
-                    if ([left isEqualToString:@"0"] || [right isEqualToString:@"0"] || [center isEqualToString:@"0"]) {
-                        self->open = NO;
-                    }else {
-                        self->open = YES;
-                    }
-                }else {
-                    if ([status isEqualToString:@"00"]) {
-                        self->open = NO;
-                    }else {
-                        self->open = YES;
-                    }
-                }
-                if (!self->open) {
-                    //开启
-                    self->closeBtn.layer.borderColor = [UIColor colorWithHexString:@"39B3FF"].CGColor;
-                    self->closeBtn.layer.borderWidth = 1;
-                    self->closeBtn.backgroundColor = [UIColor whiteColor];
-                    [self->closeBtn setTitleColor:[UIColor colorWithHexString:@"39B3FF"] forState:UIControlStateNormal];
-                    
-                    self->openBtn.backgroundColor = [UIColor colorWithHexString:@"BBBBBB"];
-                    [self->openBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                    self->openBtn.layer.borderColor = [UIColor colorWithHexString:@"BBBBBB"].CGColor;
-                }else {
-                    self->openBtn.layer.borderColor = [UIColor colorWithHexString:@"39B3FF"].CGColor;
-                    self->openBtn.layer.borderWidth = 1;
-                    self->openBtn.backgroundColor = [UIColor whiteColor];
-                    [self->openBtn setTitleColor:[UIColor colorWithHexString:@"39B3FF"] forState:UIControlStateNormal];
-                    
-                    self->closeBtn.backgroundColor = [UIColor colorWithHexString:@"BBBBBB"];
-                    [self->closeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                    self->closeBtn.layer.borderColor = [UIColor colorWithHexString:@"BBBBBB"].CGColor;
-                    
-                }
-                
-            }
-            
-        }
-        
-    }];
-    
+//    WebSocket *socket = [WebSocket socketManager];
+//    CommandModel *model = [[CommandModel alloc] init];
+//    model.command = @"0002";
+//    model.deviceNo = self.deviceNo;
+//    //    [self.view startLoading];
+//    MyWeakSelf
+//    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
+////        [weakSelf.view stopLoading];
+//        if (!error) {
+//            if (((NSString *)response).length>26) {
+//                NSString *status = [response substringWithRange:NSMakeRange(24, 2)];
+//                NSString *binary = [Utils getBinaryByHex:status];
+//                NSString *left = [binary substringWithRange:NSMakeRange(binary.length - 3, 1)];
+//                NSString *center = [binary substringWithRange:NSMakeRange(binary.length - 2, 1)];
+//                NSString *right = [binary substringFromIndex:binary.length - 1];
+//                //一位插座
+//                if ([self.deviceNo hasPrefix:@"61"]) {
+//                    if ([center isEqualToString:@"0"]) {
+//                        self->open = NO;
+//                    }else {
+//                        self->open = YES;
+//                    }
+//                    //二位插座
+//                }else if ([self.deviceNo hasPrefix:@"62"]) {
+//                    if ([left isEqualToString:@"0"] || [right isEqualToString:@"0"]) {
+//                        self->open = NO;
+//                    }else {
+//                        self->open = YES;
+//                    }
+//                    //三位插座
+//                }else if ([self.deviceNo hasPrefix:@"63"]) {
+//                    if ([left isEqualToString:@"0"] || [right isEqualToString:@"0"] || [center isEqualToString:@"0"]) {
+//                        self->open = NO;
+//                    }else {
+//                        self->open = YES;
+//                    }
+//                }else {
+//                    if ([status isEqualToString:@"00"]) {
+//                        self->open = NO;
+//                    }else {
+//                        self->open = YES;
+//                    }
+//                }
+//                if (!self->open) {
+//                    //开启
+//                    self->closeBtn.layer.borderColor = [UIColor colorWithHexString:@"39B3FF"].CGColor;
+//                    self->closeBtn.layer.borderWidth = 1;
+//                    self->closeBtn.backgroundColor = [UIColor whiteColor];
+//                    [self->closeBtn setTitleColor:[UIColor colorWithHexString:@"39B3FF"] forState:UIControlStateNormal];
+//
+//                    self->openBtn.backgroundColor = [UIColor colorWithHexString:@"BBBBBB"];
+//                    [self->openBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                    self->openBtn.layer.borderColor = [UIColor colorWithHexString:@"BBBBBB"].CGColor;
+//                }else {
+//                    self->openBtn.layer.borderColor = [UIColor colorWithHexString:@"39B3FF"].CGColor;
+//                    self->openBtn.layer.borderWidth = 1;
+//                    self->openBtn.backgroundColor = [UIColor whiteColor];
+//                    [self->openBtn setTitleColor:[UIColor colorWithHexString:@"39B3FF"] forState:UIControlStateNormal];
+//
+//                    self->closeBtn.backgroundColor = [UIColor colorWithHexString:@"BBBBBB"];
+//                    [self->closeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                    self->closeBtn.layer.borderColor = [UIColor colorWithHexString:@"BBBBBB"].CGColor;
+//
+//                }
+//
+//            }
+//
+//        }
+//
+//    }];
+//
 }
 
 // 隐藏与显示
@@ -206,17 +285,17 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 }
 // 取消
 - (void)canceOperation {
-    //    [CommonOperation cancelDeviceRunModel:self.deviceNo result:^(id response, NSError *error) {
-    //        if (!error) {
-    //            [self stopTimer];
-    //            _selectedItemIndex = NSIntegerMax;
-    //            [_mainTable reloadData];
-    //            [HintView showHint:Localize(@"取消成功")];
-    //        }else {
-    //            [HintView showHint:error.localizedDescription];
-    //        }
-    //
-    //    }];
+//    //    [CommonOperation cancelDeviceRunModel:self.deviceNo result:^(id response, NSError *error) {
+//    //        if (!error) {
+//    //            [self stopTimer];
+//    //            _selectedItemIndex = NSIntegerMax;
+//    //            [_mainTable reloadData];
+//    //            [HintView showHint:Localize(@"取消成功")];
+//    //        }else {
+//    //            [HintView showHint:error.localizedDescription];
+//    //        }
+//    //
+//    //    }];
 }
 
 //新增
@@ -231,49 +310,49 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         [self startAction];
     };
     _mainTable.tableFooterView = view;
-    
+
 }
 
 // 延时开关
 - (IBAction)DelayClosingBut:(UIButton *)sender {
     [self startAction];
 }
-
+//
 // 延时数据
 - (void)startAction {
-    NSString *content = [time.text stringByReplacingOccurrencesOfString:@":" withString:@""];
-    if ([content isEqualToString:@"000000"]) {
-        //        [HintView showHint:Localize(@"请选择倒计时时间")];
-        ZPLog(@"请选择倒计时时间");
-        return;
-    }
-    WebSocket *socket = [WebSocket socketManager];
-    CommandModel *model = [[CommandModel alloc] init];
-    model.command = open?@"000B":@"000A";
-    model.deviceNo = self.deviceNo;
-    model.content = [content substringToIndex:4];
-    //    [self.view startLoading];
-    
-    __weak typeof(NSString *) weakContent = model.content;
-    MyWeakSelf
-    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
-        //        [weakSelf.view stopLoading];
-        if (!error) {
-            int minutes = [[self->time.text substringToIndex:4] intValue]*60+[[self->time.text substringWithRange:NSMakeRange(3, 5)] intValue];
-            self->startDate = [NSDate dateWithMinutesFromNow:minutes];
-            [self->formatter setDateFormat:@"yyMMddHHmmss"];
-            self->startDate = [self->formatter dateFromString:[self->formatter stringFromDate:self->startDate]];
-            self->totalSecend = MAX(0, [self->startDate timeIntervalSinceDate:[NSDate date]]);
-            [weakSelf showConfig];
-            [self setUpTimer];
-            //            [HintView showHint:Localize(@"设置成功")];
-            [SVProgressHUD showInfoWithStatus:@"设置成功"];
-            ZPLog(@"设置成功");
-        }else {
-            //            [HintView showHint:error.localizedDescription];
-            [SVProgressHUD showErrorWithStatus:@"l设置失败"];
-        }
-    }];
+//    NSString *content = [time.text stringByReplacingOccurrencesOfString:@":" withString:@""];
+//    if ([content isEqualToString:@"000000"]) {
+//        //        [HintView showHint:Localize(@"请选择倒计时时间")];
+//        ZPLog(@"请选择倒计时时间");
+//        return;
+//    }
+//    WebSocket *socket = [WebSocket socketManager];
+//    CommandModel *model = [[CommandModel alloc] init];
+//    model.command = open?@"000B":@"000A";
+//    model.deviceNo = self.deviceNo;
+//    model.content = [content substringToIndex:4];
+//    //    [self.view startLoading];
+//
+//    __weak typeof(NSString *) weakContent = model.content;
+//    MyWeakSelf
+//    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
+//        //        [weakSelf.view stopLoading];
+//        if (!error) {
+//            int minutes = [[self->time.text substringToIndex:4] intValue]*60+[[self->time.text substringWithRange:NSMakeRange(3, 5)] intValue];
+//            self->startDate = [NSDate dateWithMinutesFromNow:minutes];
+//            [self->formatter setDateFormat:@"yyMMddHHmmss"];
+//            self->startDate = [self->formatter dateFromString:[self->formatter stringFromDate:self->startDate]];
+//            self->totalSecend = MAX(0, [self->startDate timeIntervalSinceDate:[NSDate date]]);
+//            [weakSelf showConfig];
+//            [self setUpTimer];
+//            //            [HintView showHint:Localize(@"设置成功")];
+//            [SVProgressHUD showInfoWithStatus:@"设置成功"];
+//            ZPLog(@"设置成功");
+//        }else {
+//            //            [HintView showHint:error.localizedDescription];
+//            [SVProgressHUD showErrorWithStatus:@"l设置失败"];
+//        }
+//    }];
 }
 
 - (void)setUpTimer {
@@ -290,7 +369,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
                                                    [strongSelf timeAction];
                                                }
                                              repeats:YES];
-    
+
 }
 
 - (void)timeAction {
@@ -302,7 +381,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     }
     [progressView setPersentage:lastSecend/(totalSecend*1.0)];
     [time setText:[Utils gapDateFrom:[NSDate date] toDate:startDate]] ;
-    
+
 }
 
 - (void)stopTimer {
@@ -310,7 +389,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [progressView setPersentage:0];
     [status setText:Localize(@"设备打开/关闭")];
     startDate = nil;
-    [self getStatus];
+//    [self getStatus];
     [self showConfig];
     if ([_timer isValid]) {
         [_timer invalidate];
@@ -326,7 +405,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 /*设置cell 的宽度 */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 40;
-    
+
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:countCellIdentifier];
@@ -343,8 +422,8 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"5c5c5c"];
     }
-    
-    
+
+
     return cell;
 }
 #pragma mark 按钮的点击事件
@@ -359,13 +438,13 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
             [self->formatter setDateFormat:@"HH:mm:ss"];
             NSString *string = [self->formatter stringFromDate:selectDate];
             [self->time setText:string];
-            
+
         }];
         datepicker.hideBackgroundYearLabel = YES;
         datepicker.dateLabelColor = [UIColor colorWithHexString: @"3c94f2"];
         datepicker.doneButtonColor = [UIColor colorWithHexString: @"3c94f2"];
         [datepicker show];
-        
+
     }else {
         if (indexPath.row == 0) {
             [time setText:@"00:05:00"];
@@ -376,7 +455,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
             self.selectedItemIndex = indexPath.row;
             [tableView reloadData];
         }
-        
+
     }
 }
 

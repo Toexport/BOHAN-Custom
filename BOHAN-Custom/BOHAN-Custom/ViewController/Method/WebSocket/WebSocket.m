@@ -29,13 +29,13 @@
     });
     return instance;
 }
-
+//n
 - (SocketRocketUtility *)serverSockt {
     if (!_serverSockt) {
 //               _serverSockt = [[SocketRocketUtility alloc] initWithUrl:@"ws://www.bohanserver.top:8888"]; // 原始地址
 //               _serverSockt = [[SocketRocketUtility alloc] initWithUrl:@"ws://122.10.97.35:8888"]; // 香港地址
         _serverSockt = [[SocketRocketUtility alloc]initWithUrl:[NSString stringWithFormat:@"ws://%@%@",KEY_IP,KEY_IP]];
-    }
+    }// 这个是地址192.168.3.254:2323
     return _serverSockt;
 }
 
@@ -46,7 +46,7 @@
 //    }
 //    if (self.deviceIp) {
 //        _deviceSockt.socketUrl = [NSString stringWithFormat:@"%@:6868",self.deviceIp];
-//    }
+//    }168
 //
 //    return _deviceSockt;
 //}

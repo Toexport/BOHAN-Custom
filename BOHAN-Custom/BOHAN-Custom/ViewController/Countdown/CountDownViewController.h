@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "FileHeader.pch"
-@interface CountDownViewController : UIViewController
-{
+@interface CountDownViewController : UIViewController<GCDAsyncSocketDelegate,UITextFieldDelegate> {
+    GCDAsyncSocket * socket;
+
     __weak IBOutlet UIButton *DelayClosingBut;
     __weak IBOutlet UIView *PatchVIew;
     
 }
-
+@property (strong) GCDAsyncSocket * socket;
 @property (nonatomic, copy) NSString *deviceNo;
 @property (nonatomic, assign) BOOL *isCountDownModel;
 //- (IBAction)cancelAction;

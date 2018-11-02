@@ -25,6 +25,8 @@
         self.Switch1.backgroundColor = [UIColor colorWithHexString:@"54d76a"];
 //        self.ExtractButBlock(self.Switch1);
         self.extractButBlock(self.Switch1);
+        
+        
         ZPLog(@"开");
     }else {
         self.Switch1.backgroundColor = [UIColor redColor];

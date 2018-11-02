@@ -15,9 +15,12 @@
 #import "CommandModel.h"
 #import "WebSocket.h"
 #import <Foundation/Foundation.h>
+#import "NSTimer+Action.h"
+
 @interface InformationController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSString * Strid;
 @property (nonatomic, strong) NSString * Switch1;
+@property (nonatomic, weak) NSTimer *timer;
 @end
 
 @implementation InformationController
@@ -128,22 +131,33 @@ NSString * queryStr = @"00020000";
     self.Strid = String;
 //     开关状态
     NSString * Switch1 = [newMessage substringWithRange:NSMakeRange(37, 2)];
-    ZPLog(@"%@",Switch1);
-    self.Switch1 = Switch1;
+//    NSString *Switch = [newMessage substringFromIndex:newMessage.length-8];//字符串结尾
+//    NSString * Switch1 = [Switch substringWithRange:NSMakeRange(0, 2)];
+    ZPLog(@"-----%@",Switch1);
+//    MyWeakSelf
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:15 block:^{ // 列表设置15秒自动刷新
+//         __strong typeof(self) strongSelf = weakSelf;
+        [self QueryData];
+    } repeats:YES];
+    
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ // 单例方法
         [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        [self QueryData]; // 查询开关状态
+//        [self QueryData];
     });
     [socket readDataWithTimeout:-1 tag:0];
-    [self socketS]; //设置开关状态
-  
+    if (![Switch1 isEqualToString:@"0D"]) {//意念过滤0D
+        self.Switch1 = Switch1;
+        [self.tableview reloadData];
+    }
 }
 
 // 查询
 - (void)QueryData {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ // 单例方法
+//    MyWeakSelf
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:8 block:^{ // 列表设置15秒自动刷新
+//        __strong typeof(self) strongSelf = weakSelf;
         NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,queryStr];
         NSString * hexString = [Utils hexStringFromString:Str];
         NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
@@ -151,20 +165,9 @@ NSString * queryStr = @"00020000";
         NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,queryStr,string];
         [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
         [self->socket readDataWithTimeout:-1 tag:0];
-    });
-}
-
-// 获取开关状态
-- (void)socketS {
-    InformationViewCell * cell = [[InformationViewCell alloc]init];
-    if ([self.Switch1 containsString:@"00"]) {
-        cell.Switch1.on = YES;// 不能用通知，同一个界面
-    }else
-        if ([self.Switch1 containsString:@"01"]) {
-            cell.Switch1.on = NO;
-        }
-    ZPLog(@"%@",self.Switch1);// 还是不行的
-    [self.tableview reloadData];
+        
+    } repeats:YES];
+    
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
@@ -182,7 +185,7 @@ NSString * queryStr = @"00020000";
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,instruction,stRR];
     [self->socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [self->socket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
+    ZPLog(@"%@",Strr);// 功能都有，就是UI问题
 }
 
 // 开关1关闭
@@ -198,7 +201,7 @@ NSString * queryStr = @"00020000";
 }
 
 // 启动加载Sock
-- (void)PostData {
+- (void)PostData {// 
     socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     NSError *err = nil;
     NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
