@@ -26,10 +26,10 @@
 //准备节点
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(nullable NSString *)namespaceURI qualifiedName:(nullable NSString *)qName attributes:(NSDictionary<NSString *, NSString *> *)attributeDict{
     
-//    DBLog(@"准备节点%@",elementName);
-//    NSLog(@"self.methodName:%@",self.methodName);
-//    NSLog(@"self:%@",self);
-//    NSLog(@"解析中parse=%@, xml = %@",self.par,self);
+//    ZPLog(@"准备节点%@",elementName);
+//    ZPLog(@"self.methodName:%@",self.methodName);
+//    ZPLog(@"self:%@",self);
+//    ZPLog(@"解析中parse=%@, xml = %@",self.par,self);
 
     if ([elementName isEqualToString:[self.methodName stringByAppendingString:@"Result"]]) {
         if (!self.soapResults) {
@@ -49,11 +49,11 @@
 //解析完一个节点
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(nullable NSString *)namespaceURI qualifiedName:(nullable NSString *)qName{
 
-//    NSLog(@"elementName:%@",elementName);
-//    NSLog(@"self.methodName:%@",self.methodName);
+//    ZPLog(@"elementName:%@",elementName);
+//    ZPLog(@"self.methodName:%@",self.methodName);
 
     if ([elementName isEqualToString:[self.methodName stringByAppendingString:@"Result"]]) {
-//        NSLog(@"匹配到%@",self.methodName);
+//        ZPLog(@"匹配到%@",self.methodName);
 
         NSData *jsonData = [self.soapResults dataUsingEncoding:NSUTF8StringEncoding];
         NSError *err;
@@ -70,12 +70,12 @@
 //解析结束
 - (void)parserDidEndDocument:(NSXMLParser *)parser{
     
-//    NSLog(@"解析结束parse=%@, xml = %@",self.par,self);
+//    ZPLog(@"解析结束parse=%@, xml = %@",self.par,self);
 
     if (self.soapResults) {
         self.soapResults = nil;
     }
-//    NSLog(@"self.methodName:%@,self.data:%@",self.methodName,self.data);
+//    ZPLog(@"self.methodName:%@,self.data:%@",self.methodName,self.data);
 
 }
 

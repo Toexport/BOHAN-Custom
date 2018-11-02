@@ -7,7 +7,7 @@
 //
 
 #import "CHKeychain.h"
-
+#import "FileHeader.pch"
 
 
 @implementation CHKeychain
@@ -46,7 +46,7 @@
         @try {
             ret = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)keyData];
         } @catch (NSException *e) {
-            NSLog(@"Unarchive of %@ failed: %@", service, e);
+            ZPLog(@"Unarchive of %@ failed: %@", service, e);
         } @finally {
         }
     }

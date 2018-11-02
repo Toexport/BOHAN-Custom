@@ -46,7 +46,7 @@
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
+    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
     [socket readDataWithTimeout:-1 tag:0];
 }
 
@@ -59,17 +59,17 @@
     NSString * Str = [NSString stringWithFormat:@"%@%@%@",string,self.Id,Instruction];
     [socket writeData:[Str dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [socket readDataWithTimeout:-1 tag:0];
-    NSLog(@"1%@%@%@",string,self.Id,Instruction);
+    ZPLog(@"1%@%@%@",string,self.Id,Instruction);
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"1%@%@",sock.connectedHost,newMessage);
+    ZPLog(@"1%@%@",sock.connectedHost,newMessage);
     [socket readDataWithTimeout:-1 tag:0];
     //    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
 //    NSString * Minutes = [newMessage substringWithRange:NSMakeRange(15, 12)];
 //    Str = [NSString stringWithFormat:@"%@",Minutes];
-//        NSLog(@"%@",Minutes);
+//        ZPLog(@"%@",Minutes);
     [self.tableview reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

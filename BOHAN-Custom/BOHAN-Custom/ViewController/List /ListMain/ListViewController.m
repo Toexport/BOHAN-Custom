@@ -60,12 +60,12 @@
     if(![socket connectToHost:HTTPstr onPort:[PortStr intValue] error:&err]) {
         [SVProgressHUD showInfoWithStatus:(@"连接失败")];
     }else {
-        NSLog(@"ok");
+        ZPLog(@"ok");
     }
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
+    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
     [socket readDataWithTimeout:-1 tag:0];
 }
 
@@ -74,12 +74,12 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"1%@%@",sock.connectedHost,newMessage);
+    ZPLog(@"1%@%@",sock.connectedHost,newMessage);
     [socket readDataWithTimeout:-1 tag:0];
 //    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
     NSString * Minutes = [newMessage substringWithRange:NSMakeRange(15, 12)];
     Str = [NSString stringWithFormat:@"%@",Minutes];
-//    NSLog(@"%@",Minutes);
+//    ZPLog(@"%@",Minutes);
     [self.tableview reloadData];
 }
 
@@ -115,7 +115,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%ld",(long)indexPath.row);
+    ZPLog(@"%ld",(long)indexPath.row);
     SingleListController * SingleList = [[SingleListController alloc]init];
     SingleList.Id = Str;
     SingleList.hidesBottomBarWhenPushed = YES;

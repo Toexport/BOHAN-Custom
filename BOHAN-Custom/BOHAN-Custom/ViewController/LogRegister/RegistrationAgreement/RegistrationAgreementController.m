@@ -48,21 +48,21 @@
     activityIndicator.color = [UIColor grayColor];
     [view addSubview:activityIndicator];
     [activityIndicator startAnimating];
-    NSLog(@"webViewDidStartLoad");
+    ZPLog(@"webViewDidStartLoad");
 }
 
 - (void) webViewDidFinishLoad:(UIWebView *)webView {
     [activityIndicator stopAnimating];
     UIView *view = (UIView*)[self.view viewWithTag:108];
     [view removeFromSuperview];
-    NSLog(@"webViewDidFinishLoad");
+    ZPLog(@"webViewDidFinishLoad");
 }
 
 - (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [activityIndicator stopAnimating];
     UIView * view = (UIView*)[self.view viewWithTag:108];
     [view removeFromSuperview];
-    NSLog(@"didFailLoadWithError:%@", error);
+    ZPLog(@"didFailLoadWithError:%@", error);
 }
 
 // 热点被接入，子类重写

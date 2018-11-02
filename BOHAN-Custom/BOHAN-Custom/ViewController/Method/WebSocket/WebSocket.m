@@ -34,7 +34,7 @@
     if (!_serverSockt) {
 //               _serverSockt = [[SocketRocketUtility alloc] initWithUrl:@"ws://www.bohanserver.top:8888"]; // 原始地址
 //               _serverSockt = [[SocketRocketUtility alloc] initWithUrl:@"ws://122.10.97.35:8888"]; // 香港地址
-        _serverSockt = [[SocketRocketUtility alloc]initWithUrl:@"ws://192.168.3.254:2323"];
+        _serverSockt = [[SocketRocketUtility alloc]initWithUrl:[NSString stringWithFormat:@"ws://%@%@",KEY_IP,KEY_IP]];
     }
     return _serverSockt;
 }

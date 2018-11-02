@@ -96,6 +96,7 @@ NSString * queryStr = @"00020000";
     cell.NameLabel2.text = [usernamepasswordKVPairs objectForKey:KEY_Name2];
     cell.NameLabel3.text = [usernamepasswordKVPairs objectForKey:KEY_Name3];
     cell.NameLabel4.text = [usernamepasswordKVPairs objectForKey:KEY_Name4];
+    cell.Switch1.on = [self.Switch1 containsString:@"00"];
     cell.countdownBtnBlock = ^(id  _Nonnull CountdownBtn) {
         CountDownViewController * CountDown = [[CountDownViewController alloc]init];
         CountDown.deviceNo = self.Strid;
@@ -132,10 +133,11 @@ NSString * queryStr = @"00020000";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ // 单例方法
         [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
+        [self QueryData]; // 查询开关状态
     });
     [socket readDataWithTimeout:-1 tag:0];
     [self socketS]; //设置开关状态
-    [self QueryData]; // 查询开关状态
+  
 }
 
 // 查询
@@ -156,12 +158,13 @@ NSString * queryStr = @"00020000";
 - (void)socketS {
     InformationViewCell * cell = [[InformationViewCell alloc]init];
     if ([self.Switch1 containsString:@"00"]) {
-        cell.Switch1.on = YES;
+        cell.Switch1.on = YES;// 不能用通知，同一个界面
     }else
         if ([self.Switch1 containsString:@"01"]) {
             cell.Switch1.on = NO;
         }
-    ZPLog(@"%@",self.Switch1);
+    ZPLog(@"%@",self.Switch1);// 还是不行的
+    [self.tableview reloadData];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
@@ -209,8 +212,8 @@ NSString * queryStr = @"00020000";
 //        2.view上面的旋转小图标的 颜色
         [SVProgressHUD setForegroundColor:[UIColor blueColor]];
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        NSLog(@"ok");
-        NSLog(@"%@:%@",KEY_PORT,KEY_IP);
+        ZPLog(@"ok");
+        ZPLog(@"%@:%@",KEY_PORT,KEY_IP);
     }
 }
 
@@ -219,7 +222,7 @@ NSString * queryStr = @"00020000";
 - (void)LogOut {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:Localize(@"Prompt") message:Localize(@"Are you sure you want to log out?") preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:Localize(@"Cancel") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            NSLog(@"action = %@", action);
+            ZPLog(@"action = %@", action);
         }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"Determine") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 //        清除所有的数据

@@ -92,7 +92,7 @@
     MinutesTextField.text = [NSString stringWithString:self.string55];
     NSString * string = [NSString stringWithFormat:@"%@%@%@%@%@",YearTextField.text,MonthTextField.text,DayTextField.text,HoursTextField.text,MinutesTextField.text];
     str1 = [NSString stringWithFormat:@"%@",string];
-    NSLog(@"%@",str1);
+    ZPLog(@"%@",str1);
     
 }
 
@@ -133,7 +133,7 @@
         self->MinutesTextField.text = [NSString stringWithString:self.string5];
         NSString * string1 = [NSString stringWithFormat:@"%@%@%@%@%@",self->YearTextField.text,self->MonthTextField.text,DayTextField.text,HoursTextField.text,MinutesTextField.text];
         self->str2 = [NSString stringWithFormat:@"%@",string1];
-        NSLog(@"%@",self->str2);
+        ZPLog(@"%@",self->str2);
         [self pleaseInsertStarTimeo:self->str1 andInsertEndTime:self->str2];
         
     }];
@@ -170,6 +170,6 @@
 ////    NSString * string = [NSString stringWithFormat:@"%ld%ld%ld%ld", (long)cmps.year, (long)cmps.month, (long)cmps.day, (long)cmps.hour, (long)cmps.minute];
 ////    ZPLog(@"%@",string);
 //    // 4.输出结果
-//    NSLog(@"两个时间相差%ld年%ld月%ld日%ld小时%ld分钟", (long)cmps.year, (long)cmps.month, (long)cmps.day, (long)cmps.hour, (long)cmps.minute);
+//    ZPLog(@"两个时间相差%ld年%ld月%ld日%ld小时%ld分钟", (long)cmps.year, (long)cmps.month, (long)cmps.day, (long)cmps.hour, (long)cmps.minute);
 }
 @end

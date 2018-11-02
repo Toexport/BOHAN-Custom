@@ -56,29 +56,29 @@
     NSError *err = nil;
     if(![socket connectToHost:IPTExtField.text onPort:[PortTextField.text intValue] error:&err]) {
         [SVProgressHUD showInfoWithStatus:(@"连接失败")];
-        NSLog(@"%@%@",IPTExtField.text,PortTextField.text);
+        ZPLog(@"%@%@",IPTExtField.text,PortTextField.text);
     }else {
-        NSLog(@"ok");
-        NSLog(@"%@%@",IPTExtField.text,PortTextField.text);
+        ZPLog(@"ok");
+        ZPLog(@"%@%@",IPTExtField.text,PortTextField.text);
     }
 }
 
 // 发送数据
 -(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    NSLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
+    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
     [socket readDataWithTimeout:-1 tag:0];
 }
 
 // 接收数据
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"%@%@",sock.connectedHost,newMessage);
+    ZPLog(@"%@%@",sock.connectedHost,newMessage);
     [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
     [socket readDataWithTimeout:-1 tag:0];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    NSLog(@"%@",error);
+    ZPLog(@"%@",error);
     [SVProgressHUD showInfoWithStatus:(@"连接失败")];
 }
 

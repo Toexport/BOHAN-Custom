@@ -57,7 +57,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 - (void)loadData {
     WebSocket *socket = [WebSocket socketManager];
     CommandModel *model = [[CommandModel alloc] init];
-    model.command = @"0008";
+    model.command = @"002F"; // 查询定时状态以及结束时间
     model.deviceNo = self.deviceNo;
     //    MyWeakSelf
     [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
@@ -269,7 +269,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
             //            [HintView showHint:Localize(@"设置成功")];
             [SVProgressHUD showInfoWithStatus:@"设置成功"];
             ZPLog(@"设置成功");
-        }else{
+        }else {
             //            [HintView showHint:error.localizedDescription];
             [SVProgressHUD showErrorWithStatus:@"l设置失败"];
         }

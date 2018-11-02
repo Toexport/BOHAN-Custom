@@ -80,9 +80,9 @@ static NSString *const SERVER = @"http://192.168.3.254:2323";// 测试接口地�
     XMLUtil *xml = [[XMLUtil alloc] init];
     xml.par = parse;
     xml.methodName = method;
-    //    NSLog(@"解析前parse=%@, xml = %@",parse,xml);
+    //    ZPLog(@"解析前parse=%@, xml = %@",parse,xml);
     [xml.par parse];
-    //    NSLog(@"解析后parse=%@, xml = %@",parse,xml);
+    //    ZPLog(@"解析后parse=%@, xml = %@",parse,xml);
     return xml.data;
 }
 
