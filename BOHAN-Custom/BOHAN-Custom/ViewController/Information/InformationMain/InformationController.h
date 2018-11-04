@@ -10,10 +10,7 @@
 #import "FileHeader.pch"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InformationController : UIViewController<GCDAsyncSocketDelegate,UITextFieldDelegate> {
-    GCDAsyncSocket * socket;
-}
-@property (strong) GCDAsyncSocket * socket;
+@interface InformationController : UIViewController<GCDAsyncSocketDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIView *titleView;
 

@@ -38,6 +38,7 @@
 #import "NotificationMacro.h"
 
 
+static GCDAsyncSocket *BHSocket;
 //国际化
 #define Localize(key) NSLocalizedString(key,@"")
 

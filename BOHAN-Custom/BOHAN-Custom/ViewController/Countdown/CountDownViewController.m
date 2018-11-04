@@ -16,6 +16,7 @@
 #import "WebSocket.h"
 #import "WSDatePickerView.h"
 #import "CommandModel.h"
+#import "SocketRocketUtility.h"
 
 @interface CountDownViewController ()<UITableViewDelegate, UITableViewDataSource> {
     __weak IBOutlet STLoopProgressView *progressView;
@@ -28,7 +29,6 @@
     NSInteger totalSecend;//总秒数
     NSInteger lastSecend;//剩余秒数
     BOOL open;
-    
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *mainTable;
@@ -36,13 +36,13 @@
 @property (assign, nonatomic) NSInteger selectedItemIndex;
 @property (nonatomic, weak)NSTimer *timer;//定时器
 
+
 @end
 static NSString *countCellIdentifier = @"countCellIdentifier";
-
+static NSString * HeadStr = @"E7";
+static NSString * queryStr = @"002E0001";
 @implementation CountDownViewController
-@synthesize socket;
-//NSString * HeadStr = @"+RECV:0,E7";
-//NSString * instructionS = @"002F00";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = Localize(@"倒计时");
@@ -52,108 +52,38 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     _mainTable.tintColor = [UIColor colorWithHexString:@"f03c4c"];
     [progressView setPersentage:0];
     [self rightBarTitle:Localize(@"取消") color:[UIColor whiteColor] action:@selector(canceOperation)];
+//    [[WebSocket socketManager] serverSockt];
 //    [self getStatus];
+//    [self countDownTime];
     [self loadData];
-//    [self UI];
+    [self UI];
 }
-
 
 - (void)loadData {
-    socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    NSError *err = nil;
-    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-    if(![socket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
-        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
-    }else {
-        [SVProgressHUD showWithStatus:@"Loading..."];
-        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-        //        1.view的背景颜色
-        [SVProgressHUD setBackgroundColor:[UIColor orangeColor]];
-        //        2.view上面的旋转小图标的 颜色
-        [SVProgressHUD setForegroundColor:[UIColor blueColor]];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        ZPLog(@"ok");
-        ZPLog(@"%@:%@",KEY_PORT,KEY_IP);
-    }
+    NSString * Str = [NSString stringWithFormat:@"%@%@",self.deviceNo,queryStr];
+    NSString * hexString = [Utils hexStringFromString:Str];
+    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
+    NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.deviceNo,queryStr,string];
+    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
+    ZPLog(@"%@",Strr);
 }
-
-// 查询倒计时
-- (void)QueryCountdownStatus {
-//    NSString * 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // 发送数据
--(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@",host]);
-    [socket readDataWithTimeout:-1 tag:0];
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@:%d",host,port]);
+    [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
 // 接收数据
--(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     ZPLog(@"%@%@",sock.connectedHost,newMessage);
-    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
-    [socket readDataWithTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    ZPLog(@"%@",error);
-    [SVProgressHUD showInfoWithStatus:(@"连接失败")];
-}
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
-//    WebSocket *socket = [WebSocket socketManager];
-//    CommandModel *model = [[CommandModel alloc] init];
-//    model.command = @"002F"; // 查询定时状态以及结束时间
-//    model.deviceNo = self.deviceNo;
-//    //    MyWeakSelf
-//    [socket sendSingleDataWithModel:model resultBlock:^(id response, NSError *error) {
-//        if (!error) {
-//            if (((NSString *)response).length == 120) {
-//                NSString *content = [response substringWithRange:NSMakeRange(((NSString *)response).length - 96, 92)];
-//                NSString *electrictyModel = [content substringFromIndex:content.length - 2];
-//                if ([electrictyModel isEqualToString:@"00"] || [electrictyModel isEqualToString:@"01"]) {
-//                    [self countDownTime];
-//                }
-//            }
-//        }else {
-//        }
-//        ZPLog(@"--------%@",response);
-//    }];
-//}
-//
 //- (void)countDownTime {
 //    WebSocket *socket = [WebSocket socketManager];
 //    CommandModel *model = [[CommandModel alloc] init];

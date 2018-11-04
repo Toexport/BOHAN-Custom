@@ -199,6 +199,8 @@ CGSize getTextSizeWithAttributes(UIFont *font,NSString *text, CGFloat maxWidth, 
 
 + (NSString *)getHexByBinary:(NSString *)binary;
 
+//普通字符串转换为十六进制的。
++ (NSString *)hexXStringFromString:(NSString *)string;
 //+ (NSString *)hexStringFromString:(NSString *)string;
 
 //时间间隔时分秒

@@ -24,6 +24,7 @@
 		4DAF1A3B21820AA000B91F80 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */; };
 		4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */; };
 		4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */; };
+		C40A7BBB218D70EB0064BA1F /* NsData.m in Sources */ = {isa = PBXBuildFile; fileRef = C40A7BBA218D70EB0064BA1F /* NsData.m */; };
 		C442325F218C1DD00071ADE3 /* SocketRocketUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C4423252218C1DD00071ADE3 /* SocketRocketUtility.m */; };
 		C4423260218C1DD00071ADE3 /* CommandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4423253218C1DD00071ADE3 /* CommandModel.m */; };
 		C4423261218C1DD00071ADE3 /* NetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4423255218C1DD00071ADE3 /* NetworkRequest.m */; };
@@ -133,6 +134,8 @@
 		4DAF1A3E21820DE100B91F80 /* BCNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCNavigationController.h; sourceTree = "<group>"; };
 		4DAF1A3F21820DE100B91F80 /* BCNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCNavigationController.m; sourceTree = "<group>"; };
 		7D28760051FE06F93E146C73 /* libPods-BOHAN-Custom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BOHAN-Custom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C40A7BB9218D70EB0064BA1F /* NsData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NsData.h; sourceTree = "<group>"; };
+		C40A7BBA218D70EB0064BA1F /* NsData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NsData.m; sourceTree = "<group>"; };
 		C4423252218C1DD00071ADE3 /* SocketRocketUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketRocketUtility.m; sourceTree = "<group>"; };
 		C4423253218C1DD00071ADE3 /* CommandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandModel.m; sourceTree = "<group>"; };
 		C4423255218C1DD00071ADE3 /* NetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkRequest.m; sourceTree = "<group>"; };
@@ -511,6 +514,8 @@
 				C442326A218C3FD80071ADE3 /* SoapManager.m */,
 				C4604C6F218556E800CD41A5 /* UserInfoManager.h */,
 				C4604C70218556E800CD41A5 /* UserInfoManager.m */,
+				C40A7BB9218D70EB0064BA1F /* NsData.h */,
+				C40A7BBA218D70EB0064BA1F /* NsData.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -698,9 +703,9 @@
 		C4C36ABE218712020079D6AE /* STLoopProgressView */ = {
 			isa = PBXGroup;
 			children = (
-				C4C36ABF218712020079D6AE /* STLoopProgressView.h */,
-				C4C36AC0218712020079D6AE /* STLoopProgressView+BaseConfiguration.m */,
 				C4C36AC1218712020079D6AE /* STLoopProgressView+BaseConfiguration.h */,
+				C4C36AC0218712020079D6AE /* STLoopProgressView+BaseConfiguration.m */,
+				C4C36ABF218712020079D6AE /* STLoopProgressView.h */,
 				C4C36AC2218712020079D6AE /* STLoopProgressView.m */,
 			);
 			path = STLoopProgressView;
@@ -983,6 +988,7 @@
 				C4604C88218569FD00CD41A5 /* InformationController.m in Sources */,
 				C4423261218C1DD00071ADE3 /* NetworkRequest.m in Sources */,
 				4DAF1A3C21820AA000B91F80 /* GCDAsyncSocket.m in Sources */,
+				C40A7BBB218D70EB0064BA1F /* NsData.m in Sources */,
 				4DAF1A4021820DE100B91F80 /* BCNavigationController.m in Sources */,
 				C4AA87E72184517B0013307D /* ListTableViewCell.m in Sources */,
 				C4AA87F8218465810013307D /* SingleListController.m in Sources */,

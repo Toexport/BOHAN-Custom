@@ -712,6 +712,7 @@ CGSize getTextSizeWithAttributesDic(NSString *text, CGFloat maxWidth, NSStringDr
     return hexNumber;
 }
 
+// 十六进制转二进制
 + (NSString *)getBinaryByHex:(NSString *)hex {
     NSMutableDictionary *hexDic = [[NSMutableDictionary alloc] initWithCapacity:16];
     //    以上是未设置成功
@@ -861,6 +862,8 @@ CGSize getTextSizeWithAttributesDic(NSString *text, CGFloat maxWidth, NSStringDr
             hex = [hex stringByAppendingString:value];
         }
     }
+//    //保留4位
+//    hex = [Utils addZero:hex withLength:8];
     return hex;
 }
 
@@ -894,6 +897,25 @@ CGSize getTextSizeWithAttributesDic(NSString *text, CGFloat maxWidth, NSStringDr
     return string;
     
 }
+
+//普通字符串转换为十六进制的。
+
++ (NSString *)hexXStringFromString:(NSString *)string{
+    NSData *myD = [string dataUsingEncoding:NSUTF8StringEncoding];
+    Byte *bytes = (Byte *)[myD bytes];
+    //下面是Byte 转换为16进制。
+    NSString *hexStr=@"";
+    for(int i=0;i<[myD length];i++)
+    {
+        NSString *newHexStr = [NSString stringWithFormat:@"%x",bytes[i]&0xff];///16进制数
+        if([newHexStr length]==1)
+            hexStr = [NSString stringWithFormat:@"%@0%@",hexStr,newHexStr];
+        else
+            hexStr = [NSString stringWithFormat:@"%@%@",hexStr,newHexStr];
+    }
+    return hexStr;
+}
+
 
 + (NSString *)gapDateFrom:(NSDate *)fromDate toDate:(NSDate *)toDate
 {

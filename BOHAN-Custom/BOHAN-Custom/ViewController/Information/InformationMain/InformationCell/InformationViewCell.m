@@ -8,9 +8,11 @@
 
 #import "InformationViewCell.h"
 #import "FileHeader.pch"
+
 @implementation InformationViewCell
 
 - (void)awakeFromNib {
+    
     [super awakeFromNib];
     self.Switch1.backgroundColor = [UIColor redColor];
     self.Switch2.backgroundColor = [UIColor redColor];
@@ -19,36 +21,57 @@
 }
 
 - (IBAction)Switch1:(UISwitch *)sender {
-//     self.Switch1.backgroundColor = [UIColor colorWithHexString:@"e4e4e4"];
-    
     if (sender.isOn) {
         self.Switch1.backgroundColor = [UIColor colorWithHexString:@"54d76a"];
-//        self.ExtractButBlock(self.Switch1);
-        self.extractButBlock(self.Switch1);
-        
-        
+        self.switch1ONButBlock(self.Switch1);
         ZPLog(@"开");
     }else {
         self.Switch1.backgroundColor = [UIColor redColor];
-        self.sxtractButBlock(self.Switch1);
+        self.switch1OFFButBlock(self.Switch1);
         ZPLog(@"关");
     }
-    
-    
 }
 
 - (IBAction)Switch2:(UISwitch *)sender {
-    
+    if (sender.isOn) {
+        self.Switch2.backgroundColor = [UIColor colorWithHexString:@"54d76a"];
+        self.switch2ONButBlock(self.Switch2);
+        ZPLog(@"开");
+    }else {
+        self.Switch2.backgroundColor = [UIColor redColor];
+        self.switch2OFFButBlock(self.Switch2);
+        ZPLog(@"关");
+    }
 }
 
 - (IBAction)Switch3:(UISwitch *)sender {
-    
+    if (sender.isOn) {
+        self.Switch3.backgroundColor = [UIColor colorWithHexString:@"54d76a"];
+        self.switch3ONButBlock(self.Switch3);
+        ZPLog(@"开");
+    }else {
+        self.Switch3.backgroundColor = [UIColor redColor];
+        self.switch3OFFButBlock(self.Switch3);
+        ZPLog(@"关");
+    }
 }
 
 - (IBAction)Switch4:(UISwitch *)sender {
-    
+    //to do something.
+    if (sender.isOn) {
+        self.Switch4.backgroundColor = [UIColor colorWithHexString:@"54d76a"];
+        self.switch4ONButBlock(self.Switch4);
+        ZPLog(@"开");
+    }else {
+        self.Switch4.backgroundColor = [UIColor redColor];
+        self.switch4OFFButBlock(self.Switch4);
+        ZPLog(@"关");
+    }
 }
 
+
+
+// 倒计时
 - (IBAction)CountdownBtn:(UIButton *)sender {
     self.countdownBtnBlock(self.CountdownBtn);
 }

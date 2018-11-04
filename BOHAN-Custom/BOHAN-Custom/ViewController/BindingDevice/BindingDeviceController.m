@@ -51,6 +51,12 @@
 
 // 连接
 - (IBAction)ConnectBtn:(UIButton *)sender {
+    if ([self.IPTExtField.text isEqualToString:@""]) {
+        [SVProgressHUD showErrorWithStatus:Localize(@"Please fill out the IP")];
+    }else
+        if ([self.PortTextField.text isEqualToString:@""]) {
+            [SVProgressHUD showErrorWithStatus:Localize(@"Please fill out the Port")];
+        }else {
     socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     //socket.delegate = self;
     NSError *err = nil;
@@ -61,6 +67,7 @@
         ZPLog(@"ok");
         ZPLog(@"%@%@",IPTExtField.text,PortTextField.text);
     }
+        }
 }
 
 // 发送数据
@@ -85,25 +92,25 @@
 // 保存
 - (IBAction)SaceBtn:(UIButton *)sender {
     if ([self.IPTExtField.text isEqualToString:@""]) {
-        [SVProgressHUD showErrorWithStatus:Localize(@"请填写IP")];
+        [SVProgressHUD showErrorWithStatus:Localize(@"Please fill out the IP")];
     }else
         if ([self.PortTextField.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"请填写端口")];
+            [SVProgressHUD showErrorWithStatus:Localize(@"Please fill out the Port")];
     }else
         if ([self.TitleNameTextField.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"请填写设备名称")];
+            [SVProgressHUD showErrorWithStatus:Localize(@"Please fill equipment Name")];
     }else
         if ([self.Switch1Name.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关1名称")];
+            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 1")];
     }else
         if ([self.Switch2Name.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关2名称")];
+            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 2")];
     }else
         if ([self.Switch3Name.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关3名称")];
+            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 3")];
     }else
         if ([self.Switch4Name.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"请填写开关4名称")];
+            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 4")];
     }else {
             [self SaveData];
     }
