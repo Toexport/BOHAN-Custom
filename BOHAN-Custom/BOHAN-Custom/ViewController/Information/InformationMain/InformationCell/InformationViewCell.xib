@@ -94,7 +94,7 @@
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <real key="value" value="14.5"/>
+                                <integer key="value" value="15"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
@@ -124,6 +124,7 @@
                     </view>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1eg-4G-30M">
                         <rect key="frame" x="224" y="108" width="51" height="30"/>
+                        <color key="backgroundColor" red="0.9806855320930481" green="0.11876741796731949" blue="0.029299594461917877" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="2dG-5f-2TS"/>
                         </constraints>
@@ -159,6 +160,7 @@
                     </view>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QD-tLT">
                         <rect key="frame" x="224" y="158" width="51" height="30"/>
+                        <color key="backgroundColor" red="0.9806855320930481" green="0.11876741796731949" blue="0.029299594461917877" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="JRv-JB-oN7"/>
                         </constraints>
@@ -194,6 +196,7 @@
                     </view>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Buh-iv-zcR">
                         <rect key="frame" x="224" y="208" width="51" height="30"/>
+                        <color key="backgroundColor" red="0.9806855320930481" green="0.11876741796731949" blue="0.029299594461917877" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="41f-gt-QAB"/>
                         </constraints>
@@ -298,7 +301,7 @@
                 <outlet property="Switch4" destination="Buh-iv-zcR" id="I0G-El-1Jh"/>
                 <outlet property="TitleNameLabel" destination="fUT-uP-pf0" id="KzU-Gs-Oqi"/>
             </connections>
-            <point key="canvasLocation" x="263.19999999999999" y="197.9010494752624"/>
+            <point key="canvasLocation" x="-159" y="202"/>
         </tableViewCell>
     </objects>
 </document>
