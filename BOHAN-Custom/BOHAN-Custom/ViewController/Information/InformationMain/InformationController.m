@@ -19,7 +19,6 @@
 #import "MJRefreshComponent.h"
 #import "MJRefresh.h"
 
-
 @interface InformationController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSString * Strid;
 @property (nonatomic, strong) NSString * SwitchStr;
@@ -159,6 +158,7 @@ NSString * queryStr = @"00260000";
         self.isCanSelect = YES;
         [self addRefresh];
     }
+//    [SVProgressHUD dismiss];
 //    static dispatch_once_t onceToken;
 //    dispatch_once(&onceToken, ^{ // 单例方法
 //        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
@@ -183,27 +183,29 @@ NSString * queryStr = @"00260000";
 
 // 加载失败
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    self.isCanSelect = NO;
-    // 断线重连
+    [self PostData];
+//    self.isCanSelect = NO;
+//    // 断线重连
     ZPLog(@"断线重连");
-    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-    [BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] withTimeout:5 error:nil];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:15 block:^{ // 列表设置5秒自
-        [BHSocket disconnect];
-    //结束头部刷新
-        [self.tableview.mj_header endRefreshing];
-    } repeats:YES];
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ // 单例方法
-        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{ // 列表设置5秒自动刷新
-        [BHSocket disconnect];
+//    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+//    [BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] withTimeout:5 error:nil];
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:15 block:^{ // 列表设置5秒自
+//        [BHSocket disconnect];
 //    //结束头部刷新
-         [self.tableview.mj_header endRefreshing];
-        } repeats:YES];
-    });
-    [BHSocket readDataWithTimeout:-1 tag:0];
-    [BHSocket disconnect];
+//        [self.tableview.mj_header endRefreshing];
+//    } repeats:YES];
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{ // 单例方法
+//        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
+//        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{ // 列表设置5秒自动刷新
+//        [BHSocket disconnect];
+////    //结束头部刷新
+//         [self.tableview.mj_header endRefreshing];
+//        } repeats:YES];
+//    });
+//    [BHSocket readDataWithTimeout:-1 tag:0];
+//    [BHSocket disconnect];
+//    [SVProgressHUD dismiss];
 }
 
 //接受到新的socket连接才会调用
@@ -561,7 +563,7 @@ NSString * queryStr = @"00260000";
 //    cell.Switch4.userInteractionEnabled = NO;
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        cell.Switch1.userInteractionEnabled = YES;
-//        cell.Switch2.userInteractionEnabled = YES; //啥意思啊6060秒不让点击吗？对你看。为什么啊你不是要求60秒不让点吗，我上面时候说了啊，我说连接失败了，重连，没有加载数据
+//        cell.Switch2.userInteractionEnabled = YES;
 //        cell.Switch3.userInteractionEnabled = YES;
 //        cell.Switch4.userInteractionEnabled = YES;
 //    });
@@ -685,6 +687,7 @@ NSString * queryStr = @"00260000";
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
+
 
 @end
 

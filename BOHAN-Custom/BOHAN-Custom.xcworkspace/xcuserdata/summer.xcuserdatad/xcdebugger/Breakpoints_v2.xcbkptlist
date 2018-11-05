@@ -40,7 +40,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BOHAN-Custom/ViewController/Countdown/CountDownViewController.m"
-            timestampString = "563127816.500213"
+            timestampString = "563129232.835218"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "407"
@@ -56,7 +56,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BOHAN-Custom/ViewController/Countdown/CountDownViewController.m"
-            timestampString = "563127816.500561"
+            timestampString = "563129232.835274"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "390"
@@ -72,28 +72,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BOHAN-Custom/ViewController/Countdown/CountDownViewController.m"
-            timestampString = "563127816.500787"
+            timestampString = "563129232.835313"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
             endingLineNumber = "174"
             landmarkName = "-SetCountdown"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BOHAN-Custom/ViewController/Information/InformationMain/InformationController.m"
-            timestampString = "563127816.501008"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
-            landmarkName = "-socketDidDisconnect:withError:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
