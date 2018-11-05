@@ -24,8 +24,7 @@
 }
 
 - (IBAction)DetermineBtn:(UIButton *)sender {
-    //删除
-    //    [CHKeychain delete:KEY_USERNAME_PASSWORD];
+    
     if ([CHKeychain load:self.UserNameTextField.text]) {
         [SVProgressHUD showInfoWithStatus:@"用户已注册"];
     } else {

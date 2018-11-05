@@ -80,7 +80,11 @@
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     ZPLog(@"%@%@",sock.connectedHost,newMessage);
-    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{ // 单例方法
+    [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
+    });
+//    [SVProgressHUD showSuccessWithStatus:(Localize(@"连接成功"))];
     [socket readDataWithTimeout:-1 tag:0];
 }
 
@@ -127,6 +131,7 @@
     [usernamepasswordKVPairs setObject:self.Switch4Name.text forKey:KEY_Name4];
     [CHKeychain save:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4 data:usernamepasswordKVPairs];
     [SVProgressHUD showSuccessWithStatus:Localize(@"保存成功")];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {

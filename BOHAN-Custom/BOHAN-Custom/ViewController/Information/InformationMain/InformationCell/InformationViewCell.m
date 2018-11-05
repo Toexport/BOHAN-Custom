@@ -14,10 +14,14 @@
 - (void)awakeFromNib {
     
     [super awakeFromNib];
-    self.Switch1.backgroundColor = [UIColor redColor];
+//    self.Switch1.backgroundColor = [UIColor redColor];
     self.Switch2.backgroundColor = [UIColor redColor];
     self.Switch3.backgroundColor = [UIColor redColor];
     self.Switch4.backgroundColor = [UIColor redColor];
+    self.Switch1.transform = CGAffineTransformMakeScale( 1.1, 1.1);//缩放
+    self.Switch2.transform = CGAffineTransformMakeScale( 1.1, 1.1);//缩放
+    self.Switch3.transform = CGAffineTransformMakeScale( 1.1, 1.1);//缩放
+    self.Switch4.transform = CGAffineTransformMakeScale( 1.1, 1.1);//缩放
 }
 
 - (IBAction)Switch1:(UISwitch *)sender {
@@ -57,7 +61,6 @@
 }
 
 - (IBAction)Switch4:(UISwitch *)sender {
-    //to do something.
     if (sender.isOn) {
         self.Switch4.backgroundColor = [UIColor colorWithHexString:@"54d76a"];
         self.switch4ONButBlock(self.Switch4);
@@ -68,8 +71,6 @@
         ZPLog(@"关");
     }
 }
-
-
 
 // 倒计时
 - (IBAction)CountdownBtn:(UIButton *)sender {

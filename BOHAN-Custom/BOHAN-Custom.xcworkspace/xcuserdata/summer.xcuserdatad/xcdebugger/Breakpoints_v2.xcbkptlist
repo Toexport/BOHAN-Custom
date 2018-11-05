@@ -40,12 +40,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BOHAN-Custom/ViewController/Countdown/CountDownViewController.m"
-            timestampString = "563034744.1728801"
+            timestampString = "563101699.745681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "-socket:didReadData:withTag:"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
+            landmarkName = "-timeAction"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -56,12 +56,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BOHAN-Custom/ViewController/Countdown/CountDownViewController.m"
-            timestampString = "563034744.173218"
+            timestampString = "563101699.746104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "-socket:didConnectToHost:port:"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
+            landmarkName = "-setUpTimer"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -71,13 +71,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BOHAN-Custom/ViewController/Information/InformationMain/InformationController.m"
-            timestampString = "563034744.1732759"
+            filePath = "BOHAN-Custom/ViewController/Countdown/CountDownViewController.m"
+            timestampString = "563101699.7463551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
-            landmarkName = "-QueryData"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "-SetCountdown"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -21,7 +21,6 @@ PODS:
     - Realm/Headers (= 3.7.4)
   - Realm/Headers (3.7.4)
   - SAMKeychain (1.5.3)
-  - SocketRocket (0.5.1)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
@@ -31,7 +30,6 @@ DEPENDENCIES:
   - MJRefresh
   - Realm
   - SAMKeychain
-  - SocketRocket
   - SVProgressHUD
 
 SPEC REPOS:
@@ -42,7 +40,6 @@ SPEC REPOS:
     - MJRefresh
     - Realm
     - SAMKeychain
-    - SocketRocket
     - SVProgressHUD
 
 SPEC CHECKSUMS:
@@ -52,9 +49,8 @@ SPEC CHECKSUMS:
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
-  SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 0e7c9565e1ad7a51963f723a8409f9edd563e5dc
+PODFILE CHECKSUM: ed22f811d728f9de523e7d42441f6bd8c0cb62da
 
 COCOAPODS: 1.5.3

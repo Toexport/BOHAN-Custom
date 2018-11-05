@@ -12,17 +12,19 @@
 #import "BindingDeviceController.h"
 #import "LoginViewController.h"
 #import "CountDownViewController.h"
-#import "CommandModel.h"
-#import "WebSocket.h"
 #import <Foundation/Foundation.h>
 #import "NSTimer+Action.h"
 #import "NsData.h"
+#import "Masonry.h"
+#import "MJRefreshComponent.h"
 
 @interface InformationController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSString * Strid;
 @property (nonatomic, strong) NSString * SwitchStr;
+@property (nonatomic, strong) NSString * StateSStr;
 @property (nonatomic, strong) NSString * Switch1;
 @property (nonatomic, weak) NSTimer *timer;
+
 @property (nonatomic, assign) BOOL isCanSelect;
 @end
 
@@ -30,7 +32,7 @@
 NSString * HeadStr = @"E7";
 NSString * instruction = @"00130001";
 NSString * instructionS = @"00130001";
-NSString * queryStr = @"00320000";
+NSString * queryStr = @"00260000";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,7 +41,10 @@ NSString * queryStr = @"00320000";
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
     [self PostData];
+    
+    
 }
+
 
 - (IBAction)GetData:(UIButton *)sender {
     [self PostData];
@@ -107,75 +112,8 @@ NSString * queryStr = @"00320000";
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
     };
     [self SwitchStateS:cell];
+    [self SwitcBtn:cell]; // 开关点击事件
     
-    //     开关1
-    cell.switch1ONButBlock = ^(id  _Nonnull Switch1OnBut) {
-        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        });
-        [self Switch1oN];
-    };
-    cell.switch1OFFButBlock = ^(id  _Nonnull Switch1OFFButBlock) {
-        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        });
-            [self Switch1Off];
-    };
-    //     开关2
-    cell.switch2ONButBlock = ^(id  _Nonnull Switch2OnBut) {
-        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        });
-             [self Switch2oN];
-    };
-    cell.switch2OFFButBlock = ^(id  _Nonnull Switch2OFFButBlock) {
-        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        });
-             [self Switch2Off];
-    };
-    //     开关3
-    cell.switch3ONButBlock = ^(id  _Nonnull Switch3OnBut) {
-        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        });
-            [self Switch3oN];
-    };
-    cell.switch3OFFButBlock = ^(id  _Nonnull Switch3OFFButBlock) {
-        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        });
-            [self Switch3Off];
-    };
-    //     开关4
-    cell.switch4ONButBlock = ^(id  _Nonnull Switch4OnBut) {
-        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        });
-            [self Switch4oN];
-    };
-    cell.switch4OFFButBlock = ^(id  _Nonnull Switch4OFFButBlock) {
-        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        });
-            [self Switch4Off];
-    };
     return cell;
 }
 
@@ -196,20 +134,19 @@ NSString * queryStr = @"00320000";
         NSString * SwitchState = [newMessage substringWithRange:NSMakeRange(14, 2)];
         if (![self.SwitchStr isEqualToString:SwitchState]) {
             self.SwitchStr = SwitchState;
-            [self.tableview reloadData];
         }
         self.SwitchStr = SwitchState;
         ZPLog(@"%@---%@",STRid,SwitchState);
+        [self.tableview reloadData];
     }
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ // 单例方法
         [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-//        self.tableview.hidden = NO;
-//        self.timer = [NSTimer scheduledTimerWithTimeInterval:3 block:^{ // 列表设置15秒自动刷新
-        [self QueryData];
-        
-//        } repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:8 block:^{ // 列表设置5秒自动刷新
+            [self QueryData];
+            [self.tableview reloadData];
+        } repeats:YES];
     });
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
@@ -220,19 +157,15 @@ NSString * queryStr = @"00320000";
     NSString * hexString = [Utils hexStringFromString:Str];
     NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
     NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@",self.Strid,queryStr,string];
-        NSString * UFT = @" E7701811020001002E0001CB0D";
-    [BHSocket writeData:[UFT dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,queryStr,string];
+    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
-
-
-
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
     ZPLog(@"%@",error);
     [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
-    self.tableview.hidden = YES;
+    //    self.tableview.hidden = YES;
 }
 
 // 开关1开启
@@ -277,29 +210,16 @@ NSString * queryStr = @"00320000";
     NSString *string22 = @"10001000";
     NSString *string222 = [string22 stringByReplacingCharactersInRange:NSMakeRange(4, 1) withString:@"9"];
     ZPLog(@"replace---%@",string222);
-    
-////    NSString * Instruction = @"10000001";
-////    NSString * State = [Utils getHexByBinary:Instruction];
-//    NSString * State = @"81";
-//    ZPLog(@"%@",State);
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instructionS,State];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instructionS,State,stRR];
-//    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [socket readDataWithTimeout:-1 tag:0];
-//    ZPLog(@"%@",Strr);
 }
 
 // 开关2开启
 - (void)Switch2oN {
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-//
+    //
     NSString * Stats = [State substringWithRange:NSMakeRange(6, 1)]; // 获取2位
-
+    
     NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-//
+    //
     NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的1换成0
     NSString * KLKK = [State substringWithRange:NSMakeRange(7, 1)];
     NSString * SRT = [State substringWithRange:NSMakeRange(0, 6)];
@@ -316,18 +236,6 @@ NSString * queryStr = @"00320000";
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
-    
-    
-    
-//    NSString * State = @"8D";
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,State];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,State,stRR];
-//    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [socket readDataWithTimeout:-1 tag:0];
-//    ZPLog(@"%@",Strr);
 }
 
 // 开关2关闭
@@ -353,15 +261,15 @@ NSString * queryStr = @"00320000";
     [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
     
-//    NSString * State = @"8B";
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instructionS,State];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instructionS,State,stRR];
-//    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [socket readDataWithTimeout:-1 tag:0];
-//    ZPLog(@"%@",Strr);
+    //    NSString * State = @"8B";
+    //    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instructionS,State];
+    //    NSString * string = [Utils hexStringFromString:Str];
+    //    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+    //    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+    //    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instructionS,State,stRR];
+    //    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    //    [socket readDataWithTimeout:-1 tag:0];
+    //    ZPLog(@"%@",Strr);
 }
 
 // 开关3开启
@@ -391,15 +299,15 @@ NSString * queryStr = @"00320000";
     
     
     
-//    NSString * State = @"80";
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,State];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,State,stRR];
-//    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [socket readDataWithTimeout:-1 tag:0];
-//    ZPLog(@"%@",Strr);
+    //    NSString * State = @"80";
+    //    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,State];
+    //    NSString * string = [Utils hexStringFromString:Str];
+    //    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+    //    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+    //    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,State,stRR];
+    //    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    //    [socket readDataWithTimeout:-1 tag:0];
+    //    ZPLog(@"%@",Strr);
 }
 
 // 开关3关闭
@@ -428,15 +336,15 @@ NSString * queryStr = @"00320000";
     [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
     
-//    NSString * State = @"82";
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instructionS,State];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instructionS,State,stRR];
-//    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [socket readDataWithTimeout:-1 tag:0];
-//    ZPLog(@"%@",Strr);
+    //    NSString * State = @"82";
+    //    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instructionS,State];
+    //    NSString * string = [Utils hexStringFromString:Str];
+    //    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+    //    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+    //    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instructionS,State,stRR];
+    //    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    //    [socket readDataWithTimeout:-1 tag:0];
+    //    ZPLog(@"%@",Strr);
 }
 
 // 开关4开启
@@ -463,17 +371,6 @@ NSString * queryStr = @"00320000";
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
-//    NSString * State = @"80";
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,State];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,State,stRR];
-//    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [socket readDataWithTimeout:-1 tag:0];
-////    [socket readDataWithTimeout:-1 tag:100];
-//    ZPLog(@"%@",Strr);
 }
 
 // 开关4关闭
@@ -501,18 +398,6 @@ NSString * queryStr = @"00320000";
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
-    
-    
-//    NSString * State = @"82";
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instructionS,State];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instructionS,State,stRR];
-//    [socket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [socket readDataWithTimeout:-1 tag:0];
-////    [socket readDataWithTimeout:-1 tag:100];
-//    ZPLog(@"%@",Strr);
 }
 
 // 启动加载Sock
@@ -521,7 +406,7 @@ NSString * queryStr = @"00320000";
     NSError *err = nil;
     NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
     if(![BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
-        self.tableview.hidden = YES;
+        //        self.tableview.hidden = YES;
         [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
     }else {
         [SVProgressHUD showWithStatus:@"Loading..."];
@@ -536,93 +421,223 @@ NSString * queryStr = @"00320000";
     }
 }
 
-    // 查询开关状态
-    - (void)SwitchStateS:(InformationViewCell *)cell { // 不显示出来。。。你来,keyilema
-        if ([self.SwitchStr isEqualToString:@"80"]) {
-            cell.Switch1.on = YES;
+// 开关点击事件
+- (void)SwitcBtn:(InformationViewCell *)cell {
+    //     开关1
+    cell.switch1ONButBlock = ^(id  _Nonnull Switch1OnBut) {
+        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
+            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(7, 1)];
+            if ([State16 containsString:@"0"]) {
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
+            }else {
+                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
+            }
+        });
+        [self Switch1oN];
+    };
+    
+    cell.switch1OFFButBlock = ^(id  _Nonnull Switch1OFFButBlock) {
+        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
+            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(7, 1)];
+            if ([State16 containsString:@"1"]) {
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
+            }else {
+                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
+            }
+        });
+        [self Switch1Off];
+    };
+    
+    //     开关2
+    cell.switch2ONButBlock = ^(id  _Nonnull Switch2OnBut) {
+        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
+            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(6, 1)];
+            if ([State16 containsString:@"0"]) {
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
+            }else {
+                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
+            }
+        });
+        [self Switch2oN];
+    };
+    cell.switch2OFFButBlock = ^(id  _Nonnull Switch2OFFButBlock) {
+        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
+            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(6, 1)];
+            if ([State16 containsString:@"1"]) {
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
+            }else {
+                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
+            }
+        });
+        [self Switch2Off];
+    };
+    
+    //     开关3
+    cell.switch3ONButBlock = ^(id  _Nonnull Switch3OnBut) {
+        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
+            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(5, 1)];
+            if ([State16 containsString:@"0"]) {
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
+            }else {
+                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
+            }
+        });
+        [self Switch3oN];
+    };
+    cell.switch3OFFButBlock = ^(id  _Nonnull Switch3OFFButBlock) {
+        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
+            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(5, 1)];
+            if ([State16 containsString:@"1"]) {
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
+            }else {
+                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
+            }
+        });
+        [self Switch3Off];
+    };
+    
+    //     开关4
+    cell.switch4ONButBlock = ^(id  _Nonnull Switch4OnBut) {
+        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
+            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(4, 1)];
+            if ([State16 containsString:@"0"]) {
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
+            }else {
+                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
+            }
+        });
+        [self Switch4oN];
+    };
+    cell.switch4OFFButBlock = ^(id  _Nonnull Switch4OFFButBlock) {
+        [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
+            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(4, 1)];
+            if ([State16 containsString:@"0"]) {
+                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
+            }else {
+                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
+            }
+        });
+        [self Switch4Off];
+    };
+}
+
+// 查询开关状态
+- (void)SwitchStateS:(InformationViewCell *)cell {
+    if ([self.SwitchStr isEqualToString:@"80"]) {
+        cell.Switch1.on = YES;
+        cell.Switch2.on = YES;
+        cell.Switch3.on = YES;
+        cell.Switch4.on = YES;
+    }else
+        if ([self.SwitchStr isEqualToString:@"81"]) {
+            cell.Switch1.on = NO;
             cell.Switch2.on = YES;
             cell.Switch3.on = YES;
             cell.Switch4.on = YES;
         }else
-            if ([self.SwitchStr isEqualToString:@"81"]) {
-                cell.Switch1.on = NO;
-                cell.Switch2.on = YES;
+            if ([self.SwitchStr isEqualToString:@"82"]) {
+                cell.Switch1.on = YES;
+                cell.Switch2.on = NO;
                 cell.Switch3.on = YES;
                 cell.Switch4.on = YES;
             }else
-                if ([self.SwitchStr isEqualToString:@"82"]) {
-                    cell.Switch1.on = YES;
-                    cell.Switch2.on = YES;
-                    cell.Switch3.on = NO;
+                if ([self.SwitchStr isEqualToString:@"83"]) {
+                    cell.Switch1.on = NO;
+                    cell.Switch2.on = NO;
+                    cell.Switch3.on = YES;
                     cell.Switch4.on = YES;
                 }else
-                    if ([self.SwitchStr isEqualToString:@"83"]) {
-                        cell.Switch1.on = NO;
-                        cell.Switch2.on = NO;
-                        cell.Switch3.on = YES;
+                    if ([self.SwitchStr isEqualToString:@"84"]) {
+                        cell.Switch1.on = YES;
+                        cell.Switch2.on = YES;
+                        cell.Switch3.on = NO;
                         cell.Switch4.on = YES;
                     }else
-                        if ([self.SwitchStr isEqualToString:@"84"]) {
-                            cell.Switch1.on = YES;
+                        if ([self.SwitchStr isEqualToString:@"85"]) {
+                            cell.Switch1.on = NO;
                             cell.Switch2.on = YES;
                             cell.Switch3.on = NO;
                             cell.Switch4.on = YES;
                         }else
-                            if ([self.SwitchStr isEqualToString:@"85"]) {
-                                cell.Switch1.on = NO;
-                                cell.Switch2.on = YES;
+                            if ([self.SwitchStr isEqualToString:@"86"]) {
+                                cell.Switch1.on = YES;
+                                cell.Switch2.on = NO;
                                 cell.Switch3.on = NO;
                                 cell.Switch4.on = YES;
                             }else
-                                if ([self.SwitchStr isEqualToString:@"86"]) {
-                                    cell.Switch1.on = YES;
-                                    cell.Switch2.on = NO;
-                                    cell.Switch3.on = NO;
-                                    cell.Switch4.on = YES;
-                                }else
-                                  if ([self.SwitchStr isEqualToString:@"88"]) {
-                                            cell.Switch1.on = YES;
-                                            cell.Switch2.on = YES;
-                                            cell.Switch3.on = YES;
-                                            cell.Switch4.on = NO;
-                                }else
-                                    if ([self.SwitchStr isEqualToString:@"8B"]) {
-                                        cell.Switch1.on = NO;
-                                        cell.Switch2.on = NO;
-                                        cell.Switch3.on = YES;
-                                        cell.Switch4.on = NO;
-                                    }else
-                                if ([self.SwitchStr isEqualToString:@"8D"]) {
-                                    cell.Switch1.on = YES;
+                                if ([self.SwitchStr isEqualToString:@"87"]) {
+                                    cell.Switch1.on = NO;
                                     cell.Switch2.on = NO;
                                     cell.Switch3.on = YES;
                                     cell.Switch4.on = YES;
                                 }else
-                                    if ([self.SwitchStr isEqualToString:@"8C"]) {
+                                    if ([self.SwitchStr isEqualToString:@"88"]) {
                                         cell.Switch1.on = YES;
                                         cell.Switch2.on = YES;
-                                        cell.Switch3.on = NO;
+                                        cell.Switch3.on = YES;
                                         cell.Switch4.on = NO;
                                     }else
-                                        if ([self.SwitchStr isEqualToString:@"8F"]) {
+                                        if ([self.SwitchStr isEqualToString:@"89"]) {
                                             cell.Switch1.on = NO;
-                                            cell.Switch2.on = NO;
-                                            cell.Switch3.on = NO;
+                                            cell.Switch2.on = YES;
+                                            cell.Switch3.on = YES;
                                             cell.Switch4.on = NO;
                                         }else
-                                            if ([self.SwitchStr isEqualToString:@"89"]) {
+                                            if ([self.SwitchStr isEqualToString:@"8B"]) {
                                                 cell.Switch1.on = NO;
-                                                cell.Switch2.on = YES;
+                                                cell.Switch2.on = NO;
                                                 cell.Switch3.on = YES;
                                                 cell.Switch4.on = NO;
                                             }else
-                                                if ([self.SwitchStr isEqualToString:@"8E"]) {
-                                                    cell.Switch1.on = YES;
-                                                    cell.Switch2.on = NO;
+                                                if ([self.SwitchStr isEqualToString:@"8D"]) {
+                                                    cell.Switch1.on = NO;
+                                                    cell.Switch2.on = YES;
                                                     cell.Switch3.on = NO;
                                                     cell.Switch4.on = NO;
-                                                }
-    }
+                                                }else
+                                                    if ([self.SwitchStr isEqualToString:@"8C"]) {
+                                                        cell.Switch1.on = YES;
+                                                        cell.Switch2.on = YES;
+                                                        cell.Switch3.on = NO;
+                                                        cell.Switch4.on = NO;
+                                                    }else
+                                                        if ([self.SwitchStr isEqualToString:@"8E"]) {
+                                                            cell.Switch1.on = YES;
+                                                            cell.Switch2.on = NO;
+                                                            cell.Switch3.on = NO;
+                                                            cell.Switch4.on = NO;
+                                                        }else
+                                                            if ([self.SwitchStr isEqualToString:@"8F"]) {
+                                                                cell.Switch1.on = NO;
+                                                                cell.Switch2.on = NO;
+                                                                cell.Switch3.on = NO;
+                                                                cell.Switch4.on = NO;
+                                                            }
+}
 
 
 // 注销登录
@@ -644,3 +659,4 @@ NSString * queryStr = @"00320000";
 }
 
 @end
+

@@ -146,6 +146,16 @@
     passwordTF.secureTextEntry = sender.selected;
     sender.selected = !sender.selected;
 }
+// 删除数据
+- (IBAction)delete:(UIButton *)sender {
+    //删除
+    [CHKeychain delete:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    [CHKeychain delete:KEY_USERNAME];
+     [CHKeychain delete:KEY_PASSWORD];
+    [CHKeychain delete:KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    
+}
+
 
 - (IBAction)registAction {
     RegisterViewController * Register = [[RegisterViewController alloc] init];

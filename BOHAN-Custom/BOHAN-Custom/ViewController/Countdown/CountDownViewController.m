@@ -13,10 +13,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "NSTimer+Action.h"
 #import "FileHeader.pch"
-#import "WebSocket.h"
 #import "WSDatePickerView.h"
-#import "CommandModel.h"
-#import "SocketRocketUtility.h"
 
 @interface CountDownViewController ()<UITableViewDelegate, UITableViewDataSource> {
     __weak IBOutlet STLoopProgressView *progressView;
@@ -40,7 +37,8 @@
 @end
 static NSString *countCellIdentifier = @"countCellIdentifier";
 static NSString * HeadStr = @"E7";
-static NSString * queryStr = @"002E0001";
+static NSString * queryStr = @"002F0000";
+static NSString * countdownStr = @"002E000C";
 @implementation CountDownViewController
 
 - (void)viewDidLoad {
@@ -53,21 +51,51 @@ static NSString * queryStr = @"002E0001";
     [progressView setPersentage:0];
     [self rightBarTitle:Localize(@"取消") color:[UIColor whiteColor] action:@selector(canceOperation)];
 //    [[WebSocket socketManager] serverSockt];
+    
 //    [self getStatus];
 //    [self countDownTime];
-    [self loadData];
+//    [self loadData];
+    [self PostData];
     [self UI];
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
 
-- (void)loadData {
-    NSString * Str = [NSString stringWithFormat:@"%@%@",self.deviceNo,queryStr];
-    NSString * hexString = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
-    NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.deviceNo,queryStr,string];
-    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-    [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+// 启动加载Sock
+- (void)PostData {
+    BHSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    NSError *err = nil;
+    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    if(![BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
+        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
+    }else {
+        [SVProgressHUD showWithStatus:@"Loading..."];
+        //        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+        //        1.view的背景颜色
+        //        [SVProgressHUD setBackgroundColor:[UIColor orangeColor]];
+        //        2.view上面的旋转小图标的 颜色
+        //        [SVProgressHUD setForegroundColor:[UIColor blueColor]];
+        //        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        ZPLog(@"ok");
+        ZPLog(@"%@:%@",KEY_PORT,KEY_IP);
+    }
 }
 
 // 发送数据
@@ -80,9 +108,78 @@ static NSString * queryStr = @"002E0001";
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     ZPLog(@"%@%@",sock.connectedHost,newMessage);
+    
+    //    if (newMessage.length > 11) {
+    //        NSString * STRid = [newMessage substringWithRange:NSMakeRange(2, 12)];
+    //        self.Strid = STRid;
+    //        NSString * SwitchState = [newMessage substringWithRange:NSMakeRange(14, 2)];
+    //        if (![self.SwitchStr isEqualToString:SwitchState]) {
+    //            self.SwitchStr = SwitchState;
+    //            [self.tableview reloadData];
+    //        }
+    //        self.SwitchStr = SwitchState;
+    //        ZPLog(@"%@---%@",STRid,SwitchState);// 动画都在下面，我不知道那个是开启动画的代码
+    //    }
+    //
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{ // 单例方法
+        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
+        //        //        self.tableview.hidden = NO;
+                //        self.timer = [NSTimer scheduledTimerWithTimeInterval:3 block:^{ // 列表设置15秒自动刷新
+        //        [self QueryData];
+        [self loadData];
+//       } repeats:YES];
+    });
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
+    ZPLog(@"%@",error);
+    [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
+}
+// 查询
+- (void)loadData {
+    NSString * Str = [NSString stringWithFormat:@"%@%@",self.deviceNo,queryStr];
+    NSString * hexString = [Utils hexStringFromString:Str];
+    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
+    NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.deviceNo,queryStr,string];
+//    NSString * ssss = @"E7701811020001002F0000CB0D";
+    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
+    ZPLog(@"%@",Strr);
+}
+
+// 定时开关
+- (void)SetCountdown {
+    NSString * TimeStr = [NSString stringWithFormat:@"%@010000FF0000FF0000FF",time.text];
+    NSString * strUrl = [TimeStr stringByReplacingOccurrencesOfString:@":" withString:@""];  //去掉:
+    NSString * str = [NSString stringWithFormat:@"%@%@%@",self.deviceNo,countdownStr,strUrl];
+    NSString * hexString = [Utils hexStringFromString:str];
+    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
+    NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.deviceNo,countdownStr,strUrl,string];
+//    E7701811020001002E000C0002000000FF0000FF0000FFD90D"
+//    E7701811020001002E000C0005010000FF0000FF0000FFD90D
+//
+    
+//    NSString * hexString = [Utils hexStringFromString:Strr];
+//    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
+//    NSString * AAAA = [NSString stringWithFormat:@"E7%@%@0D",aaaa,CheckCode];
+//    E7701811020001002E000C0002000002FF0002FF0002FFDB0D
+    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
+    ZPLog(@"%@",time.text);
+    [self setUpTimer];
+    ZPLog(@"%@",Strr);
+}
+
+- (void)HHmmddmmNN {
+    NSString * BBBB = @"E77018110200010031000509500952012E0D";
+    [BHSocket writeData:[BBBB dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
+    ZPLog(@"%@",BBBB);
+}
 
 //- (void)countDownTime {
 //    WebSocket *socket = [WebSocket socketManager];
@@ -238,6 +335,7 @@ static NSString * queryStr = @"002E0001";
     };
     view.buttonAction = ^(UIButton *sender) {
         [self startAction];
+        [self HHmmddmmNN];
     };
     _mainTable.tableFooterView = view;
 
@@ -245,7 +343,9 @@ static NSString * queryStr = @"002E0001";
 
 // 延时开关
 - (IBAction)DelayClosingBut:(UIButton *)sender {
-    [self startAction];
+//    [self startAction];
+    [self SetCountdown];
+    
 }
 //
 // 延时数据
@@ -288,7 +388,7 @@ static NSString * queryStr = @"002E0001";
 - (void)setUpTimer {
     //说明已经过了时间,不再开启定时器
     NSComparisonResult result =[startDate compare:[NSDate date]];
-    if (result != NSOrderedDescending) {
+    if (result != NSOrderedDescending) {//是不是上面没有写这个StartDate进去啊
         [self stopTimer];
         return;
     }
@@ -352,14 +452,13 @@ static NSString * queryStr = @"002E0001";
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"5c5c5c"];
     }
-
-
     return cell;
 }
+
 #pragma mark 按钮的点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 2) {
-        [formatter setDateFormat:@"HH:mm"];
+        [formatter setDateFormat:@"HHmm"];
         WSDatePickerView *datepicker = [[WSDatePickerView alloc] initWithDateStyle:DateStyleShowHourMinute scrollToDate:[formatter dateFromString:[time.text substringToIndex:5]] CompleteBlock:^(NSDate *selectDate) {
             if (self.selectedItemIndex != indexPath.row) {
                 self.selectedItemIndex = indexPath.row;
@@ -377,9 +476,9 @@ static NSString * queryStr = @"002E0001";
 
     }else {
         if (indexPath.row == 0) {
-            [time setText:@"00:05:00"];
+            [time setText:@"00:05"];
         }else {
-            [time setText:@"00:10:00"];
+            [time setText:@"00:10"];
         }
         if (self.selectedItemIndex != indexPath.row) {
             self.selectedItemIndex = indexPath.row;

@@ -51,6 +51,7 @@
 
 // 登录注册
 #define KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4  @"com.company.app.usernamepasswordtitlenameipportname1name2name3name4"
+#define KEY_USERNAME_PASSWORD @"com.company.app.usernamepassword"
 #define KEY_USERNAME  @"com.company.app.username"
 #define KEY_PASSWORD  @"com.company.app.password"
 // 添加设备
