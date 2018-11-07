@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZHeartBeatSocket : NSObject
 
++ (instancetype)shareZheartBeatSocket;
+- (void)initZheartBeatSocket;               //创建单例内部的GCDAsyncSocket
+- (void)runTimerWhenAppEnterBackGround;     //如果需要在APP进入后台开启NStimer
+
 @end
 
 NS_ASSUME_NONNULL_END

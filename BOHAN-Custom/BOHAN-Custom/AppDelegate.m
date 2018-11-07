@@ -13,7 +13,10 @@
 #import "ListViewController.h"
 #import "FileHeader.pch"
 #import "AFNetworking.h"
-@interface AppDelegate ()<UITabBarControllerDelegate>
+#import "ZHeartBeatSocket.h"
+@interface AppDelegate ()<UITabBarControllerDelegate>{
+    ZHeartBeatSocket *_socket;
+}
 
 @end
 
@@ -39,7 +42,10 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor], nil] forKeys:[NSArray arrayWithObjects:NSForegroundColorAttributeName, nil]]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
-
+    
+    _socket  =  [ZHeartBeatSocket shareZheartBeatSocket];
+    [_socket initZheartBeatSocket];
+    
     return YES;
 }
 
@@ -50,8 +56,9 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
+    //如果需要添加NSTimer
+    [_socket runTimerWhenAppEnterBackGround];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
