@@ -71,9 +71,24 @@
     }
 }
 
-// 倒计时
-- (IBAction)CountdownBtn:(UIButton *)sender {
-    self.countdownBtnBlock(self.CountdownBtn);
+// 倒计时1
+- (IBAction)Countdown1Btn:(UIButton *)sender {
+    self.countdown1BtnBlock(self.Countdown1Btn);
+}
+
+// 倒计时2
+- (IBAction)Countdown2Btn:(UIButton *)sender {
+    self.countdown2BtnBlock(self.Countdown2Btn);
+}
+
+// 倒计时3
+- (IBAction)Countdown3Btn:(UIButton *)sender {
+    self.countdown3BtnBlock(self.Countdown3Btn);
+}
+
+// 倒计时4
+- (IBAction)Countdown4Btn:(UIButton *)sender {
+    self.countdown4BtnBlock(self.Countdown4Btn);
 }
 
 @end

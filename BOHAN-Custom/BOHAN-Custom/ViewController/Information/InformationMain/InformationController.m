@@ -106,16 +106,9 @@
     cell.NameLabel4.text = [usernamepasswordKVPairs objectForKey:KEY_Name4];
     [self SwitchStateS:cell];
     [self SwitcBtn:cell]; // 开关点击事件
-    cell.countdownBtnBlock = ^(id  _Nonnull CountdownBtn) {
-        CountDownViewController * CountDown = [[CountDownViewController alloc]init];
-        CountDown.deviceNo = self.Strid;
-        [self.navigationController pushViewController:CountDown animated:YES];
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
-    };
+    [self SwitchPush:cell]; // 开关点击跳转事件
     return cell;
 }
-
 
 // 发送数据
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
@@ -123,22 +116,28 @@
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
-
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    ZPLog(@"%@%@",sock.connectedHost,newMessage);
+    ZPLog(@"%@-----%@",sock.connectedHost,newMessage);
     if (newMessage.length > 14) {
         NSString * STRid = [newMessage substringWithRange:NSMakeRange(2, 12)];
         self.Strid = STRid;
-        NSString * SwitchState = [newMessage substringWithRange:NSMakeRange(14, 2)];
+        if (newMessage.length > 26) {
+            SwitchState = [newMessage substringWithRange:NSMakeRange(26, 2)];
+        }else {
+            SwitchState = [newMessage substringWithRange:NSMakeRange(14, 2)];
+        }
         if (![self.SwitchStr isEqualToString:SwitchState] && ![SwitchState isEqualToString:@"00"]) {
             self.SwitchStr = SwitchState;
             [self.tableview reloadData];
             [self.tableview.mj_header endRefreshing];
-            [SVProgressHUD dismiss];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+//            });
+            
         }
-        self.SwitchStr = SwitchState;
+//        self.SwitchStr = SwitchState;
         ZPLog(@"%@---%@",STRid,SwitchState);
         
 //        [self.tableview reloadData];
@@ -148,7 +147,9 @@
         self.isCanSelect = YES;
         [self addRefresh];
     }
-    [SVProgressHUD dismiss];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+//    });
 //    static dispatch_once_t onceToken;
 //    dispatch_once(&onceToken, ^{ // 单例方法
 //        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
@@ -206,6 +207,7 @@
         [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
     }else {
         [SVProgressHUD showWithStatus:@"Reconnect..."];
+        
     }
 }
 
@@ -222,7 +224,6 @@
     NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
     NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
@@ -242,7 +243,7 @@
 //    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
 //    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
 //    [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
+     ZPLog(@"开关1开启%@",Strr);
 }
 
 // 开关1关闭
@@ -256,7 +257,7 @@
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
-    
+    ZPLog(@"开关1关闭%@",Strr);
 //    NSString *string22 = @"10001000";
 //    NSString *string222 = [string22 stringByReplacingCharactersInRange:NSMakeRange(4, 1) withString:@"9"];
 //    ZPLog(@"replace---%@",string222);
@@ -273,23 +274,7 @@
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
-    
-//    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-//    NSString * Stats = [State substringWithRange:NSMakeRange(6, 1)]; // 获取2位
-//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的1换成0
-//    NSString * KLKK = [State substringWithRange:NSMakeRange(7, 1)];
-//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 6)];
-//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-//    NSString * UKTS = [Utils getHexByBinary:STRURL];
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
-//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
+    ZPLog(@"开关2开启%@",Strr);
 }
 
 // 开关2关闭
@@ -318,7 +303,7 @@
 //    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
 //    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
 //    [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
+     ZPLog(@"开关2关闭%@",Strr);
 }
 
 // 开关3开启
@@ -375,7 +360,7 @@
 //    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
 //    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
 //    [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
+    ZPLog(@"开关3关闭%@",Strr);
 }
 
 // 开关4开启
@@ -433,7 +418,7 @@
 //    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
 //    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
 //    [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
+    ZPLog(@"开关4关闭%@",Strr);
 }
 
 // 启动加载Sock
@@ -466,7 +451,6 @@
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
         });
         [self Switch1oN];
-        //        192.168.3.253:6878
     };
     cell.switch1OFFButBlock = ^(id  _Nonnull Switch1OFFButBlock) {
         [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
@@ -529,12 +513,11 @@
         });
         [self Switch4Off];
     };
-    
 //    cell.Switch1.userInteractionEnabled = NO;
 //    cell.Switch2.userInteractionEnabled = NO;
 //    cell.Switch3.userInteractionEnabled = NO;
 //    cell.Switch4.userInteractionEnabled = NO;
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        cell.Switch1.userInteractionEnabled = YES;
 //        cell.Switch2.userInteractionEnabled = YES;
 //        cell.Switch3.userInteractionEnabled = YES;
@@ -642,6 +625,41 @@
                                                                 }
 }
 
+// 点击开关跳转事件
+- (void)SwitchPush:(InformationViewCell *)cell {
+    cell.countdown1BtnBlock = ^(id  _Nonnull Countdown1Btn) {
+        CountDownViewController * CountDown = [[CountDownViewController alloc]init];
+        CountDown.deviceNo = self.Strid;
+        CountDown.type = 111;
+        [self.navigationController pushViewController:CountDown animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
+    };
+    cell.countdown2BtnBlock = ^(id  _Nonnull Countdown2Btn) {
+        CountDownViewController * CountDown = [[CountDownViewController alloc]init];
+        CountDown.deviceNo = self.Strid;
+        CountDown.type = 222;
+        [self.navigationController pushViewController:CountDown animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
+    };
+    cell.countdown3BtnBlock = ^(id  _Nonnull Countdown3Btn) {
+        CountDownViewController * CountDown = [[CountDownViewController alloc]init];
+        CountDown.deviceNo = self.Strid;
+        CountDown.type = 333;
+        [self.navigationController pushViewController:CountDown animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
+    };
+    cell.countdown4BtnBlock = ^(id  _Nonnull Countdown4Btn) {
+        CountDownViewController * CountDown = [[CountDownViewController alloc]init];
+        CountDown.deviceNo = self.Strid;
+        CountDown.type = 444;
+        [self.navigationController pushViewController:CountDown animated:YES];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
+    };
+}
 
 // 注销登录
 - (void)LogOut {

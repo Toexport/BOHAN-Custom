@@ -112,7 +112,7 @@
                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="CountdownBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7y7-r3-1zc"/>
+                            <action selector="Countdown1Btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qfh-zp-bWI"/>
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x9X-lK-sei">
@@ -148,7 +148,7 @@
                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="CountdownBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7uG-Fh-gXk"/>
+                            <action selector="Countdown2Btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="1wG-PE-Xdd"/>
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KIo-0C-VJx">
@@ -184,7 +184,7 @@
                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="CountdownBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Yom-ML-2Sh"/>
+                            <action selector="Countdown3Btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vdt-lD-bbX"/>
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yqV-Gt-JC5">
@@ -220,7 +220,7 @@
                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="CountdownBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="I9S-vG-jz6"/>
+                            <action selector="Countdown4Btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="q5r-iA-UL8"/>
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8j-AB-11D">
@@ -289,7 +289,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
-                <outlet property="CountdownBtn" destination="PlL-Sq-jkX" id="cqa-Ij-bFN"/>
+                <outlet property="Countdown1Btn" destination="KK9-NC-Hr4" id="9Vg-D3-HVF"/>
+                <outlet property="Countdown2Btn" destination="Wa5-lZ-bR1" id="3jy-Uz-I36"/>
+                <outlet property="Countdown3Btn" destination="GGy-UF-ApP" id="Nrl-yA-dQl"/>
+                <outlet property="Countdown4Btn" destination="PlL-Sq-jkX" id="BIQ-kX-vgD"/>
                 <outlet property="IPLabel" destination="Qfh-OM-Pjv" id="0IV-4t-ael"/>
                 <outlet property="NameLabel1" destination="8tA-i8-MCl" id="8XG-dB-2Nv"/>
                 <outlet property="NameLabel2" destination="vy5-y5-WFU" id="DIi-mb-gdv"/>

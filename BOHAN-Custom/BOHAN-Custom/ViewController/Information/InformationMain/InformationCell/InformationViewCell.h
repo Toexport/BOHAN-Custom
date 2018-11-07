@@ -21,10 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UISwitch *Switch2;
 @property (weak, nonatomic) IBOutlet UISwitch *Switch3;
 @property (weak, nonatomic) IBOutlet UISwitch *Switch4;
-@property (weak, nonatomic) IBOutlet UIButton *CountdownBtn;
+@property (weak, nonatomic) IBOutlet UIButton *Countdown1Btn;
+@property (weak, nonatomic) IBOutlet UIButton *Countdown2Btn;
+@property (weak, nonatomic) IBOutlet UIButton *Countdown3Btn;
+@property (weak, nonatomic) IBOutlet UIButton *Countdown4Btn;
 
-typedef void (^CountdownBtnBlock)(id CountdownBtn);
-@property (nonatomic , copy) CountdownBtnBlock countdownBtnBlock;
 // 开关1
 typedef void (^Switch1ONButBlock)(id Switch1OnBut);
 @property (nonatomic , copy) Switch1ONButBlock switch1ONButBlock;
@@ -45,6 +46,20 @@ typedef void (^Switch4ONButBlock)(id Switch4OnBut);
 @property (nonatomic , copy) Switch4ONButBlock switch4ONButBlock;
 typedef void (^Switch4OFFButBlock)(id Switch4OFFButBlock);
 @property (nonatomic , copy) Switch4OFFButBlock switch4OFFButBlock;
+
+// 倒计时1
+typedef void (^Countdown1BtnBlock)(id Countdown1Btn);
+@property (nonatomic , copy) Countdown1BtnBlock countdown1BtnBlock;
+// 倒计时2
+typedef void (^Countdown2BtnBlock)(id Countdown2Btn);
+@property (nonatomic , copy) Countdown2BtnBlock countdown2BtnBlock;
+// 倒计时3
+typedef void (^Countdown3BtnBlock)(id Countdown3Btn);
+@property (nonatomic , copy) Countdown3BtnBlock countdown3BtnBlock;
+// 倒计时4
+typedef void (^Countdown4BtnBlock)(id Countdown4Btn);
+@property (nonatomic , copy) Countdown4BtnBlock countdown4BtnBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END
