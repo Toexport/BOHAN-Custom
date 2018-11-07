@@ -36,9 +36,11 @@
 #import "AdapationMacro.h"
 #import "CHKeychain.h"
 #import "NotificationMacro.h"
+#import "CommonlyInstruction.h"
 
 
 static GCDAsyncSocket *BHSocket;
+
 //国际化
 #define Localize(key) NSLocalizedString(key,@"")
 

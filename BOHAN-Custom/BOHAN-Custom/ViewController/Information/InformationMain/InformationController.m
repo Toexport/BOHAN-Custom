@@ -19,21 +19,16 @@
 #import "MJRefreshComponent.h"
 #import "MJRefresh.h"
 
-@interface InformationController ()<UITableViewDelegate, UITableViewDataSource>
+@interface InformationController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSString * Strid;
 @property (nonatomic, strong) NSString * SwitchStr;
 @property (nonatomic, strong) NSString * StateSStr;
 @property (nonatomic, strong) NSString * Switch1;
 @property (nonatomic, weak) NSTimer *timer;
-
 @property (nonatomic, assign) BOOL isCanSelect;
 @end
 
 @implementation InformationController
-NSString * HeadStr = @"E7";
-NSString * instruction = @"00130001";
-NSString * instructionS = @"00130001";
-NSString * queryStr = @"00260000";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,11 +45,6 @@ NSString * queryStr = @"00260000";
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(QueryData)];
     //自动更改透明度
     self.tableview.mj_header.automaticallyChangeAlpha = YES;
-//    [self.tableview.mj_header endRefreshing];
-//    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        // 进入刷新状态后会自动调用这个block
-//        [self.tableview.mj_header endRefreshing];
-//    }];
 }
 
 - (IBAction)GetData:(UIButton *)sender {
@@ -158,7 +148,7 @@ NSString * queryStr = @"00260000";
         self.isCanSelect = YES;
         [self addRefresh];
     }
-//    [SVProgressHUD dismiss];
+    [SVProgressHUD dismiss];
 //    static dispatch_once_t onceToken;
 //    dispatch_once(&onceToken, ^{ // 单例方法
 //        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
@@ -172,18 +162,17 @@ NSString * queryStr = @"00260000";
 
 // 查询
 - (void)QueryData {
-    NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,queryStr];
+    NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,SwitchqueryStr];
     NSString * hexString = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
-    NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.Strid,queryStr,string];
+    NSString * CheckCode = [hexString substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,SwitchqueryStr,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
 // 加载失败
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    [self PostData];
+    [self BoltData];
 //    self.isCanSelect = NO;
 //    // 断线重连
     ZPLog(@"断线重连");
@@ -208,6 +197,18 @@ NSString * queryStr = @"00260000";
 //    [SVProgressHUD dismiss];
 }
 
+/// 断线加载Sock
+- (void)BoltData {
+    BHSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    NSError *err = nil;
+    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    if(![BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
+        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
+    }else {
+        [SVProgressHUD showWithStatus:@"Reconnect..."];
+    }
+}
+
 //接受到新的socket连接才会调用
 - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket {
     ZPLog(@"%@----新socket",newSocket);
@@ -216,38 +217,43 @@ NSString * queryStr = @"00260000";
 // 开关1开启
 - (void)Switch1oN {
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-    NSString * Stats = [State substringWithRange:NSMakeRange(7, 1)]; // 获取1位
-    NSString *strUrl = [Stats stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的1h换成0
-    NSString * SRT = [State substringWithRange:NSMakeRange(0, 7)];
-    NSString * STRURL = [NSString stringWithFormat:@"%@%@",SRT,strUrl];
-    NSString * UKTS = [Utils getHexByBinary:STRURL];
-    
-    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+    NSString *strUrl = [State stringByReplacingCharactersInRange:NSMakeRange(7, 1) withString:@"0"]; // 改变开关状态
+    NSString * UKTS = [Utils getHexByBinary:strUrl];
+    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
-    
-    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
+    
+//    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
+//    NSString * Stats = [State substringWithRange:NSMakeRange(7, 1)]; // 获取1位
+//    NSString *strUrl = [Stats stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的1h换成0
+//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 7)];
+//    NSString * STRURL = [NSString stringWithFormat:@"%@%@",SRT,strUrl];
+//    NSString * UKTS = [Utils getHexByBinary:STRURL];
+//
+//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+//    NSString * string = [Utils hexStringFromString:Str];
+//
+//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
 }
 
 // 开关1关闭
 - (void)Switch1Off {
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-    NSString * Stats = [State substringWithRange:NSMakeRange(7, 1)]; // 获取1位
-    NSString *strUrl = [Stats stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的1换成0
-    NSString * SRT = [State substringWithRange:NSMakeRange(0, 7)];
-    NSString * STRURL = [NSString stringWithFormat:@"%@%@",SRT,strUrl];
-    NSString * UKTS = [Utils getHexByBinary:STRURL];
-    
-    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+    NSString *strUrl = [State stringByReplacingCharactersInRange:NSMakeRange(7, 1) withString:@"1"]; // 改变开关状态
+    NSString * UKTS = [Utils getHexByBinary:strUrl];
+    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
-    
-    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
     
@@ -259,158 +265,174 @@ NSString * queryStr = @"00260000";
 // 开关2开启
 - (void)Switch2oN {
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-    
-    NSString * Stats = [State substringWithRange:NSMakeRange(6, 1)]; // 获取2位
-    
-    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-    
-    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的1换成0
-    NSString * KLKK = [State substringWithRange:NSMakeRange(7, 1)];
-    NSString * SRT = [State substringWithRange:NSMakeRange(0, 6)];
-    
-    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-    
-    NSString * UKTS = [Utils getHexByBinary:STRURL];
-    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+    NSString *strUrl = [State stringByReplacingCharactersInRange:NSMakeRange(6, 1) withString:@"0"]; // 改变开关状态
+    NSString * UKTS = [Utils getHexByBinary:strUrl];
+    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
+    
+//    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
+//    NSString * Stats = [State substringWithRange:NSMakeRange(6, 1)]; // 获取2位
+//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
+//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的1换成0
+//    NSString * KLKK = [State substringWithRange:NSMakeRange(7, 1)];
+//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 6)];
+//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
+//    NSString * UKTS = [Utils getHexByBinary:STRURL];
+//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+//    NSString * string = [Utils hexStringFromString:Str];
+//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
 }
 
 // 开关2关闭
 - (void)Switch2Off {
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-    
-    NSString * Stats = [State substringWithRange:NSMakeRange(6, 1)]; // 获取2位
-    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-    
-    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
-    NSString * KLKK = [State substringWithRange:NSMakeRange(7, 1)];
-    NSString * SRT = [State substringWithRange:NSMakeRange(0, 6)];
-    
-    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-    
-    NSString * UKTS = [Utils getHexByBinary:STRURL];
-    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+    NSString *strUrl = [State stringByReplacingCharactersInRange:NSMakeRange(6, 1) withString:@"1"]; // 改变开关状态
+    NSString * UKTS = [Utils getHexByBinary:strUrl];
+    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
+//    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
+//    NSString * Stats = [State substringWithRange:NSMakeRange(6, 1)]; // 获取2位
+//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
+//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
+//    NSString * KLKK = [State substringWithRange:NSMakeRange(7, 1)];
+//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 6)];
+//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
+//    NSString * UKTS = [Utils getHexByBinary:STRURL];
+//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+//    NSString * string = [Utils hexStringFromString:Str];
+//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
 }
 
 // 开关3开启
 - (void)Switch3oN {
-    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
-    
-    NSString * Stats = [State substringWithRange:NSMakeRange(5, 1)]; // 获取1位
-    
-    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-    
-    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的0换成1
-    
-    NSString * KLKK = [State substringWithRange:NSMakeRange(6, 2)];
-    
-    NSString * SRT = [State substringWithRange:NSMakeRange(0, 5)];
-    
-    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-    
-    NSString * UKTS = [Utils getHexByBinary:STRURL];
-    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
+    NSString *strUrl = [State stringByReplacingCharactersInRange:NSMakeRange(5, 1) withString:@"0"]; // 改变开关状态
+    NSString * UKTS = [Utils getHexByBinary:strUrl];
+    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
+//    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
+//    NSString * Stats = [State substringWithRange:NSMakeRange(5, 1)]; // 获取1位
+//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
+//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的0换成1
+//    NSString * KLKK = [State substringWithRange:NSMakeRange(6, 2)];
+//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 5)];
+//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
+//    NSString * UKTS = [Utils getHexByBinary:STRURL];
+//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+//    NSString * string = [Utils hexStringFromString:Str];
+//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
 // 开关3关闭
 - (void)Switch3Off {
-    
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-    
-    NSString * Stats = [State substringWithRange:NSMakeRange(5, 1)]; // 获取1位
-    
-    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-    
-    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
-    
-    NSString * KLKK = [State substringWithRange:NSMakeRange(6, 2)];
-    
-    NSString * SRT = [State substringWithRange:NSMakeRange(0, 5)];
-    
-    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-    
-    NSString * UKTS = [Utils getHexByBinary:STRURL];
-    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+    NSString *strUrl = [State stringByReplacingCharactersInRange:NSMakeRange(5, 1) withString:@"1"]; // 改变开关状态
+    NSString * UKTS = [Utils getHexByBinary:strUrl];
+    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
+//    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
+//    NSString * Stats = [State substringWithRange:NSMakeRange(5, 1)]; // 获取1位
+//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
+//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
+//    NSString * KLKK = [State substringWithRange:NSMakeRange(6, 2)];
+//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 5)];
+//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
+//    NSString * UKTS = [Utils getHexByBinary:STRURL];
+//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+//    NSString * string = [Utils hexStringFromString:Str];
+//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
 }
 
 // 开关4开启
 - (void)Switch4oN {
-    
-    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
-    
-    NSString * Stats = [State substringWithRange:NSMakeRange(4, 1)]; // 获取1位
-    
-    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-    
-    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的0换成1
-    
-    NSString * KLKK = [State substringWithRange:NSMakeRange(5, 3)];
-    
-    NSString * SRT = [State substringWithRange:NSMakeRange(0, 4)];
-    
-    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-    
-    NSString * UKTS = [Utils getHexByBinary:STRURL];
-    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
+    NSString *strUrl = [State stringByReplacingCharactersInRange:NSMakeRange(4, 1) withString:@"0"]; // 改变开关状态
+    NSString * UKTS = [Utils getHexByBinary:strUrl];
+    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
+    
+//    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
+//    NSString * Stats = [State substringWithRange:NSMakeRange(4, 1)]; // 获取1位
+//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
+//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的0换成1
+//    NSString * KLKK = [State substringWithRange:NSMakeRange(5, 3)];
+//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 4)];
+//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
+//    NSString * UKTS = [Utils getHexByBinary:STRURL];
+//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+//    NSString * string = [Utils hexStringFromString:Str];
+//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
 // 开关4关闭
 - (void)Switch4Off {
-    
-    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
-    
-    NSString * Stats = [State substringWithRange:NSMakeRange(4, 1)]; // 获取1位
-    
-    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-    
-    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
-    
-    NSString * KLKK = [State substringWithRange:NSMakeRange(5, 3)];
-    
-    NSString * SRT = [State substringWithRange:NSMakeRange(0, 4)];
-    
-    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-    
-    NSString * UKTS = [Utils getHexByBinary:STRURL];
-    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
+    NSString *strUrl = [State stringByReplacingCharactersInRange:NSMakeRange(4, 1) withString:@"1"]; // 改变开关状态
+    NSString * UKTS = [Utils getHexByBinary:strUrl];
+    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,SwitchinstructionStr,UKTS];
     NSString * string = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
+//    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
+//    NSString * Stats = [State substringWithRange:NSMakeRange(4, 1)]; // 获取1位
+//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
+//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
+//    NSString * KLKK = [State substringWithRange:NSMakeRange(5, 3)];
+//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 4)];
+//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
+//    NSString * UKTS = [Utils getHexByBinary:STRURL];
+//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
+//    NSString * string = [Utils hexStringFromString:Str];
+//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
+//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
 }
 
@@ -442,12 +464,6 @@ NSString * queryStr = @"00260000";
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
-            //            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(7, 1)];
-            //            if ([State16 containsString:@"0"]) {
-            //                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
-            //            }else {
-            //                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
-            //            }
         });
         [self Switch1oN];
         //        192.168.3.253:6878
@@ -457,12 +473,6 @@ NSString * queryStr = @"00260000";
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
-            //            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(7, 1)];
-            //            if ([State16 containsString:@"1"]) {
-            //                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
-            //            }else {
-            //                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
-            //            }
         });
         [self Switch1Off];
     };
@@ -473,12 +483,6 @@ NSString * queryStr = @"00260000";
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
-            //            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(6, 1)];
-            //            if ([State16 containsString:@"0"]) {
-            //                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
-            //            }else {
-            //                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
-            //            }
         });
         [self Switch2oN];
     };
@@ -487,12 +491,6 @@ NSString * queryStr = @"00260000";
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
-            //            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(6, 1)];
-            //            if ([State16 containsString:@"1"]) {
-            //                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
-            //            }else {
-            //                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
-            //            }
         });
         [self Switch2Off];
     };
@@ -502,12 +500,6 @@ NSString * queryStr = @"00260000";
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
-            //            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(5, 1)];
-            //            if ([State16 containsString:@"0"]) {
-            //                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
-            //            }else {
-            //                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
-            //            }
         });
         [self Switch3oN];
     };
@@ -516,14 +508,7 @@ NSString * queryStr = @"00260000";
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
-            //            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(5, 1)];
-            //            if ([State16 containsString:@"1"]) {
-            //                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
-            //            }else {
-            //                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
-            //            }
         });
-        
         [self Switch3Off];
     };
     
@@ -533,12 +518,6 @@ NSString * queryStr = @"00260000";
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
-            //            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(4, 1)];
-            //            if ([State16 containsString:@"0"]) {
-            //                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
-            //            }else {
-            //                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
-            //            }
         });
         [self Switch4oN];
     };
@@ -547,12 +526,6 @@ NSString * queryStr = @"00260000";
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.StateSStr = [Utils getBinaryByHex:self.SwitchStr];
-            //            NSString * State16 = [self.StateSStr substringWithRange:NSMakeRange(4, 1)];
-            //            if ([State16 containsString:@"1"]) {
-            //                [SVProgressHUD showSuccessWithStatus:(Localize(@"Set Success"))];
-            //            }else {
-            //                [SVProgressHUD showInfoWithStatus:(@"Set Failure")];
-            //            }
         });
         [self Switch4Off];
     };
@@ -687,7 +660,6 @@ NSString * queryStr = @"00260000";
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
 
 @end
 

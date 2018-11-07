@@ -31,14 +31,13 @@
 @property (weak, nonatomic) IBOutlet UITableView *mainTable;
 @property (copy, nonatomic) NSArray *datas;
 @property (assign, nonatomic) NSInteger selectedItemIndex;
-@property (nonatomic, weak)NSTimer *timer;//定时器
-
-
+@property (nonatomic, weak) NSTimer *timer;//定时器
+@property (nonatomic, strong) NSString * TimeUrl;
+@property (nonatomic, strong) NSString * TimeStr;
 @end
+
 static NSString *countCellIdentifier = @"countCellIdentifier";
-static NSString * HeadStr = @"E7";
-static NSString * queryStr = @"002F0000";
-static NSString * countdownStr = @"002E000C";
+
 @implementation CountDownViewController
 
 - (void)viewDidLoad {
@@ -50,14 +49,14 @@ static NSString * countdownStr = @"002E000C";
     _mainTable.tintColor = [UIColor colorWithHexString:@"f03c4c"];
     [progressView setPersentage:0];
     [self rightBarTitle:Localize(@"取消") color:[UIColor whiteColor] action:@selector(canceOperation)];
-//    [[WebSocket socketManager] serverSockt];
     
 //    [self getStatus];
 //    [self countDownTime];
-//    [self loadData];
+    [self loadData];
     [self PostData];
     [self UI];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
@@ -137,14 +136,13 @@ static NSString * countdownStr = @"002E000C";
     ZPLog(@"%@",error);
     [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
 }
+
 // 查询
 - (void)loadData {
-    NSString * Str = [NSString stringWithFormat:@"%@%@",self.deviceNo,queryStr];
+    NSString * Str = [NSString stringWithFormat:@"%@%@",self.deviceNo,CountdownqQueryStr];
     NSString * hexString = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
-    NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@",HeadStr,self.deviceNo,queryStr,string];
-//    NSString * ssss = @"E7701811020001002F0000CB0D";
+    NSString * CheckCode = [hexString substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.deviceNo,CountdownqQueryStr,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",Strr);
@@ -152,33 +150,28 @@ static NSString * countdownStr = @"002E000C";
 
 // 定时开关
 - (void)SetCountdown {
-    NSString * TimeStr = [NSString stringWithFormat:@"%@010000FF0000FF0000FF",time.text];
-    NSString * strUrl = [TimeStr stringByReplacingOccurrencesOfString:@":" withString:@""];  //去掉:
+    if (time.text.length >= 7) {
+        _TimeUrl = [time.text substringToIndex:5];
+    }else
+        if (time.text.length >= 5) {
+            _TimeUrl = [time.text substringToIndex:5];
+        }
+    _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@",_TimeUrl,SetOpen,Switch,Switch,Switch];
+    [self TimingSet];
+}
+
+// 定时器
+- (void)TimingSet {
+    NSString * strUrl = [_TimeStr stringByReplacingOccurrencesOfString:@":" withString:@""];  //去掉:
     NSString * str = [NSString stringWithFormat:@"%@%@%@",self.deviceNo,countdownStr,strUrl];
     NSString * hexString = [Utils hexStringFromString:str];
-    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
-    NSString * string = [NSString stringWithFormat:@"%@0D",CheckCode];
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.deviceNo,countdownStr,strUrl,string];
-//    E7701811020001002E000C0002000000FF0000FF0000FFD90D"
-//    E7701811020001002E000C0005010000FF0000FF0000FFD90D
-//
-    
-//    NSString * hexString = [Utils hexStringFromString:Strr];
-//    NSString * CheckCode = [hexString substringWithRange:NSMakeRange(2, 2)];
-//    NSString * AAAA = [NSString stringWithFormat:@"E7%@%@0D",aaaa,CheckCode];
-//    E7701811020001002E000C0002000002FF0002FF0002FFDB0D
+    NSString * CheckCode = [hexString substringFromIndex:2];
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.deviceNo,countdownStr,strUrl,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"%@",time.text);
     [self setUpTimer];
     ZPLog(@"%@",Strr);
-}
-
-- (void)HHmmddmmNN {
-    NSString * BBBB = @"E77018110200010031000509500952012E0D";
-    [BHSocket writeData:[BBBB dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-    [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",BBBB);
 }
 
 //- (void)countDownTime {
@@ -335,7 +328,7 @@ static NSString * countdownStr = @"002E000C";
     };
     view.buttonAction = ^(UIButton *sender) {
         [self startAction];
-        [self HHmmddmmNN];
+        [self SetCountdown];
     };
     _mainTable.tableFooterView = view;
 
@@ -458,7 +451,7 @@ static NSString * countdownStr = @"002E000C";
 #pragma mark 按钮的点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 2) {
-        [formatter setDateFormat:@"HHmm"];
+        [formatter setDateFormat:@"HH:mm"];
         WSDatePickerView *datepicker = [[WSDatePickerView alloc] initWithDateStyle:DateStyleShowHourMinute scrollToDate:[formatter dateFromString:[time.text substringToIndex:5]] CompleteBlock:^(NSDate *selectDate) {
             if (self.selectedItemIndex != indexPath.row) {
                 self.selectedItemIndex = indexPath.row;

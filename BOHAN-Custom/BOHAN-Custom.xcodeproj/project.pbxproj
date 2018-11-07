@@ -219,6 +219,7 @@
 		C4C36AEC218838BC0079D6AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C4C40A142189E82400233497 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		C4C40A152189E82400233497 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		C4CA9F912191849500A1E842 /* CommonlyInstruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonlyInstruction.h; sourceTree = "<group>"; };
 		D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOHAN-Custom.release.xcconfig"; path = "Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -298,6 +299,7 @@
 				4DAF19F42181FE1300B91F80 /* Main.storyboard */,
 				C4AA86872183E68F0013307D /* FileHeader.pch */,
 				C4C36AB52185F93B0079D6AE /* PrefixHeader.pch */,
+				C4CA9F912191849500A1E842 /* CommonlyInstruction.h */,
 				C4AA86A921840A650013307D /* ColorMacro.h */,
 				4DAF19F72181FE1400B91F80 /* Assets.xcassets */,
 				4DAF19F92181FE1400B91F80 /* LaunchScreen.storyboard */,

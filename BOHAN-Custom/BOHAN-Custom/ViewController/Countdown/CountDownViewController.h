@@ -17,6 +17,7 @@
 @property (nonatomic, copy) NSString *deviceNo;
 //@property (nonatomic, assign) BOOL *isCountDownModel;
 //- (IBAction)cancelAction;
+@property (nonatomic, assign) NSInteger type; // 识别号
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *PatchViewLayoutConstraint;
 
 @end

@@ -12,6 +12,7 @@
 #import "InformationController.h"
 #import "ListViewController.h"
 #import "FileHeader.pch"
+#import "AFNetworking.h"
 @interface AppDelegate ()
 
 @end
@@ -20,6 +21,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[AFNetworkReachabilityManager sharedManager]  startMonitoring];
     LoginViewController *login = [[LoginViewController alloc] init];
     UINavigationController *nav;
     if ([login autoLogin]) {
@@ -67,6 +69,38 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+/**
+ 实时检查当前网络状态
+ */
+- (void)addReachabilityManager {
+    AFNetworkReachabilityManager *afNetworkReachabilityManager = [AFNetworkReachabilityManager sharedManager];
+    [afNetworkReachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusNotReachable:{
+                NSLog(@"网络不通：%@",@(status) );
+                break;
+            }
+            case AFNetworkReachabilityStatusReachableViaWiFi:{
+                NSLog(@"网络通过WIFI连接：%@",@(status));
+                break;
+            }
+            case AFNetworkReachabilityStatusReachableViaWWAN:{
+                NSLog(@"网络通过无线连接：%@",@(status) );
+                break;
+            }
+            default:
+                break;
+        }
+        
+        NSLog(@"网络状态数字返回：%@",@(status));
+        NSLog(@"网络状态返回: %@", AFStringFromNetworkReachabilityStatus(status));
+        
+        NSLog(@"isReachable: %@",@([AFNetworkReachabilityManager sharedManager].isReachable));
+        NSLog(@"isReachableViaWWAN: %@",@([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN));
+        NSLog(@"isReachableViaWiFi: %@",@([AFNetworkReachabilityManager sharedManager].isReachableViaWiFi));
+    }];
+    
+    [afNetworkReachabilityManager startMonitoring];  //开启网络监视器
+}
 
 @end
