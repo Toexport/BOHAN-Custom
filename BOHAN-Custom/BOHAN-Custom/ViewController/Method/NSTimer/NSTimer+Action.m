@@ -22,15 +22,13 @@
 }
 
 + (void)blockInvoke:(NSTimer *)timer{
-    
     void(^block)() = timer.userInfo;
     if (block) {
         block();
     }
 }
 
--(void)pauseTimer
-{
+-(void)pauseTimer {
     if (![self isValid]) {
         return ;
     }
@@ -38,16 +36,14 @@
 }
 
 
--(void)resumeTimer
-{
+-(void)resumeTimer {
     if (![self isValid]) {
         return ;
     }
     [self setFireDate:[NSDate date]];
 }
 
-- (void)resumeTimerAfterTimeInterval:(NSTimeInterval)interval
-{
+- (void)resumeTimerAfterTimeInterval:(NSTimeInterval)interval {
     if (![self isValid]) {
         return ;
     }

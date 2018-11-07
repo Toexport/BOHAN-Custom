@@ -18,7 +18,7 @@
 #import "Masonry.h"
 #import "MJRefreshComponent.h"
 #import "MJRefresh.h"
-
+//#define KPacketHeaderLength 7
 @interface InformationController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSString * Strid;
 @property (nonatomic, strong) NSString * SwitchStr;
@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSString * Switch1;
 @property (nonatomic, weak) NSTimer *timer;
 @property (nonatomic, assign) BOOL isCanSelect;
+
 @end
 
 @implementation InformationController
@@ -38,11 +39,18 @@
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
     [self PostData];
     [self addRefresh];
+//    MyWeakSelf
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^{ // 列表设置8秒自动刷新
+//        __strong typeof(self) strongSelf = weakSelf;
+//        [strongSelf QueryData];
+//    } repeats:YES];
+    
 }
 
 // 刷新
 - (void)addRefresh {
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(QueryData)];
+    [self.tableview reloadData];
     //自动更改透明度
     self.tableview.mj_header.automaticallyChangeAlpha = YES;
 }
@@ -54,6 +62,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -66,7 +75,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [_timer pauseTimer];
 }
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
@@ -113,7 +124,12 @@
 // 发送数据
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
     ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@:%d服务器",host,port]);
+//    typedef NS_ENUM(NSInteger ,KReadDataType){
+//        TAG_FIXED_LENGTH_HEADER = 10,//消息头部tag
+//        TAG_RESPONSE_BODY = 11//消息体tag
+//    };
     [BHSocket readDataWithTimeout:-1 tag:0];
+//    [BHSocket readDataToLength:KPacketHeaderLength withTimeout:-1 tag:TAG_FIXED_LENGTH_HEADER];
 }
 
 // 接收数据
@@ -132,35 +148,31 @@
             self.SwitchStr = SwitchState;
             [self.tableview reloadData];
             [self.tableview.mj_header endRefreshing];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-//            });
-            
+            [SVProgressHUD dismiss];
         }
-//        self.SwitchStr = SwitchState;
+        self.SwitchStr = SwitchState;
         ZPLog(@"%@---%@",STRid,SwitchState);
-        
-//        [self.tableview reloadData];
         //结束头部刷新
+        [self.tableview.mj_header endRefreshing];
     }
     if (!self.isCanSelect) {
         self.isCanSelect = YES;
         [self addRefresh];
     }
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
-//    });
+
 //    static dispatch_once_t onceToken;
 //    dispatch_once(&onceToken, ^{ // 单例方法
 //        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-//        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{ // 列表设置5秒自动刷新
-//            [self QueryData];
-//            [self.tableview reloadData];
+//        MyWeakSelf
+//        self.timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^{ // 列表设置8秒自动刷新
+//            __strong typeof(self) strongSelf = weakSelf;
+//            [strongSelf PostData];
 //        } repeats:YES];
 //    });
-    [BHSocket readDataWithTimeout:-1 tag:0];
+    
+    [BHSocket readDataWithTimeout:-1 tag:tag];
 }
-
 // 查询
 - (void)QueryData {
     NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,SwitchqueryStr];
@@ -173,10 +185,9 @@
 
 // 加载失败
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    [self BoltData];
-//    self.isCanSelect = NO;
-//    // 断线重连
     ZPLog(@"断线重连");
+     [self BoltData];
+//    self.isCanSelect = NO;
 //    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
 //    [BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] withTimeout:5 error:nil];
 //    self.timer = [NSTimer scheduledTimerWithTimeInterval:15 block:^{ // 列表设置5秒自
@@ -198,7 +209,7 @@
 //    [SVProgressHUD dismiss];
 }
 
-/// 断线加载Sock
+// 断线加载Sock
 - (void)BoltData {
     BHSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     NSError *err = nil;
@@ -211,10 +222,6 @@
     }
 }
 
-//接受到新的socket连接才会调用
-- (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket {
-    ZPLog(@"%@----新socket",newSocket);
-}
 
 // 开关1开启
 - (void)Switch1oN {
@@ -288,21 +295,6 @@
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
-//    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-//    NSString * Stats = [State substringWithRange:NSMakeRange(6, 1)]; // 获取2位
-//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
-//    NSString * KLKK = [State substringWithRange:NSMakeRange(7, 1)];
-//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 6)];
-//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-//    NSString * UKTS = [Utils getHexByBinary:STRURL];
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
-//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [BHSocket readDataWithTimeout:-1 tag:0];
      ZPLog(@"开关2关闭%@",Strr);
 }
 
@@ -317,21 +309,6 @@
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
-//    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
-//    NSString * Stats = [State substringWithRange:NSMakeRange(5, 1)]; // 获取1位
-//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的0换成1
-//    NSString * KLKK = [State substringWithRange:NSMakeRange(6, 2)];
-//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 5)];
-//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-//    NSString * UKTS = [Utils getHexByBinary:STRURL];
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
-//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
 // 开关3关闭
@@ -345,21 +322,6 @@
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
-//    NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
-//    NSString * Stats = [State substringWithRange:NSMakeRange(5, 1)]; // 获取1位
-//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
-//    NSString * KLKK = [State substringWithRange:NSMakeRange(6, 2)];
-//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 5)];
-//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-//    NSString * UKTS = [Utils getHexByBinary:STRURL];
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
-//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"开关3关闭%@",Strr);
 }
 
@@ -374,22 +336,6 @@
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
-    
-//    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
-//    NSString * Stats = [State substringWithRange:NSMakeRange(4, 1)]; // 获取1位
-//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"1" withString:@"0"];// 把获取到的0换成1
-//    NSString * KLKK = [State substringWithRange:NSMakeRange(5, 3)];
-//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 4)];
-//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-//    NSString * UKTS = [Utils getHexByBinary:STRURL];
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
-//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
 // 开关4关闭
@@ -403,21 +349,6 @@
     NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.Strid,SwitchinstructionStr,UKTS,CheckCode,TailStr];
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
-//    NSString * State = [Utils getBinaryByHex:self.SwitchStr];
-//    NSString * Stats = [State substringWithRange:NSMakeRange(4, 1)]; // 获取1位
-//    NSString * sKU = [Stats substringWithRange:NSMakeRange(0, 1)];
-//    NSString *strUrl = [sKU stringByReplacingOccurrencesOfString:@"0" withString:@"1"];// 把获取到的0换成1
-//    NSString * KLKK = [State substringWithRange:NSMakeRange(5, 3)];
-//    NSString * SRT = [State substringWithRange:NSMakeRange(0, 4)];
-//    NSString * STRURL = [NSString stringWithFormat:@"%@%@%@",SRT,strUrl,KLKK];
-//    NSString * UKTS = [Utils getHexByBinary:STRURL];
-//    NSString * Str = [NSString stringWithFormat:@"%@%@%@",self.Strid,instruction,UKTS];
-//    NSString * string = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [string substringWithRange:NSMakeRange(2, 2)];
-//    NSString * stRR = [NSString stringWithFormat:@"%@0D",CheckCode];
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,instruction,UKTS,stRR];
-//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [BHSocket readDataWithTimeout:-1 tag:0];
     ZPLog(@"开关4关闭%@",Strr);
 }
 
@@ -460,8 +391,7 @@
         });
         [self Switch1Off];
     };
-    
-    //     开关2
+//     开关2
     cell.switch2ONButBlock = ^(id  _Nonnull Switch2OnBut) {
         [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
@@ -478,7 +408,7 @@
         });
         [self Switch2Off];
     };
-    //     开关3
+//     开关3
     cell.switch3ONButBlock = ^(id  _Nonnull Switch3OnBut) {
         [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
@@ -495,8 +425,7 @@
         });
         [self Switch3Off];
     };
-    
-    //     开关4
+//     开关4
     cell.switch4ONButBlock = ^(id  _Nonnull Switch4OnBut) {
         [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
@@ -513,16 +442,6 @@
         });
         [self Switch4Off];
     };
-//    cell.Switch1.userInteractionEnabled = NO;
-//    cell.Switch2.userInteractionEnabled = NO;
-//    cell.Switch3.userInteractionEnabled = NO;
-//    cell.Switch4.userInteractionEnabled = NO;
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        cell.Switch1.userInteractionEnabled = YES;
-//        cell.Switch2.userInteractionEnabled = YES;
-//        cell.Switch3.userInteractionEnabled = YES;
-//        cell.Switch4.userInteractionEnabled = YES;
-//    });
 }
 
 // 查询开关状态
@@ -668,7 +587,7 @@
         ZPLog(@"action = %@", action);
     }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"Determine") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        //        清除所有的数据
+//        清除所有的数据
         [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[LoginViewController new]];
         NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
         [UserLoginState removeObjectForKey:LOGOUTNOTIFICATION];

@@ -27,6 +27,8 @@
 		C40A7BBB218D70EB0064BA1F /* NsData.m in Sources */ = {isa = PBXBuildFile; fileRef = C40A7BBA218D70EB0064BA1F /* NsData.m */; };
 		C442326B218C3FD80071ADE3 /* SoapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C442326A218C3FD80071ADE3 /* SoapManager.m */; };
 		C442326E218C40E70071ADE3 /* XMLUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C442326D218C40E60071ADE3 /* XMLUtil.m */; };
+		C44A6BF521931E67003D50BE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C44A6BF421931E67003D50BE /* CFNetwork.framework */; };
+		C44A6BF8219320B5003D50BE /* ZHeartBeatSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C44A6BF7219320B5003D50BE /* ZHeartBeatSocket.m */; };
 		C4604C422185497500CD41A5 /* EdgetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C402185497500CD41A5 /* EdgetTextField.m */; };
 		C4604C692185546F00CD41A5 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4604C682185546F00CD41A5 /* LoginViewController.xib */; };
 		C4604C6C2185548000CD41A5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4604C6B2185548000CD41A5 /* LoginViewController.m */; };
@@ -55,7 +57,6 @@
 		C4AA87F4218463DC0013307D /* SingleListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87F2218463DC0013307D /* SingleListViewCell.xib */; };
 		C4AA87F8218465810013307D /* SingleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AA87F6218465810013307D /* SingleListController.m */; };
 		C4AA87F9218465810013307D /* SingleListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AA87F7218465810013307D /* SingleListController.xib */; };
-		C4C018F221906F4900670F35 /* ReconnectControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C018F121906F4900670F35 /* ReconnectControl.m */; };
 		C4C36AB42185F24A0079D6AE /* CHKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C36AB32185F24A0079D6AE /* CHKeychain.m */; };
 		C4C36AB72186FE170079D6AE /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C36AB62186FE170079D6AE /* libsqlite3.tbd */; };
 		C4C36ABA218711600079D6AE /* CountDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C36AB9218711600079D6AE /* CountDownViewController.xib */; };
@@ -134,6 +135,9 @@
 		C442326A218C3FD80071ADE3 /* SoapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoapManager.m; sourceTree = "<group>"; };
 		C442326C218C40E60071ADE3 /* XMLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLUtil.h; sourceTree = "<group>"; };
 		C442326D218C40E60071ADE3 /* XMLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLUtil.m; sourceTree = "<group>"; };
+		C44A6BF421931E67003D50BE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C44A6BF6219320B5003D50BE /* ZHeartBeatSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHeartBeatSocket.h; sourceTree = "<group>"; };
+		C44A6BF7219320B5003D50BE /* ZHeartBeatSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHeartBeatSocket.m; sourceTree = "<group>"; };
 		C4604C402185497500CD41A5 /* EdgetTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgetTextField.m; sourceTree = "<group>"; };
 		C4604C412185497500CD41A5 /* EdgetTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgetTextField.h; sourceTree = "<group>"; };
 		C4604C682185546F00CD41A5 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -183,8 +187,6 @@
 		C4AA87F5218465810013307D /* SingleListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SingleListController.h; sourceTree = "<group>"; };
 		C4AA87F6218465810013307D /* SingleListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SingleListController.m; sourceTree = "<group>"; };
 		C4AA87F7218465810013307D /* SingleListController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleListController.xib; sourceTree = "<group>"; };
-		C4C018F021906F4900670F35 /* ReconnectControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReconnectControl.h; sourceTree = "<group>"; };
-		C4C018F121906F4900670F35 /* ReconnectControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReconnectControl.m; sourceTree = "<group>"; };
 		C4C36AB22185F24A0079D6AE /* CHKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHKeychain.h; sourceTree = "<group>"; };
 		C4C36AB32185F24A0079D6AE /* CHKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHKeychain.m; sourceTree = "<group>"; };
 		C4C36AB52185F93B0079D6AE /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C44A6BF521931E67003D50BE /* CFNetwork.framework in Frameworks */,
 				C4C36AED218838BC0079D6AE /* CoreGraphics.framework in Frameworks */,
 				C4C36AEB218838A60079D6AE /* Foundation.framework in Frameworks */,
 				C4C36AE9218838830079D6AE /* UIKit.framework in Frameworks */,
@@ -256,6 +259,7 @@
 		08C96659199A0D01D4425400 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C44A6BF421931E67003D50BE /* CFNetwork.framework */,
 				C4C36AEC218838BC0079D6AE /* CoreGraphics.framework */,
 				C4C36AEA218838A60079D6AE /* Foundation.framework */,
 				C4C36AE8218838830079D6AE /* UIKit.framework */,
@@ -397,8 +401,8 @@
 				4DAF1A3321820AA000B91F80 /* GCDAsyncUdpSocket.m */,
 				4DAF1A3621820AA000B91F80 /* GCDAsyncSocket.h */,
 				4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */,
-				C4C018F021906F4900670F35 /* ReconnectControl.h */,
-				C4C018F121906F4900670F35 /* ReconnectControl.m */,
+				C44A6BF6219320B5003D50BE /* ZHeartBeatSocket.h */,
+				C44A6BF7219320B5003D50BE /* ZHeartBeatSocket.m */,
 			);
 			path = GCDAsync;
 			sourceTree = "<group>";
@@ -780,6 +784,11 @@
 				TargetAttributes = {
 					4DAF19EA2181FE1300B91F80 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					4DAF1A022181FE1400B91F80 = {
 						CreatedOnToolsVersion = 10.0;
@@ -906,6 +915,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C44A6BF8219320B5003D50BE /* ZHeartBeatSocket.m in Sources */,
 				C4604C9521859FE100CD41A5 /* RegistrationAgreementController.m in Sources */,
 				C4AA87C42184122F0013307D /* UIView+Frame.m in Sources */,
 				4DAF1A242182061800B91F80 /* BCTabBarController.m in Sources */,
@@ -917,7 +927,6 @@
 				C4AA87E1218434BB0013307D /* BindingController.m in Sources */,
 				C4AA87CC218416320013307D /* UIColor+Extension.m in Sources */,
 				C4AA868D2183F98B0013307D /* ManagementCell.m in Sources */,
-				C4C018F221906F4900670F35 /* ReconnectControl.m in Sources */,
 				C442326B218C3FD80071ADE3 /* SoapManager.m in Sources */,
 				C4C40A162189E82400233497 /* Utils.m in Sources */,
 				C4C36ADF218716D80079D6AE /* UIView+Extension.m in Sources */,
