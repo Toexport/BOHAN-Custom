@@ -37,8 +37,9 @@
     [self rightBarTitle:Localize(@"Exit") action:@selector(LogOut)];
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
-    [self PostData];
-    [self addRefresh];
+        [self PostData];
+//    [self addRefresh];
+    
 //    MyWeakSelf
 //    self.timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^{ // 列表设置8秒自动刷新
 //        __strong typeof(self) strongSelf = weakSelf;
@@ -121,16 +122,16 @@
     return cell;
 }
 
-// 发送数据
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@:%d服务器",host,port]);
-//    typedef NS_ENUM(NSInteger ,KReadDataType){
-//        TAG_FIXED_LENGTH_HEADER = 10,//消息头部tag
-//        TAG_RESPONSE_BODY = 11//消息体tag
-//    };
-    [BHSocket readDataWithTimeout:-1 tag:0];
-//    [BHSocket readDataToLength:KPacketHeaderLength withTimeout:-1 tag:TAG_FIXED_LENGTH_HEADER];
-}
+//// 发送数据
+//- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+//    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@:%d服务器",host,port]);
+////    typedef NS_ENUM(NSInteger ,KReadDataType){
+////        TAG_FIXED_LENGTH_HEADER = 10,//消息头部tag
+////        TAG_RESPONSE_BODY = 11//消息体tag
+////    };
+//    [BHSocket readDataWithTimeout:-1 tag:0];
+////    [BHSocket readDataToLength:KPacketHeaderLength withTimeout:-1 tag:TAG_FIXED_LENGTH_HEADER];
+//}
 
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -171,7 +172,7 @@
 //        } repeats:YES];
 //    });
     
-    [BHSocket readDataWithTimeout:-1 tag:tag];
+//    [BHSocket readDataWithTimeout:-1 tag:tag];
 }
 // 查询
 - (void)QueryData {
@@ -184,43 +185,43 @@
 }
 
 // 加载失败
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    ZPLog(@"断线重连");
-     [self BoltData];
-//    self.isCanSelect = NO;
-//    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-//    [BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] withTimeout:5 error:nil];
-//    self.timer = [NSTimer scheduledTimerWithTimeInterval:15 block:^{ // 列表设置5秒自
-//        [BHSocket disconnect];
-//    //结束头部刷新
-//        [self.tableview.mj_header endRefreshing];
-//    } repeats:YES];
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{ // 单例方法
-//        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-//        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{ // 列表设置5秒自动刷新
-//        [BHSocket disconnect];
+//- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
+//    ZPLog(@"断线重连");
+//     [self BoltData];
+////    self.isCanSelect = NO;
+////    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+////    [BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] withTimeout:5 error:nil];
+////    self.timer = [NSTimer scheduledTimerWithTimeInterval:15 block:^{ // 列表设置5秒自
+////        [BHSocket disconnect];
 ////    //结束头部刷新
-//         [self.tableview.mj_header endRefreshing];
-//        } repeats:YES];
-//    });
-//    [BHSocket readDataWithTimeout:-1 tag:0];
-//    [BHSocket disconnect];
-//    [SVProgressHUD dismiss];
-}
-
-// 断线加载Sock
-- (void)BoltData {
-    BHSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    NSError *err = nil;
-    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-    if(![BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
-        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
-    }else {
-        [SVProgressHUD showWithStatus:@"Reconnect..."];
-        
-    }
-}
+////        [self.tableview.mj_header endRefreshing];
+////    } repeats:YES];
+////    static dispatch_once_t onceToken;
+////    dispatch_once(&onceToken, ^{ // 单例方法
+////        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
+////        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{ // 列表设置5秒自动刷新
+////        [BHSocket disconnect];
+//////    //结束头部刷新
+////         [self.tableview.mj_header endRefreshing];
+////        } repeats:YES];
+////    });
+////    [BHSocket readDataWithTimeout:-1 tag:0];
+////    [BHSocket disconnect];
+////    [SVProgressHUD dismiss];
+//}
+//
+//// 断线加载Sock
+//- (void)BoltData {
+//    BHSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    NSError *err = nil;
+//    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+//    if(![BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
+//        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
+//    }else {
+//        [SVProgressHUD showWithStatus:@"Reconnect..."];
+//
+//    }
+//}
 
 
 // 开关1开启
@@ -354,23 +355,7 @@
 
 // 启动加载Sock
 - (void)PostData {
-    BHSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    NSError *err = nil;
-    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-    if(![BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
-        //        self.tableview.hidden = YES;
-        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
-    }else {
-        [SVProgressHUD showWithStatus:@"Loading..."];
-        //        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-        //        1.view的背景颜色
-        //        [SVProgressHUD setBackgroundColor:[UIColor orangeColor]];
-        //        2.view上面的旋转小图标的 颜色
-        //        [SVProgressHUD setForegroundColor:[UIColor blueColor]];
-        //        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        ZPLog(@"ok");
-//        ZPLog(@"%@:%@",KEY_PORT,KEY_IP);
-    }
+    [[ZHeartBeatSocket shareZheartBeatSocket] initZheartBeatSocketWithDelegate:self];
 }
 
 // 开关点击事件

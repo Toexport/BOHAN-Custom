@@ -37,9 +37,9 @@
 #import "CHKeychain.h"
 #import "NotificationMacro.h"
 #import "CommonlyInstruction.h"
+#import "ZHeartBeatSocket.h"
 
-
-static GCDAsyncSocket *BHSocket;
+#define BHSocket [ZHeartBeatSocket shareZheartBeatSocket].asyncSocket
 
 //国际化
 #define Localize(key) NSLocalizedString(key,@"")

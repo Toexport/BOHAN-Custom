@@ -44,7 +44,7 @@
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
     
     _socket  =  [ZHeartBeatSocket shareZheartBeatSocket];
-    [_socket initZheartBeatSocket];
+    [_socket initZheartBeatSocketWithDelegate:nil];
     
     return YES;
 }
@@ -56,7 +56,7 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
+    [[UIApplication sharedApplication] setKeepAliveTimeout:300 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
     //如果需要添加NSTimer
     [_socket runTimerWhenAppEnterBackGround];
 }
