@@ -24,6 +24,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self addReachabilityManager];
     [[AFNetworkReachabilityManager sharedManager]  startMonitoring];
     LoginViewController *login = [[LoginViewController alloc] init];
     UINavigationController *nav;
@@ -55,7 +56,7 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
+    [[UIApplication sharedApplication] setKeepAliveTimeout:300 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
     //如果需要添加NSTimer
     [_socket runTimerWhenAppEnterBackGround];
 }

@@ -95,7 +95,8 @@
 //            记录上次的登录账号,下载可自动登录,退出登录需要删除此信息
         [[NSUserDefaults standardUserDefaults] setObject:accountTF.text forKey:LOGOUTNOTIFICATION];
         [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[InformationController new]];
-        [SVProgressHUD showSuccessWithStatus:@"登陆成功"];
+//        [SVProgressHUD showSuccessWithStatus:@"登陆成功"];
+        
     } else {
         [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
     }

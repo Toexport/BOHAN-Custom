@@ -13,9 +13,6 @@
 #import <netinet/in.h>
 #import <arpa/inet.h>
 #import <unistd.h>
-
-//#define SocketHOST @"192.168.3.253"         //服务器ip地址
-//#define SocketonPort 6878                   //服务器端口号
 #define SocketHartKey @"0026"               //心跳包的指令
 
 @interface ZHeartBeatSocket() <GCDAsyncSocketDelegate>{
@@ -47,6 +44,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatSocket) name:@"CreatGcdSocket" object:nil];
 }
 
+- (void)disContennct {
+    _isInContentPerform = YES;
+    [self.asyncSocket disconnect];
+}
+
 //INT_MAX 最大时间链接，心跳必须!
 -(void)creatSocket{
     if (_asyncSocket == nil || [_asyncSocket isDisconnected]) {
@@ -64,25 +66,22 @@
         [_asyncSocket readDataWithTimeout:INT_MAX tag:0];
         NSLog(@"socket通讯连接成功");
         //编写Socket通讯提交服务器
-        NSString *inputMsgStr = [NSString stringWithFormat:@"%@",_getStr];
+        NSString *inputMsgStr = [NSString stringWithFormat:@"客户端收到%@",_getStr];
         NSString * content = [inputMsgStr stringByAppendingString:@"\r\n"];
         NSData *data = [content dataUsingEncoding:NSISOLatin1StringEncoding];
         [_asyncSocket writeData:data withTimeout:INT_MAX tag:0];
-        
         [self heartbeat];
     }
 }
 
-- (void)heartbeat{
+- (void)heartbeat {
     /*
      *此处是一个心跳请求链接（自己的服务器），Timeout时间随意
      */
     [_asyncSocket writeData:[SocketHartKey dataUsingEncoding:NSISOLatin1StringEncoding] withTimeout:INT_MAX tag:0];
     NSLog(@"heart live-----------------");
     NSLog(@"%@",_asyncSocket);
-    
 }
-
 
 #pragma mark - <GCDasyncSocketDelegate>
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(nullable NSError *)err{
@@ -122,11 +121,12 @@
 - (void)runTimerWhenAppEnterBackGround{
     // 每隔30s像服务器发送心跳包
     if (self.connectTimer == nil) {
-        self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
+        self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
         NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
         [runLoop addTimer:self.connectTimer forMode:NSDefaultRunLoopMode];
     }
     [self.connectTimer fire];
+    
     //配置所有添加RunLoop后台的NSTimer可用!
     UIApplication* app = [UIApplication sharedApplication];
     __block UIBackgroundTaskIdentifier bgTask;
@@ -137,7 +137,7 @@
             }
         });
     }];
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if(bgTask != UIBackgroundTaskInvalid){

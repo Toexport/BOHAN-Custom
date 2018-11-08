@@ -20,63 +20,59 @@
 }
 
 - (IBAction)Switch1:(UISwitch *)sender {
-    if (sender.isOn) {
-        self.switch1ONButBlock(self.Switch1);
-        ZPLog(@"开");
-    }else {
-        self.switch1OFFButBlock(self.Switch1);
-        ZPLog(@"关");
+//    sender.on = !sender.on;
+    if (self.switchBlock) {
+        self.switchBlock(sender.tag);
     }
 }
 
 - (IBAction)Switch2:(UISwitch *)sender {
-    if (sender.isOn) {
-        self.switch2ONButBlock(self.Switch2);
-        ZPLog(@"开");
-    }else {
-        self.switch2OFFButBlock(self.Switch2);
-        ZPLog(@"关");
+//    sender.on = !sender.on;
+    if (self.switchBlock) {
+        self.switchBlock(sender.tag);
     }
 }
 
 - (IBAction)Switch3:(UISwitch *)sender {
-    if (sender.isOn) {
-        self.switch3ONButBlock(self.Switch3);
-        ZPLog(@"开");
-    }else {
-        self.switch3OFFButBlock(self.Switch3);
-        ZPLog(@"关");
+//    sender.on = !sender.on;
+    if (self.switchBlock) {
+        self.switchBlock(sender.tag);
     }
 }
 
 - (IBAction)Switch4:(UISwitch *)sender {
-    if (sender.isOn) {
-        self.switch4ONButBlock(self.Switch4);
-        ZPLog(@"开");
-    }else {
-        self.switch4OFFButBlock(self.Switch4);
-        ZPLog(@"关");
+//    sender.on = !sender.on;
+    if (self.switchBlock) {
+        self.switchBlock(sender.tag);
     }
 }
 
 // 倒计时1
 - (IBAction)Countdown1Btn:(UIButton *)sender {
-    self.countdown1BtnBlock(self.Countdown1Btn);
+    if (self.switchBlock) {
+        self.switchBlock(sender.tag);
+    }
 }
 
 // 倒计时2
 - (IBAction)Countdown2Btn:(UIButton *)sender {
-    self.countdown2BtnBlock(self.Countdown2Btn);
+    if (self.switchBlock) {
+        self.switchBlock(sender.tag);
+    }
 }
 
 // 倒计时3
 - (IBAction)Countdown3Btn:(UIButton *)sender {
-    self.countdown3BtnBlock(self.Countdown3Btn);
+    if (self.switchBlock) {
+        self.switchBlock(sender.tag);
+    };
 }
 
 // 倒计时4
 - (IBAction)Countdown4Btn:(UIButton *)sender {
-    self.countdown4BtnBlock(self.Countdown4Btn);
+    if (self.switchBlock) {
+        self.switchBlock(sender.tag);
+    }
 }
 
 @end

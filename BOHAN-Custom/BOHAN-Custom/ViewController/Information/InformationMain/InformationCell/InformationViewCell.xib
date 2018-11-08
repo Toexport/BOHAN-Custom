@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -102,7 +102,7 @@
                             <action selector="Switch1:" destination="KGk-i7-Jjw" eventType="valueChanged" id="576-Ck-0Y0"/>
                         </connections>
                     </switch>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KK9-NC-Hr4">
+                    <button opaque="NO" tag="111" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KK9-NC-Hr4">
                         <rect key="frame" x="367" y="57" width="90" height="31"/>
                         <color key="backgroundColor" red="0.32393941279999999" green="0.54492551089999997" blue="0.91768991950000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -122,7 +122,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="cc7-Wt-gGt"/>
                         </constraints>
                     </view>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1eg-4G-30M">
+                    <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1eg-4G-30M">
                         <rect key="frame" x="224" y="108" width="51" height="30"/>
                         <color key="backgroundColor" red="0.9806855320930481" green="0.11876741796731949" blue="0.029299594461917877" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -138,7 +138,7 @@
                             <action selector="Switch2:" destination="KGk-i7-Jjw" eventType="valueChanged" id="vES-jD-NsD"/>
                         </connections>
                     </switch>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wa5-lZ-bR1">
+                    <button opaque="NO" tag="222" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wa5-lZ-bR1">
                         <rect key="frame" x="367" y="108" width="90" height="30"/>
                         <color key="backgroundColor" red="0.32393941279999999" green="0.54492551089999997" blue="0.91768991950000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -158,7 +158,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="1l5-WM-eiW"/>
                         </constraints>
                     </view>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QD-tLT">
+                    <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QD-tLT">
                         <rect key="frame" x="224" y="158" width="51" height="30"/>
                         <color key="backgroundColor" red="0.9806855320930481" green="0.11876741796731949" blue="0.029299594461917877" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -174,7 +174,7 @@
                             <action selector="Switch3:" destination="KGk-i7-Jjw" eventType="valueChanged" id="g2l-Yy-9cz"/>
                         </connections>
                     </switch>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGy-UF-ApP">
+                    <button opaque="NO" tag="333" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGy-UF-ApP">
                         <rect key="frame" x="367" y="158" width="90" height="30"/>
                         <color key="backgroundColor" red="0.32393941279999999" green="0.54492551089999997" blue="0.91768991950000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -194,7 +194,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="S5L-YH-OLL"/>
                         </constraints>
                     </view>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Buh-iv-zcR">
+                    <switch opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Buh-iv-zcR">
                         <rect key="frame" x="224" y="208" width="51" height="30"/>
                         <color key="backgroundColor" red="0.9806855320930481" green="0.11876741796731949" blue="0.029299594461917877" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -210,7 +210,7 @@
                             <action selector="Switch4:" destination="KGk-i7-Jjw" eventType="valueChanged" id="PYZ-w9-KtC"/>
                         </connections>
                     </switch>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PlL-Sq-jkX">
+                    <button opaque="NO" tag="444" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PlL-Sq-jkX">
                         <rect key="frame" x="367" y="208" width="90" height="30"/>
                         <color key="backgroundColor" red="0.32393941279999999" green="0.54492551089999997" blue="0.91768991950000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -304,7 +304,7 @@
                 <outlet property="Switch4" destination="Buh-iv-zcR" id="I0G-El-1Jh"/>
                 <outlet property="TitleNameLabel" destination="fUT-uP-pf0" id="KzU-Gs-Oqi"/>
             </connections>
-            <point key="canvasLocation" x="-159" y="202"/>
+            <point key="canvasLocation" x="-772" y="195"/>
         </tableViewCell>
     </objects>
 </document>
