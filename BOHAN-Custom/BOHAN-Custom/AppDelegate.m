@@ -14,7 +14,7 @@
 #import "FileHeader.pch"
 #import "AFNetworking.h"
 #import "ZHeartBeatSocket.h"
-@interface AppDelegate ()<UITabBarControllerDelegate>{
+@interface AppDelegate ()<UITabBarControllerDelegate,GCDAsyncSocketDelegate>{
     ZHeartBeatSocket *_socket;
 }
 
@@ -42,7 +42,6 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor], nil] forKeys:[NSArray arrayWithObjects:NSForegroundColorAttributeName, nil]]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
-    
     _socket  =  [ZHeartBeatSocket shareZheartBeatSocket];
     [_socket initZheartBeatSocketWithDelegate:nil];
     
@@ -56,7 +55,7 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[UIApplication sharedApplication] setKeepAliveTimeout:300 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
+    [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
     //如果需要添加NSTimer
     [_socket runTimerWhenAppEnterBackGround];
 }

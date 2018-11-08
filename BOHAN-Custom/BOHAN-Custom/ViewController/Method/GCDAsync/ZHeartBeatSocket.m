@@ -43,7 +43,6 @@
 - (void)initZheartBeatSocketWithDelegate:(id)delegate {
     _delegate = delegate;
     [self creatSocket];
-    
     //注册APP退到后台，之后每十分钟发送的通知，与VOIP无关，由于等待时间必须大于600s，不使用
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatSocket) name:@"CreatGcdSocket" object:nil];
 }
@@ -65,7 +64,7 @@
         [_asyncSocket readDataWithTimeout:INT_MAX tag:0];
         NSLog(@"socket通讯连接成功");
         //编写Socket通讯提交服务器
-        NSString *inputMsgStr = [NSString stringWithFormat:@"客户端收到%@",_getStr];
+        NSString *inputMsgStr = [NSString stringWithFormat:@"%@",_getStr];
         NSString * content = [inputMsgStr stringByAppendingString:@"\r\n"];
         NSData *data = [content dataUsingEncoding:NSISOLatin1StringEncoding];
         [_asyncSocket writeData:data withTimeout:INT_MAX tag:0];
@@ -80,7 +79,10 @@
      */
     [_asyncSocket writeData:[SocketHartKey dataUsingEncoding:NSISOLatin1StringEncoding] withTimeout:INT_MAX tag:0];
     NSLog(@"heart live-----------------");
+    NSLog(@"%@",_asyncSocket);
+    
 }
+
 
 #pragma mark - <GCDasyncSocketDelegate>
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(nullable NSError *)err{
@@ -88,7 +90,7 @@
     [_asyncSocket disconnectAfterReading];
     [_asyncSocket disconnectAfterWriting];
     [_asyncSocket disconnectAfterReadingAndWriting];
-    // 服务器掉线，重连（不知道为什么我们的服务器没两分钟重连一次），必须添加
+    // 服务器掉线，重连，必须添加
     if (!_isInContentPerform) {
         _isInContentPerform = YES;
         [self performSelector:@selector(perform) withObject:nil afterDelay:2];
@@ -120,12 +122,11 @@
 - (void)runTimerWhenAppEnterBackGround{
     // 每隔30s像服务器发送心跳包
     if (self.connectTimer == nil) {
-        self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
+        self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
         NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
         [runLoop addTimer:self.connectTimer forMode:NSDefaultRunLoopMode];
     }
     [self.connectTimer fire];
-    
     //配置所有添加RunLoop后台的NSTimer可用!
     UIApplication* app = [UIApplication sharedApplication];
     __block UIBackgroundTaskIdentifier bgTask;
@@ -136,7 +137,7 @@
             }
         });
     }];
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if(bgTask != UIBackgroundTaskInvalid){

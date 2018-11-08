@@ -37,15 +37,7 @@
     [self rightBarTitle:Localize(@"Exit") action:@selector(LogOut)];
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
-        [self PostData];
-//    [self addRefresh];
-    
-//    MyWeakSelf
-//    self.timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^{ // 列表设置8秒自动刷新
-//        __strong typeof(self) strongSelf = weakSelf;
-//        [strongSelf QueryData];
-//    } repeats:YES];
-    
+    [self PostData];
 }
 
 // 刷新
@@ -61,9 +53,10 @@
     [self QueryData];
 }
 
+//  生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self.tableview reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -73,16 +66,15 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
-
+//
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [_timer pauseTimer];
 }
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
+//
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+//    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+//}
 
 // 新增设备
 - (IBAction)BindingDevice:(UIButton *)sender {
@@ -135,32 +127,33 @@
 
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-    NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    ZPLog(@"%@-----%@",sock.connectedHost,newMessage);
-    if (newMessage.length > 14) {
-        NSString * STRid = [newMessage substringWithRange:NSMakeRange(2, 12)];
-        self.Strid = STRid;
-        if (newMessage.length > 26) {
-            SwitchState = [newMessage substringWithRange:NSMakeRange(26, 2)];
-        }else {
-            SwitchState = [newMessage substringWithRange:NSMakeRange(14, 2)];
-        }
-        if (![self.SwitchStr isEqualToString:SwitchState] && ![SwitchState isEqualToString:@"00"]) {
+        NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        ZPLog(@"%@-----%@",sock.connectedHost,newMessage);
+        if (newMessage.length > 14) {
+            NSString * STRid = [newMessage substringWithRange:NSMakeRange(2, 12)];
+            self.Strid = STRid;
+            if (newMessage.length > 26) {
+                SwitchState = [newMessage substringWithRange:NSMakeRange(26, 2)];
+            }else {
+                SwitchState = [newMessage substringWithRange:NSMakeRange(14, 2)];
+            }
+            if (![self.SwitchStr isEqualToString:SwitchState] && ![SwitchState isEqualToString:@"00"]) {
+                self.SwitchStr = SwitchState;
+                [self.tableview reloadData];
+                [self.tableview.mj_header endRefreshing];
+                [SVProgressHUD dismiss];
+            }
             self.SwitchStr = SwitchState;
-            [self.tableview reloadData];
+            ZPLog(@"%@---%@",STRid,SwitchState);
+            //结束头部刷新
             [self.tableview.mj_header endRefreshing];
-            [SVProgressHUD dismiss];
         }
-        self.SwitchStr = SwitchState;
-        ZPLog(@"%@---%@",STRid,SwitchState);
-        //结束头部刷新
-        [self.tableview.mj_header endRefreshing];
-    }
-    if (!self.isCanSelect) {
-        self.isCanSelect = YES;
-        [self addRefresh];
-    }
+        if (!self.isCanSelect) {
+            self.isCanSelect = YES;
+            [self addRefresh];
+        }
         [SVProgressHUD dismiss];
+    
 
 //    static dispatch_once_t onceToken;
 //    dispatch_once(&onceToken, ^{ // 单例方法
@@ -172,7 +165,7 @@
 //        } repeats:YES];
 //    });
     
-//    [BHSocket readDataWithTimeout:-1 tag:tag];
+    [BHSocket readDataWithTimeout:-1 tag:0];
 }
 // 查询
 - (void)QueryData {

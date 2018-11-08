@@ -17,6 +17,7 @@ static NSString * TailStr = @"0D"; // 尾部
 static NSString * SwitchState;
 static NSString * SwitchinstructionStr = @"00130001"; // 查询开关状态指令
 static NSString * SwitchqueryStr = @"00260000"; // 定时开关指令
+//static NSString * Strr; // 指令参数，全局
 
 /********倒计时查询&&定时指令**********/
 static NSString * CountdownqQueryStr = @"002F0000"; // 查询(倒计时)

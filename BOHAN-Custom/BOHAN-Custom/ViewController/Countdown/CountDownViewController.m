@@ -52,51 +52,30 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [self rightBarTitle:Localize(@"Cancel") color:[UIColor whiteColor] action:@selector(canceOperation)];
     _SwitchState = @"00";
     [self loadData];
-    [self PostData];
+//    [self PostData];
     [self UI];
     ZPLog(@"%ld",(long)self.type);
 }
+//
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//}
+//
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//}
+//
+//- (void)viewDidDisappear:(BOOL)animated {
+//    [super viewDidDisappear:animated];
+//}
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
-// 启动加载Sock
-- (void)PostData {
-    BHSocket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    NSError *err = nil;
-    NSMutableDictionary *usernamepasswordKVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-    if(![BHSocket connectToHost:[usernamepasswordKVPairs objectForKey:KEY_IP] onPort:[[usernamepasswordKVPairs objectForKey:KEY_PORT] intValue] error:&err]) {
-        [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
-    }else {
-        [SVProgressHUD showWithStatus:nil];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        ZPLog(@"ok");
-        ZPLog(@"%@:%@",KEY_PORT,KEY_IP);
-    }
-}
-
-// 发送数据
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@:%d",host,port]);
-    [BHSocket readDataWithTimeout:-1 tag:0];
-}
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+//    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+//}
 
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -108,12 +87,6 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         [self loadData];
     });
     [BHSocket readDataWithTimeout:-1 tag:0];
-}
-
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error {
-    ZPLog(@"%@",error);
-    [SVProgressHUD dismiss];
-//    [SVProgressHUD showInfoWithStatus:(@"Connection Fails")];
 }
 
 // 查询
@@ -226,9 +199,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [SVProgressHUD showSuccessWithStatus:Localize(@"Cancel Success")];
 }
 
-//新增
-
-// UI
+//新增UI
 - (void)UI {
     CountdownView * view = [[[NSBundle mainBundle] loadNibNamed:@"CountdownView" owner:nil options:nil] firstObject];
     view.doneBlock = ^(NSString *selectDate) {

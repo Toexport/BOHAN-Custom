@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface InformationController : UIViewController<GCDAsyncSocketDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIView *titleView;
-
+// 查询
+- (void)QueryData;
 @end
 
 NS_ASSUME_NONNULL_END
