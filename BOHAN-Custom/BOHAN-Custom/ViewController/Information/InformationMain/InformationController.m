@@ -59,22 +59,10 @@
     [self QueryData];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+// 启动加载Sock
+- (void)PostData {
+    [[ZHeartBeatSocket shareZheartBeatSocket] initZheartBeatSocketWithDelegate:self];
 }
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-//
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [_timer pauseTimer];
-}
-//
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-//    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-//}
 
 // 新增设备
 - (IBAction)BindingDevice:(UIButton *)sender {
@@ -108,7 +96,6 @@
     cell.NameLabel2.text = [usernamepasswordKVPairs objectForKey:KEY_Name2];
     cell.NameLabel3.text = [usernamepasswordKVPairs objectForKey:KEY_Name3];
     cell.NameLabel4.text = [usernamepasswordKVPairs objectForKey:KEY_Name4];
-    
     cell.switchBlock = ^(NSInteger selectIndex) {
         if (selectIndex >= 10) { //跳转
             [self SwitchPush:selectIndex];
@@ -122,7 +109,6 @@
                 default:
                     break;
             }
-            
             [SVProgressHUD showWithStatus:@"Setting, please wait  moment..."];
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [self changeSwichStase:swich];
@@ -132,21 +118,11 @@
     return cell;
 }
 
-//// 发送数据
-//- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-//    ZPLog(@"%@",[NSString stringWithFormat:@"连接到:%@:%d服务器",host,port]);
-////    typedef NS_ENUM(NSInteger ,KReadDataType){
-////        TAG_FIXED_LENGTH_HEADER = 10,//消息头部tag
-////        TAG_RESPONSE_BODY = 11//消息体tag
-////    };
-//    [BHSocket readDataWithTimeout:-1 tag:0];
-////    [BHSocket readDataToLength:KPacketHeaderLength withTimeout:-1 tag:TAG_FIXED_LENGTH_HEADER];
-//}
-
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
         NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        ZPLog(@"%@-----%@",sock.connectedHost,newMessage);
+        ZPLog(@"%@-----%@",sock.connectedHost,newMessage);
+//    E770181102000100002F001CFF000000000248FF00000000022800000000000048FF000000000148E90D
         if (newMessage.length > 14) {
             NSString * STRid = [newMessage substringWithRange:NSMakeRange(2, 12)];
             self.Strid = STRid;
@@ -170,19 +146,9 @@
                 [self PostData];
             }
         }
-
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{ // 单例方法
-//        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-//        MyWeakSelf
-//        self.timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^{ // 列表设置8秒自动刷新
-//            __strong typeof(self) strongSelf = weakSelf;
-//            [strongSelf PostData];
-//        } repeats:YES];
-//    });
-    
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
+
 // 查询
 - (void)QueryData {
     if (self.tableview) {
@@ -208,12 +174,6 @@
     [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
-
-// 启动加载Sock
-- (void)PostData {
-    [[ZHeartBeatSocket shareZheartBeatSocket] initZheartBeatSocketWithDelegate:self];
-}
-
 
 // 查询开关状态
 - (void)SwitchStateS:(InformationViewCell *)cell {

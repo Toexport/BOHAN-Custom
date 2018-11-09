@@ -12,7 +12,6 @@
 /********头&&尾**********/
 static NSString * HeadStr = @"E7";
 static NSString * TailStr = @"0D"; // 尾部
-
 /********开关查询以及指令**********/
 static NSString * SwitchState;
 static NSString * SwitchinstructionStr = @"00130001"; // 查询开关状态指令

@@ -20,28 +20,24 @@
 }
 
 - (IBAction)Switch1:(UISwitch *)sender {
-//    sender.on = !sender.on;
     if (self.switchBlock) {
         self.switchBlock(sender.tag);
     }
 }
 
 - (IBAction)Switch2:(UISwitch *)sender {
-//    sender.on = !sender.on;
     if (self.switchBlock) {
         self.switchBlock(sender.tag);
     }
 }
 
 - (IBAction)Switch3:(UISwitch *)sender {
-//    sender.on = !sender.on;
     if (self.switchBlock) {
         self.switchBlock(sender.tag);
     }
 }
 
 - (IBAction)Switch4:(UISwitch *)sender {
-//    sender.on = !sender.on;
     if (self.switchBlock) {
         self.switchBlock(sender.tag);
     }

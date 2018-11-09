@@ -96,7 +96,6 @@
         [[NSUserDefaults standardUserDefaults] setObject:accountTF.text forKey:LOGOUTNOTIFICATION];
         [UIApplication sharedApplication].delegate.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[InformationController new]];
 //        [SVProgressHUD showSuccessWithStatus:@"登陆成功"];
-        
     } else {
         [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
     }
@@ -151,10 +150,18 @@
 - (IBAction)delete:(UIButton *)sender {
     //删除
     [CHKeychain delete:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
+    [CHKeychain delete:KEY_USERNAME_PASSWORD];
     [CHKeychain delete:KEY_USERNAME];
-     [CHKeychain delete:KEY_PASSWORD];
+    [CHKeychain delete:KEY_PASSWORD];
     [CHKeychain delete:KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4];
-    
+    [CHKeychain delete:KEY_TitleName];
+    [CHKeychain delete:KEY_IP];
+    [CHKeychain delete:KEY_PORT];
+    [CHKeychain delete:KEY_Name1];
+    [CHKeychain delete:KEY_Name2];
+    [CHKeychain delete:KEY_Name3];
+    [CHKeychain delete:KEY_Name4];
+    ZPLog(@"删除");
 }
 
 

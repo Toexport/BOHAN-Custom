@@ -52,40 +52,16 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [self rightBarTitle:Localize(@"Cancel") color:[UIColor whiteColor] action:@selector(canceOperation)];
     _SwitchState = @"00";
     [self loadData];
-//    [self PostData];
     [self UI];
     ZPLog(@"%ld",(long)self.type);
 }
-//
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//}
-//
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//}
-//
-//- (void)viewWillDisappear:(BOOL)animated {
-//    [super viewWillDisappear:animated];
-//}
-//
-//- (void)viewDidDisappear:(BOOL)animated {
-//    [super viewDidDisappear:animated];
-//}
-
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-//    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-//}
 
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     ZPLog(@"%@%@",sock.connectedHost,newMessage);
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ // 单例方法
-        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-        [self loadData];
-    });
+    [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
+    [self loadData];
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
@@ -107,22 +83,20 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
        [SVProgressHUD showInfoWithStatus:Localize(@"Please choose countdown time")];
         return;
     }
-    
     if (time.text.length >= 7) {
         _TimeUrl = [time.text substringToIndex:5];
     }else
         if (time.text.length >= 5) {
             _TimeUrl = [time.text substringToIndex:5];
         }
-    
     if (self.type == 111) { // 开关1
         if ([self.SwitchState isEqualToString:@"00"]) {
             _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@",_TimeUrl,SetOpen,Switch,Switch,Switch];
-    }else
-        if ([self.SwitchState isEqualToString:@"01"]) {
-            _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@",_TimeUrl,SetOff,Switch,Switch,Switch];
-        }
-    [self TimingSet];
+        }else
+            if ([self.SwitchState isEqualToString:@"01"]) {
+                _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@",_TimeUrl,SetOff,Switch,Switch,Switch];
+            }
+        [self TimingSet];
     }else
         if (self.type == 222) { // 开关2
             if ([self.SwitchState isEqualToString:@"00"]) {
@@ -133,7 +107,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
                 }
             [self TimingSet];
         }else
-            if (self.type == 333) { 
+            if (self.type == 333) {
                 if ([self.SwitchState isEqualToString:@"00"]) {
                     _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@",Switch,Switch,_TimeUrl,SetOpen,Switch];
                 }else
@@ -193,9 +167,14 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 
 // 取消
 - (void)canceOperation {
+    NSString * str = @"E7701811020001002E000C000000000000000000000000000000D60D";
+//    E768170905030900001300050001000000B20D
+//    E768170905030900001300050000000000B10D
     [self stopTimer];
     _selectedItemIndex = NSIntegerMax;
     [_mainTable reloadData];
+    [BHSocket writeData:[str dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
     [SVProgressHUD showSuccessWithStatus:Localize(@"Cancel Success")];
 }
 
@@ -313,6 +292,5 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         }
     }
 }
-
 
 @end
