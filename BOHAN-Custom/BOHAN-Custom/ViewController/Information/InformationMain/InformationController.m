@@ -24,12 +24,13 @@
 @property (nonatomic, strong) NSString * SwitchStr;
 @property (nonatomic, strong) NSString * StateSStr;
 @property (nonatomic, strong) NSString * Switch1;
-@property (nonatomic, weak) NSTimer *timer;
+@property (nonatomic, weak) NSTimer * timer;
 @property (nonatomic, assign) BOOL isCanSelect;
 
 @end
 
 @implementation InformationController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = Localize(@"Device List");
@@ -100,7 +101,7 @@
         if (selectIndex >= 10) { //跳转
             [self SwitchPush:selectIndex];
         } else {                 //开关
-            UISwitch *swich = nil;
+            UISwitch * swich = nil;
             switch (selectIndex) {
                 case 0: swich = cell.Switch1; break;
                 case 1: swich = cell.Switch2; break;
@@ -120,9 +121,8 @@
 
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-        NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        ZPLog(@"%@-----%@",sock.connectedHost,newMessage);
-//    E770181102000100002F001CFF000000000248FF00000000022800000000000048FF000000000148E90D
+       NSString * newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        ZPLog(@"%@-返回所有状态-%@",sock.connectedHost,newMessage);
         if (newMessage.length > 14) {
             NSString * STRid = [newMessage substringWithRange:NSMakeRange(2, 12)];
             self.Strid = STRid;
@@ -136,8 +136,9 @@
                 [self.tableview reloadData];
                 [self.tableview.mj_header endRefreshing];
                 [SVProgressHUD dismiss];
-                ZPLog(@"%@---%@",STRid,SwitchState);
+                ZPLog(@"%@-返回开关状态-%@",STRid,SwitchState);
             }
+            
             //结束头部刷新
             [self.tableview.mj_header endRefreshing];
             if (!self.isCanSelect) {
@@ -177,108 +178,36 @@
 
 // 查询开关状态
 - (void)SwitchStateS:(InformationViewCell *)cell {
-    if ([self.SwitchStr isEqualToString:@"80"]) {
+    if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"86"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"8A"] || [self.SwitchStr isEqualToString:@"8C"] || [self.SwitchStr isEqualToString:@"8E"]) {
         cell.Switch1.on = YES;
+    }else {
+        cell.Switch1.on = NO;
+    }
+    
+    if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"85"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"89"] || [self.SwitchStr isEqualToString:@"8D"] || [self.SwitchStr isEqualToString:@"8C"]) {
         cell.Switch2.on = YES;
+    }else {
+        cell.Switch2.on = NO;
+    }
+    
+    if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"83"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"89"] || [self.SwitchStr isEqualToString:@"8A"] || [self.SwitchStr isEqualToString:@"8B"]) {
         cell.Switch3.on = YES;
+    }else {
+        cell.Switch3.on = NO;
+    }
+    
+    if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"83"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"85"] || [self.SwitchStr isEqualToString:@"86"] || [self.SwitchStr isEqualToString:@"87"]) {
         cell.Switch4.on = YES;
-    }else
-        if ([self.SwitchStr isEqualToString:@"81"]) {
-            cell.Switch1.on = NO;
-            cell.Switch2.on = YES;
-            cell.Switch3.on = YES;
-            cell.Switch4.on = YES;
-        }else
-            if ([self.SwitchStr isEqualToString:@"82"]) {
-                cell.Switch1.on = YES;
-                cell.Switch2.on = NO;
-                cell.Switch3.on = YES;
-                cell.Switch4.on = YES;
-            }else
-                if ([self.SwitchStr isEqualToString:@"83"]) {
-                    cell.Switch1.on = NO;
-                    cell.Switch2.on = NO;
-                    cell.Switch3.on = YES;
-                    cell.Switch4.on = YES;
-                }else
-                    if ([self.SwitchStr isEqualToString:@"84"]) {
-                        cell.Switch1.on = YES;
-                        cell.Switch2.on = YES;
-                        cell.Switch3.on = NO;
-                        cell.Switch4.on = YES;
-                    }else
-                        if ([self.SwitchStr isEqualToString:@"85"]) {
-                            cell.Switch1.on = NO;
-                            cell.Switch2.on = YES;
-                            cell.Switch3.on = NO;
-                            cell.Switch4.on = YES;
-                        }else
-                            if ([self.SwitchStr isEqualToString:@"86"]) {
-                                cell.Switch1.on = YES;
-                                cell.Switch2.on = NO;
-                                cell.Switch3.on = NO;
-                                cell.Switch4.on = YES;
-                            }else
-                                if ([self.SwitchStr isEqualToString:@"87"]) {
-                                    cell.Switch1.on = NO;
-                                    cell.Switch2.on = NO;
-                                    cell.Switch3.on = NO;
-                                    cell.Switch4.on = YES;
-                                }else
-                                    if ([self.SwitchStr isEqualToString:@"88"]) {
-                                        cell.Switch1.on = YES;
-                                        cell.Switch2.on = YES;
-                                        cell.Switch3.on = YES;
-                                        cell.Switch4.on = NO;
-                                    }else
-                                        if ([self.SwitchStr isEqualToString:@"89"]) {
-                                            cell.Switch1.on = NO;
-                                            cell.Switch2.on = YES;
-                                            cell.Switch3.on = YES;
-                                            cell.Switch4.on = NO;
-                                        }else
-                                            if ([self.SwitchStr isEqualToString:@"8A"]) {
-                                                cell.Switch1.on = YES;
-                                                cell.Switch2.on = NO;
-                                                cell.Switch3.on = YES;
-                                                cell.Switch4.on = NO;
-                                            }else
-                                                if ([self.SwitchStr isEqualToString:@"8B"]) {
-                                                    cell.Switch1.on = NO;
-                                                    cell.Switch2.on = NO;
-                                                    cell.Switch3.on = YES;
-                                                    cell.Switch4.on = NO;
-                                                }else
-                                                    if ([self.SwitchStr isEqualToString:@"8D"]) {
-                                                        cell.Switch1.on = NO;
-                                                        cell.Switch2.on = YES;
-                                                        cell.Switch3.on = NO;
-                                                        cell.Switch4.on = NO;
-                                                    }else
-                                                        if ([self.SwitchStr isEqualToString:@"8C"]) {
-                                                            cell.Switch1.on = YES;
-                                                            cell.Switch2.on = YES;
-                                                            cell.Switch3.on = NO;
-                                                            cell.Switch4.on = NO;
-                                                        }else
-                                                            if ([self.SwitchStr isEqualToString:@"8E"]) {
-                                                                cell.Switch1.on = YES;
-                                                                cell.Switch2.on = NO;
-                                                                cell.Switch3.on = NO;
-                                                                cell.Switch4.on = NO;
-                                                            }else
-                                                                if ([self.SwitchStr isEqualToString:@"8F"]) {
-                                                                    cell.Switch1.on = NO;
-                                                                    cell.Switch2.on = NO;
-                                                                    cell.Switch3.on = NO;
-                                                                    cell.Switch4.on = NO;
-                                                                }
+    }else {
+        cell.Switch4.on = NO;
+    }
 }
 
 // 点击开关跳转事件
 - (void)SwitchPush:(NSInteger )type {
     CountDownViewController * CountDown = [[CountDownViewController alloc]init];
     CountDown.deviceNo = self.Strid;
+    CountDown.SwitchStr = SwitchState;
     CountDown.type = type;
     [self.navigationController pushViewController:CountDown animated:YES];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -290,7 +219,6 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:Localize(@"Prompt") message:Localize(@"Are you sure you want to log out?") preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:Localize(@"Cancel") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         ZPLog(@"action = %@", action);
-        
     }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:Localize(@"Determine") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 //        清除所有的数据
@@ -299,7 +227,6 @@
         NSUserDefaults *UserLoginState = [NSUserDefaults standardUserDefaults];
         [UserLoginState removeObjectForKey:LOGOUTNOTIFICATION];
         [UserLoginState synchronize];
-        
     }];
     [alert addAction:defaultAction];
     [alert addAction:cancelAction];

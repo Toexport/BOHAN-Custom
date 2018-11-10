@@ -51,24 +51,23 @@
 
 // 连接
 - (IBAction)ConnectBtn:(UIButton *)sender {
-    
     if ([self.IPTExtField.text isEqualToString:@""]) {
         [SVProgressHUD showErrorWithStatus:Localize(@"Please fill out the IP")];
     }else
         if ([self.PortTextField.text isEqualToString:@""]) {
             [SVProgressHUD showErrorWithStatus:Localize(@"Please fill out the Port")];
         }else {
-    [[ZHeartBeatSocket shareZheartBeatSocket] disContennct];// 断开之前连接，再次连接
-    socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    NSError *err = nil;
-    if(![socket connectToHost:IPTExtField.text onPort:[PortTextField.text intValue] error:&err]) {
-        [SVProgressHUD showInfoWithStatus:(@"Connection Succse")];
-        ZPLog(@"%@%@",IPTExtField.text,PortTextField.text);
-    }else {
-        ZPLog(@"ok");
-        ZPLog(@"%@%@",IPTExtField.text,PortTextField.text);
-        [SVProgressHUD showWithStatus:@"Loading..."];
-    }
+            [[ZHeartBeatSocket shareZheartBeatSocket] disContennct];// 断开之前连接，再次连接
+            socket = [[GCDAsyncSocket alloc]initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+            NSError *err = nil;
+            if(![socket connectToHost:IPTExtField.text onPort:[PortTextField.text intValue] error:&err]) {
+                [SVProgressHUD showInfoWithStatus:(@"Connection Succse")];
+                ZPLog(@"%@%@",IPTExtField.text,PortTextField.text);
+            }else {
+                ZPLog(@"ok");
+                ZPLog(@"%@%@",IPTExtField.text,PortTextField.text);
+                [SVProgressHUD showWithStatus:@"Loading..."];
+            }
         }
 }
 
@@ -84,7 +83,7 @@
     ZPLog(@"%@%@",sock.connectedHost,newMessage);
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ // 单例方法
-    [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
+        [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
     });
     [socket readDataWithTimeout:-1 tag:0];
     [SVProgressHUD dismiss];
@@ -97,29 +96,30 @@
 
 // 保存
 - (IBAction)SaceBtn:(UIButton *)sender {
+    
     if ([self.IPTExtField.text isEqualToString:@""]) {
         [SVProgressHUD showErrorWithStatus:Localize(@"Please fill out the IP")];
     }else
         if ([self.PortTextField.text isEqualToString:@""]) {
             [SVProgressHUD showErrorWithStatus:Localize(@"Please fill out the Port")];
-    }else
-        if ([self.TitleNameTextField.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"Please fill equipment Name")];
-    }else
-        if ([self.Switch1Name.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 1")];
-    }else
-        if ([self.Switch2Name.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 2")];
-    }else
-        if ([self.Switch3Name.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 3")];
-    }else
-        if ([self.Switch4Name.text isEqualToString:@""]) {
-            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 4")];
-    }else {
-        [self SaveData];
-    }
+        }else
+            if ([self.TitleNameTextField.text isEqualToString:@""]) {
+                [SVProgressHUD showErrorWithStatus:Localize(@"Please fill equipment Name")];
+            }else
+                if ([self.Switch1Name.text isEqualToString:@""]) {
+                    [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 1")];
+                }else
+                    if ([self.Switch2Name.text isEqualToString:@""]) {
+                        [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 2")];
+                    }else
+                        if ([self.Switch3Name.text isEqualToString:@""]) {
+                            [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 3")];
+                        }else
+                            if ([self.Switch4Name.text isEqualToString:@""]) {
+                                [SVProgressHUD showErrorWithStatus:Localize(@"Please the name of Switch 4")];
+                            }else {
+                                [self SaveData];
+                            }
 }
 
 - (void)SaveData {
@@ -132,10 +132,11 @@
     [usernamepasswordKVPairs setObject:self.Switch3Name.text forKey:KEY_Name3];
     [usernamepasswordKVPairs setObject:self.Switch4Name.text forKey:KEY_Name4];
     [CHKeychain save:KEY_USERNAME_PASSWORD_KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4 data:usernamepasswordKVPairs];
-    [[ZHeartBeatSocket shareZheartBeatSocket] initZheartBeatSocketWithDelegate:self];
+//    [[ZHeartBeatSocket shareZheartBeatSocket] disContennct];// 断开之前连接，再次连接
     [SVProgressHUD showSuccessWithStatus:Localize(@"保存成功")];
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];
+//        [[ZHeartBeatSocket shareZheartBeatSocket] initZheartBeatSocketWithDelegate:self];
 //        [SVProgressHUD showWithStatus:@"Loading..."];
 //    });
 }

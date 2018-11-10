@@ -30,6 +30,8 @@
     UINavigationController *nav;
     if ([login autoLogin]) {
         nav = [[UINavigationController alloc] initWithRootViewController:[InformationController new]];
+        _socket  =  [ZHeartBeatSocket shareZheartBeatSocket];
+        [_socket initZheartBeatSocketWithDelegate:nil];
     } else {
         nav = [[UINavigationController alloc] initWithRootViewController:login];
     }
@@ -43,8 +45,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor], nil] forKeys:[NSArray arrayWithObjects:NSForegroundColorAttributeName, nil]]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
-    _socket  =  [ZHeartBeatSocket shareZheartBeatSocket];
-    [_socket initZheartBeatSocketWithDelegate:nil];
+   
     
     return YES;
 }

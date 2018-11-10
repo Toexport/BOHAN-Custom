@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
                 <outlet property="PatchVIew" destination="9As-Uq-nnQ" id="wUO-CL-U8p"/>
                 <outlet property="PatchViewLayoutConstraint" destination="Xqo-vN-2XR" id="fau-LX-rtf"/>
                 <outlet property="closeBtn" destination="kBK-gE-Gql" id="4au-ym-e5m"/>
-                <outlet property="mainTable" destination="9Qq-ix-CwZ" id="vtg-Ia-SBa"/>
+                <outlet property="mainTable" destination="9Qq-ix-CwZ" id="wmE-cN-IPs"/>
                 <outlet property="openBtn" destination="olg-8L-vEl" id="5Zg-5m-L3m"/>
                 <outlet property="progressView" destination="o0v-Be-Vth" id="ib9-Kl-YD9"/>
                 <outlet property="status" destination="Png-Cg-6GH" id="cw0-fk-eDE"/>
@@ -40,19 +40,19 @@
                             <rect key="frame" x="50" y="10" width="294" height="294"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剩余" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jl3-53-HSc">
-                                    <rect key="frame" x="133.66666666666666" y="103.66666666666667" width="26.666666666666657" height="15.666666666666671"/>
+                                    <rect key="frame" x="133.66666666666666" y="103.66666666666667" width="27" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEZ-Vk-soT">
-                                    <rect key="frame" x="102" y="134.33333333333334" width="90" height="25.333333333333343"/>
+                                    <rect key="frame" x="102" y="134.66666666666666" width="90" height="25"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                     <color key="textColor" red="0.23921568630000001" green="0.55294117649999996" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备打开/关闭" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Png-Cg-6GH">
-                                    <rect key="frame" x="105" y="174.66666666666666" width="84" height="15.666666666666657"/>
+                                    <rect key="frame" x="105" y="174.66666666666666" width="84" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>

@@ -11,7 +11,6 @@
 #define USERNAME  [UserInfoManager userName]//用户名
 #define PASSWORD  [UserInfoManager password]//密码
 
-
 #import <Foundation/Foundation.h>
 //#import "UserInfoModel.h"
 @interface UserInfoManager : NSObject

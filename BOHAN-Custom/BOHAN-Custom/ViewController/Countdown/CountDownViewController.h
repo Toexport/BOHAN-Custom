@@ -15,6 +15,7 @@
     
 }
 @property (nonatomic, copy) NSString *deviceNo;
+@property (nonatomic, strong) NSString * SwitchStr; // 开关数据
 //@property (nonatomic, assign) BOOL *isCountDownModel;
 //- (IBAction)cancelAction;
 @property (nonatomic, assign) NSInteger type; // 识别号

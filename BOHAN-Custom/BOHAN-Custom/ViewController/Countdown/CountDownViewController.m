@@ -51,30 +51,31 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [progressView setPersentage:0];
     [self rightBarTitle:Localize(@"Cancel") color:[UIColor whiteColor] action:@selector(canceOperation)];
     _SwitchState = @"00";
-    [self loadData];
+//    [self loadData];
+    [self ShiftData];
+//    [self SwitchShift];
     [self UI];
     ZPLog(@"%ld",(long)self.type);
 }
-
-// 接收数据
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-    NSString *newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    ZPLog(@"%@%@",sock.connectedHost,newMessage);
-    [SVProgressHUD showSuccessWithStatus:(Localize(@"Connection Successful"))];
-    [self loadData];
-    [BHSocket readDataWithTimeout:-1 tag:0];
+//  生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    [self loadData];
+    [self ShiftData];
+//    [self SwitchShift];
+    [self UI];
 }
 
-// 查询
-- (void)loadData {
-    NSString * Str = [NSString stringWithFormat:@"%@%@",self.deviceNo,CountdownqQueryStr];
-    NSString * hexString = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [hexString substringFromIndex:2]; // 去掉首字符
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.deviceNo,CountdownqQueryStr,CheckCode,TailStr];
-    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-    [BHSocket readDataWithTimeout:-1 tag:0];
-    ZPLog(@"%@",Strr);
-}
+//// 查询(倒计时)
+//- (void)loadData {
+//    NSString * Str = [NSString stringWithFormat:@"%@%@",self.deviceNo,CountdownqQueryStr];
+//    NSString * hexString = [Utils hexStringFromString:Str];
+//    NSString * CheckCode = [hexString substringFromIndex:2]; // 去掉首字符
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.deviceNo,CountdownqQueryStr,CheckCode,TailStr];
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
+//    ZPLog(@"查询(倒计时)%@",Strr);
+//}
 
 // 定时开关
 - (void)SetCountdown {
@@ -167,14 +168,9 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 
 // 取消
 - (void)canceOperation {
-    NSString * str = @"E7701811020001002E000C000000000000000000000000000000D60D";
-//    E768170905030900001300050001000000B20D
-//    E768170905030900001300050000000000B10D
     [self stopTimer];
     _selectedItemIndex = NSIntegerMax;
     [_mainTable reloadData];
-    [BHSocket writeData:[str dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-    [BHSocket readDataWithTimeout:-1 tag:0];
     [SVProgressHUD showSuccessWithStatus:Localize(@"Cancel Success")];
 }
 
@@ -203,13 +199,10 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         return;
     }
     MyWeakSelf
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1
-                                               block:^{
-                                                   __strong typeof(self) strongSelf = weakSelf;
-                                                   [strongSelf timeAction];
-                                               }
-                                             repeats:YES];
-    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1  block:^{
+        __strong typeof(self) strongSelf = weakSelf;
+        [strongSelf timeAction];
+    }repeats:YES];
 }
 
 - (void)timeAction {
@@ -290,6 +283,62 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
             self.selectedItemIndex = indexPath.row;
             [tableView reloadData];
         }
+    }
+}
+
+- (void)ShiftData {
+    //     开关1
+    if (self.type == 111) {
+        if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"86"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"8A"] || [self.SwitchStr isEqualToString:@"8C"] || [self.SwitchStr isEqualToString:@"8E"]) {
+            open = NO;
+        }else{
+            open = YES;
+        }
+    }
+    //    开关2
+    if (self.type == 222) {
+        if ([self.SwitchStr isEqualToString:@"80"] && [self.SwitchStr isEqualToString:@"81"] && [self.SwitchStr isEqualToString:@"84"] && [self.SwitchStr isEqualToString:@"85"] && [self.SwitchStr isEqualToString:@"88"] && [self.SwitchStr isEqualToString:@"89"] && [self.SwitchStr isEqualToString:@"8D"] && [self.SwitchStr isEqualToString:@"8C"]) {
+            open = NO;
+        }else{
+            open = YES;
+        }
+    }
+    //    开关3
+    if (self.type == 333) {
+        if ([self.SwitchStr isEqualToString:@"80"] && [self.SwitchStr isEqualToString:@"81"] && [self.SwitchStr isEqualToString:@"82"] && [self.SwitchStr isEqualToString:@"83"] && [self.SwitchStr isEqualToString:@"88"] && [self.SwitchStr isEqualToString:@"89"] && [self.SwitchStr isEqualToString:@"8A"] && [self.SwitchStr isEqualToString:@"8B"]) {
+            open = NO;
+        }else{
+            open = YES;
+        }
+    }
+    //    开关4
+    if (self.type == 444) {
+        if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"83"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"85"] || [self.SwitchStr isEqualToString:@"86"] || [self.SwitchStr isEqualToString:@"87"]) {
+            open = NO;
+        }else {
+            open = YES;
+        }
+    }
+    
+    if (!open) {
+        //开启
+        closeBtn.layer.borderColor = [UIColor colorWithHexString:@"39B3FF"].CGColor;
+        closeBtn.layer.borderWidth = 1;
+        closeBtn.backgroundColor = [UIColor whiteColor];
+        [closeBtn setTitleColor:[UIColor colorWithHexString:@"39B3FF"] forState:UIControlStateNormal];
+        
+        openBtn.backgroundColor = [UIColor colorWithHexString:@"BBBBBB"];
+        [openBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        openBtn.layer.borderColor = [UIColor colorWithHexString:@"BBBBBB"].CGColor;
+    }else {
+        openBtn.layer.borderColor = [UIColor colorWithHexString:@"39B3FF"].CGColor;
+        openBtn.layer.borderWidth = 1;
+        openBtn.backgroundColor = [UIColor whiteColor];
+        [openBtn setTitleColor:[UIColor colorWithHexString:@"39B3FF"] forState:UIControlStateNormal];
+        
+        closeBtn.backgroundColor = [UIColor colorWithHexString:@"BBBBBB"];
+        [closeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        closeBtn.layer.borderColor = [UIColor colorWithHexString:@"BBBBBB"].CGColor;
     }
 }
 
