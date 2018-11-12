@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initZheartBeatSocketWithDelegate:(id)delegate; //创建单例内部的GCDAsyncSocket
 - (void)runTimerWhenAppEnterBackGround;  //如果需要在APP进入后台开启NStimer
 - (void)disContennct;                    //断开连接
+- (void)stopBeatHart;                    //取消刷新
+
 @end
 
 NS_ASSUME_NONNULL_END

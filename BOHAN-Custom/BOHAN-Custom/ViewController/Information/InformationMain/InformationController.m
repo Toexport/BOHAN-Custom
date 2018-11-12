@@ -18,7 +18,6 @@
 #import "Masonry.h"
 #import "MJRefreshComponent.h"
 #import "MJRefresh.h"
-//#define KPacketHeaderLength 7
 @interface InformationController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSString * Strid;
 @property (nonatomic, strong) NSString * SwitchStr;
@@ -38,6 +37,7 @@
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
     [self PostData];
+//     [self QueryData];
 }
 
 // 刷新
@@ -53,13 +53,6 @@
     [self QueryData];
 }
 
-//  生命周期
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.tableview reloadData];
-    [self QueryData];
-}
-
 // 启动加载Sock
 - (void)PostData {
     [[ZHeartBeatSocket shareZheartBeatSocket] initZheartBeatSocketWithDelegate:self];
@@ -72,6 +65,7 @@
     [self.navigationController pushViewController:BindingDevice animated:YES];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];  // 隐藏返回按钮上的文字
+    [SVProgressHUD dismiss];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -122,7 +116,7 @@
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
        NSString * newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        ZPLog(@"%@-返回所有状态-%@",sock.connectedHost,newMessage);
+        ZPLog(@"%@---返回所有状态---%@",sock.connectedHost,newMessage);
         if (newMessage.length > 14) {
             NSString * STRid = [newMessage substringWithRange:NSMakeRange(2, 12)];
             self.Strid = STRid;
@@ -131,17 +125,17 @@
             }else {
                 SwitchState = [newMessage substringWithRange:NSMakeRange(14, 2)];
             }
-            if (![SwitchState isEqualToString:@"00"]) {
+            if (![SwitchState isEqualToString:@"00"] && ![SwitchState isEqualToString:@"0D"] && ![SwitchState isEqualToString:@"CB"] && ![SwitchState isEqualToString:@"18"]) {
                 self.SwitchStr = SwitchState;
                 [self.tableview reloadData];
                 [self.tableview.mj_header endRefreshing];
                 [SVProgressHUD dismiss];
-                ZPLog(@"%@-返回开关状态-%@",STRid,SwitchState);
+                [[ZHeartBeatSocket shareZheartBeatSocket] stopBeatHart];
+                ZPLog(@"%@返回开关状态----%@",STRid,SwitchState);
             }
-            
-            //结束头部刷新
+//            结束头部刷新
             [self.tableview.mj_header endRefreshing];
-            if (!self.isCanSelect) {
+            if (!self.isCanSelect && IdStrS) {
                 self.isCanSelect = YES;
                 [self addRefresh];
                 [self PostData];
@@ -149,19 +143,19 @@
         }
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
-
-// 查询
-- (void)QueryData {
-    if (self.tableview) {
-        return;
-    }
-    NSString * Str = [NSString stringWithFormat:@"%@%@",self.Strid,SwitchqueryStr];
-    NSString * hexString = [Utils hexStringFromString:Str];
-    NSString * CheckCode = [hexString substringFromIndex:2]; // 去掉首字符
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,SwitchqueryStr,CheckCode,TailStr];
-    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-    [BHSocket readDataWithTimeout:-1 tag:0];
-}
+//// 查询
+//- (void)QueryData {
+////    if (self.tableview) {
+////        return;
+////    }
+//    NSString * Str = [NSString stringWithFormat:@"%@%@",IdStrS,SwitchqueryStr];
+//    NSString * hexString = [Utils hexStringFromString:Str];
+//    NSString * CheckCode = [hexString substringFromIndex:2]; // 去掉首字符
+//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,SwitchqueryStr,CheckCode,TailStr];
+////    NSString * strrrr = @"E770181102000100260000C20D";
+//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    [BHSocket readDataWithTimeout:-1 tag:0];
+//}
 
 - (void)changeSwichStase:(UISwitch *)swich {
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制

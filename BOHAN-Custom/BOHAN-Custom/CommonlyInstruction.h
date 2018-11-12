@@ -11,11 +11,12 @@
 
 /********头&&尾**********/
 static NSString * HeadStr = @"E7";
+static NSString * IdStrS;
 static NSString * TailStr = @"0D"; // 尾部
 /********开关查询以及指令**********/
 static NSString * SwitchState;
-static NSString * SwitchinstructionStr = @"00130001"; // 查询开关状态指令
-static NSString * SwitchqueryStr = @"00260000"; // 定时开关指令
+static NSString * SwitchinstructionStr = @"00130001"; // 定时开关指令
+static NSString * SwitchqueryStr = @"00260000";// 查询开关状态指令
 static NSString * newMessage;
 //static NSString * Strr; // 指令参数，全局
 /********倒计时查询&&定时指令**********/

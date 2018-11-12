@@ -55,6 +55,8 @@
 
 //通用的block
 typedef void(^BHFinishBlock)(NSInteger selectIndex);
+typedef void(^BHStrFinishBlock)(NSString *string);
+
 
 //通知常量
 static NSString *const LOGOUTNOTIFICATION = @"loginAccount";//退出登录通知

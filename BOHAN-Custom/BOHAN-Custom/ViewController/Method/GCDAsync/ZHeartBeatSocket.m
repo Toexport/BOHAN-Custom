@@ -13,6 +13,8 @@
 #import <netinet/in.h>
 #import <arpa/inet.h>
 #import <unistd.h>
+#import "ZPeartBeatSocket.h"
+#import "NSTimer+Action.h"
 #define SocketHartKey @"0026"               //心跳包的指令
 
 @interface ZHeartBeatSocket() <GCDAsyncSocketDelegate>{
@@ -20,8 +22,18 @@
     BOOL _isInContentPerform;
 }
 
+typedef NS_ENUM (NSInteger, BHSocketLinkStyle) {
+    HBSocketNoHartbeat,
+    HBSocketNoQueryData,
+    HBSocketDidQueryData,
+};
+
 @property (nonatomic, retain) NSTimer *connectTimer; // 计时器
 @property (nonatomic, weak) id<ZHSocketDelegate> delegate;
+@property (nonatomic, strong) BHStrFinishBlock block;
+@property (nonatomic, assign) BHSocketLinkStyle linkStyle;
+@property (nonatomic, strong) NSTimer *timer;
+
 @end
 
 @implementation ZHeartBeatSocket
@@ -49,6 +61,13 @@
     [self.asyncSocket disconnect];
 }
 
+- (void)stopBeatHart {
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+}
+
 //INT_MAX 最大时间链接，心跳必须!
 -(void)creatSocket{
     if (_asyncSocket == nil || [_asyncSocket isDisconnected]) {
@@ -70,15 +89,24 @@
         NSString * content = [inputMsgStr stringByAppendingString:@"\r\n"];
         NSData *data = [content dataUsingEncoding:NSISOLatin1StringEncoding];
         [_asyncSocket writeData:data withTimeout:INT_MAX tag:0];
-        [self heartbeat];
+        //        [self heartbeat];
     }
+}
+- (void)IDdata:(BHStrFinishBlock)block {
+    _block = block;
+    NSString * RadioStr = @"E7AAAAAAAAAAAA00000000FC0D";
+    [BHSocket writeData:[RadioStr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
 }
 
 - (void)heartbeat {
+    //    self.linkStyle = HBSocketDidQueryData;
     /*
      *此处是一个心跳请求链接（自己的服务器），Timeout时间随意
      */
-    [_asyncSocket writeData:[SocketHartKey dataUsingEncoding:NSISOLatin1StringEncoding] withTimeout:INT_MAX tag:0];
+    NSString * strrrr = @"E770181102000100260000C20D";
+    [BHSocket writeData:[strrrr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
     NSLog(@"heart live-----------------");
     NSLog(@"%@",_asyncSocket);
 }
@@ -105,15 +133,19 @@
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    [self heartbeat];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 block:^{
+        [self heartbeat];
+    } repeats:YES];
     [self creatSocket];
 }
 
--(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
-    //接收到消息。
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
     if ([self.delegate respondsToSelector:@selector(socket:didReadData:withTag:)]) {
         [self.delegate socket:sock didReadData:data withTag:tag];
     }
     _getStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
     [self creatSocket];
 }
 
@@ -121,7 +153,7 @@
 - (void)runTimerWhenAppEnterBackGround{
     // 每隔30s像服务器发送心跳包
     if (self.connectTimer == nil) {
-        self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
+        self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
         NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
         [runLoop addTimer:self.connectTimer forMode:NSDefaultRunLoopMode];
     }
@@ -137,7 +169,7 @@
             }
         });
     }];
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if(bgTask != UIBackgroundTaskInvalid){
@@ -145,7 +177,6 @@
             }
         });
     });
-    
 }
 
 @end

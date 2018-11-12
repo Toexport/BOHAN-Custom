@@ -222,6 +222,7 @@
 		C4C40A142189E82400233497 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		C4C40A152189E82400233497 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		C4CA9F912191849500A1E842 /* CommonlyInstruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonlyInstruction.h; sourceTree = "<group>"; };
+		C4CF690F2199AA59003959C8 /* ZPeartBeatSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZPeartBeatSocket.h; sourceTree = "<group>"; };
 		D37C5EEA1CE84ABF8C49AE43 /* Pods-BOHAN-Custom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOHAN-Custom.release.xcconfig"; path = "Pods/Target Support Files/Pods-BOHAN-Custom/Pods-BOHAN-Custom.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -403,6 +404,7 @@
 				4DAF1A3421820AA000B91F80 /* GCDAsyncSocket.m */,
 				C44A6BF6219320B5003D50BE /* ZHeartBeatSocket.h */,
 				C44A6BF7219320B5003D50BE /* ZHeartBeatSocket.m */,
+				C4CF690F2199AA59003959C8 /* ZPeartBeatSocket.h */,
 			);
 			path = GCDAsync;
 			sourceTree = "<group>";

@@ -24,7 +24,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self addReachabilityManager];
+//    [self addReachabilityManager];
     [[AFNetworkReachabilityManager sharedManager]  startMonitoring];
     LoginViewController *login = [[LoginViewController alloc] init];
     UINavigationController *nav;
@@ -46,7 +46,6 @@
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor], nil] forKeys:[NSArray arrayWithObjects:NSForegroundColorAttributeName, nil]]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"3c94f2"]];
    
-    
     return YES;
 }
 
@@ -57,7 +56,7 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[UIApplication sharedApplication] setKeepAliveTimeout:300 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
+    [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler:^{ [[NSNotificationCenter defaultCenter]postNotificationName:@"CreatGcdSocket" object:nil userInfo:nil];}];
     //如果需要添加NSTimer
     [_socket runTimerWhenAppEnterBackGround];
 }
