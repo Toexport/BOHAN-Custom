@@ -25,7 +25,7 @@ static CGFloat SELF_WIDTH;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    SELF_WIDTH = ScreenWidth - 120;
+    SELF_WIDTH = ScreenWidth - 235;
 //    [self setFrame:CGRectChangeSize(self.frame, SELF_WIDTH, SELF_WIDTH)];
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = SELF_WIDTH/2;

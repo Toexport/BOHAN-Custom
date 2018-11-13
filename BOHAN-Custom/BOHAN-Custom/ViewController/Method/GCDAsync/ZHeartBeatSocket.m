@@ -13,9 +13,7 @@
 #import <netinet/in.h>
 #import <arpa/inet.h>
 #import <unistd.h>
-#import "ZPeartBeatSocket.h"
 #import "NSTimer+Action.h"
-#define SocketHartKey @"0026"               //心跳包的指令
 
 @interface ZHeartBeatSocket() <GCDAsyncSocketDelegate>{
     NSString *_getStr;
@@ -104,8 +102,12 @@ typedef NS_ENUM (NSInteger, BHSocketLinkStyle) {
     /*
      *此处是一个心跳请求链接（自己的服务器），Timeout时间随意
      */
-    NSString * strrrr = @"E770181102000100260000C20D";
-    [BHSocket writeData:[strrrr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+//    NSString * strrrr = @"E770181102000100260000C20D";
+    NSString * strrrr = [NSString stringWithFormat:@"%@%@",IdStrS,SwitchqueryStr];
+    NSString * string = [Utils hexStringFromString:strrrr];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,IdStrS,SwitchqueryStr,CheckCode,TailStr];
+    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     [BHSocket readDataWithTimeout:-1 tag:0];
     NSLog(@"heart live-----------------");
     NSLog(@"%@",_asyncSocket);
@@ -133,10 +135,16 @@ typedef NS_ENUM (NSInteger, BHSocketLinkStyle) {
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    [self heartbeat];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 block:^{
-        [self heartbeat];
-    } repeats:YES];
+    [self IDdata:^(NSString *string) {
+        if (!IdStrS) {
+            IdStrS = string;
+            [self heartbeat];
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 block:^{
+                [self heartbeat];
+            } repeats:YES];
+        }
+    }];
+    
     [self creatSocket];
 }
 
@@ -145,7 +153,9 @@ typedef NS_ENUM (NSInteger, BHSocketLinkStyle) {
         [self.delegate socket:sock didReadData:data withTag:tag];
     }
     _getStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
+    if (_getStr.length > 14) {
+        self.block([_getStr substringWithRange:NSMakeRange(2, 12)]);
+    }
     [self creatSocket];
 }
 

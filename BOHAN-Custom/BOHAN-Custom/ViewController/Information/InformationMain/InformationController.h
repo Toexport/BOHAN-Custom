@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIView *titleView;
 // 查询
-- (void)QueryData;
+//- (void)QueryData;
 @end
 
 NS_ASSUME_NONNULL_END

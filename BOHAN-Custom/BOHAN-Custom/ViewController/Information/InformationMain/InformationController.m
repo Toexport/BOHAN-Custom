@@ -37,6 +37,7 @@
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
     [self PostData];
+    [self addRefresh];
 //     [self QueryData];
 }
 
@@ -50,7 +51,11 @@
 
 - (IBAction)GetData:(UIButton *)sender {
     [self PostData];
-    [self QueryData];
+}
+
+- (void)QueryData {
+    [self.tableview reloadData];
+    [self.tableview.mj_header endRefreshing];
 }
 
 // 启动加载Sock
@@ -143,19 +148,6 @@
         }
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
-//// 查询
-//- (void)QueryData {
-////    if (self.tableview) {
-////        return;
-////    }
-//    NSString * Str = [NSString stringWithFormat:@"%@%@",IdStrS,SwitchqueryStr];
-//    NSString * hexString = [Utils hexStringFromString:Str];
-//    NSString * CheckCode = [hexString substringFromIndex:2]; // 去掉首字符
-//    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,self.Strid,SwitchqueryStr,CheckCode,TailStr];
-////    NSString * strrrr = @"E770181102000100260000C20D";
-//    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-//    [BHSocket readDataWithTimeout:-1 tag:0];
-//}
 
 - (void)changeSwichStase:(UISwitch *)swich {
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
