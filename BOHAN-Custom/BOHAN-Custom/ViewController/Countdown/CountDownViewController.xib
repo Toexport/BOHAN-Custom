@@ -70,11 +70,11 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="olg-8L-vEl">
-                            <rect key="frame" x="8" y="5" width="70" height="35"/>
+                            <rect key="frame" x="8" y="262" width="71" height="35"/>
                             <color key="backgroundColor" red="0.73333333329999995" green="0.73333333329999995" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="70" id="4mm-DN-Y1H"/>
-                                <constraint firstAttribute="height" constant="35" id="HYo-Cg-DMc"/>
+                                <constraint firstAttribute="width" constant="71" id="IIw-gZ-vov"/>
+                                <constraint firstAttribute="height" constant="35" id="KS4-l4-TIb"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <state key="normal" title="开">
@@ -87,10 +87,10 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kBK-gE-Gql">
-                            <rect key="frame" x="266" y="5" width="70" height="35"/>
+                            <rect key="frame" x="266" y="262" width="70" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="70" id="8fu-bO-vEh"/>
-                                <constraint firstAttribute="height" constant="35" id="wgx-7I-tsk"/>
+                                <constraint firstAttribute="width" constant="70" id="57v-MY-lA5"/>
+                                <constraint firstAttribute="height" constant="35" id="AXu-ZK-wpi"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <state key="normal" title="关"/>
@@ -107,10 +107,10 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0v-Be-Vth" customClass="STLoopProgressView">
-                            <rect key="frame" x="82" y="63" width="180" height="180"/>
+                            <rect key="frame" x="82" y="39" width="180" height="180"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剩余" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jl3-53-HSc">
-                                    <rect key="frame" x="76.666666666666657" y="41.666666666666657" width="27" height="16"/>
+                                    <rect key="frame" x="76.666666666666657" y="41.666666666666671" width="27" height="16"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="16" id="qmC-ek-oB9"/>
                                     </constraints>
@@ -152,21 +152,21 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="kBK-gE-Gql" secondAttribute="trailing" constant="8" id="62C-E6-BIh"/>
                         <constraint firstItem="Q1e-k7-vih" firstAttribute="trailing" secondItem="o0v-Be-Vth" secondAttribute="trailing" constant="32" id="6EJ-ck-02p"/>
-                        <constraint firstAttribute="trailing" secondItem="kBK-gE-Gql" secondAttribute="trailing" constant="8" id="87H-3S-ER0"/>
-                        <constraint firstItem="olg-8L-vEl" firstAttribute="top" secondItem="BFl-2i-hjf" secondAttribute="top" constant="5" id="BxN-og-WXc"/>
-                        <constraint firstItem="o0v-Be-Vth" firstAttribute="top" secondItem="BFl-2i-hjf" secondAttribute="top" constant="63" id="BzK-Po-vDI"/>
-                        <constraint firstItem="iU4-gc-MVp" firstAttribute="top" secondItem="o0v-Be-Vth" secondAttribute="bottom" constant="12" id="Fbu-yd-D2a"/>
+                        <constraint firstItem="o0v-Be-Vth" firstAttribute="top" secondItem="BFl-2i-hjf" secondAttribute="top" constant="39" id="BzK-Po-vDI"/>
+                        <constraint firstItem="iU4-gc-MVp" firstAttribute="top" secondItem="o0v-Be-Vth" secondAttribute="bottom" constant="36" id="Fbu-yd-D2a"/>
                         <constraint firstItem="o0v-Be-Vth" firstAttribute="centerX" secondItem="BFl-2i-hjf" secondAttribute="centerX" id="IGk-Cx-MRf"/>
-                        <constraint firstItem="kBK-gE-Gql" firstAttribute="top" secondItem="olg-8L-vEl" secondAttribute="top" id="JOs-TF-B16"/>
                         <constraint firstItem="iU4-gc-MVp" firstAttribute="width" secondItem="Q1e-k7-vih" secondAttribute="width" id="V3Y-Mf-jSy"/>
+                        <constraint firstItem="kBK-gE-Gql" firstAttribute="top" secondItem="olg-8L-vEl" secondAttribute="top" id="X2u-XW-qtS"/>
+                        <constraint firstItem="olg-8L-vEl" firstAttribute="leading" secondItem="BFl-2i-hjf" secondAttribute="leading" constant="8" id="gfS-2c-RQ5"/>
                         <constraint firstAttribute="bottom" secondItem="iU4-gc-MVp" secondAttribute="bottom" constant="24" id="n1d-i8-koN"/>
                         <constraint firstItem="o0v-Be-Vth" firstAttribute="leading" secondItem="BFl-2i-hjf" secondAttribute="leading" constant="82" id="nPa-Mq-IkO"/>
                         <constraint firstItem="iU4-gc-MVp" firstAttribute="leading" secondItem="o0v-Be-Vth" secondAttribute="leading" constant="-32" id="okF-jz-eIN"/>
-                        <constraint firstItem="olg-8L-vEl" firstAttribute="leading" secondItem="BFl-2i-hjf" secondAttribute="leading" constant="8" id="p0r-4U-qQl"/>
                         <constraint firstItem="Q1e-k7-vih" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iU4-gc-MVp" secondAttribute="trailing" id="srh-ur-fbs"/>
                         <constraint firstAttribute="trailing" secondItem="o0v-Be-Vth" secondAttribute="trailing" constant="82" id="wHx-LF-m3I"/>
                         <constraint firstItem="Q1e-k7-vih" firstAttribute="bottom" secondItem="iU4-gc-MVp" secondAttribute="bottom" id="weO-hb-F1n"/>
+                        <constraint firstAttribute="bottom" secondItem="olg-8L-vEl" secondAttribute="bottom" constant="10" id="zOJ-2r-AOO"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">

@@ -27,7 +27,6 @@
 }
 // 设置按钮
 - (IBAction)SettingBut:(UIButton *)sender {
-
     if (self.buttonAction) {
         self.buttonAction(sender);
     }
@@ -131,11 +130,15 @@
         [self->MinutesTextField setText:[self->formatters stringFromDate:selectDate]];
         self.string5 = self->MinutesTextField.text;
         self->MinutesTextField.text = [NSString stringWithString:self.string5];
-        NSString * string1 = [NSString stringWithFormat:@"%@%@%@%@%@",self->YearTextField.text,self->MonthTextField.text,DayTextField.text,HoursTextField.text,MinutesTextField.text];
+        NSString * string1 = [NSString stringWithFormat:@"%@%@%@%@%@",self->YearTextField.text,self->MonthTextField.text,self->DayTextField.text,self->HoursTextField.text,self->MinutesTextField.text];
         self->str2 = [NSString stringWithFormat:@"%@",string1];
         ZPLog(@"%@",self->str2);
+        if (self->str1.integerValue >= self->str2.integerValue) {
+            [SVProgressHUD showInfoWithStatus:Localize(@"Set time Cannot be less than pre-order Time")];
+            return ;
+        }else {
         [self pleaseInsertStarTimeo:self->str1 andInsertEndTime:self->str2];
-        
+        }
     }];
     datepicker.hideBackgroundYearLabel = YES;
     datepicker.dateLabelColor = [UIColor colorWithHexString:@"3c94f2"];
@@ -161,15 +164,5 @@
         self.doneBlock(string);
         
     }
-//    
-//    // 2.创建日历
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSCalendarUnit type = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute;
-//    // 3.利用日历对象比较两个时间的差值
-//    NSDateComponents *cmps = [calendar components:type fromDate:date2 toDate:date1 options:0];
-////    NSString * string = [NSString stringWithFormat:@"%ld%ld%ld%ld", (long)cmps.year, (long)cmps.month, (long)cmps.day, (long)cmps.hour, (long)cmps.minute];
-////    ZPLog(@"%@",string);
-//    // 4.输出结果
-//    ZPLog(@"两个时间相差%ld年%ld月%ld日%ld小时%ld分钟", (long)cmps.year, (long)cmps.month, (long)cmps.day, (long)cmps.hour, (long)cmps.minute);
 }
 @end

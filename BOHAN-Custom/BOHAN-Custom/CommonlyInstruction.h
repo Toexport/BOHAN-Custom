@@ -10,14 +10,15 @@
 #define CommonlyInstruction_h
 
 /********头&&尾**********/
-static NSString * HeadStr = @"E7";
-static NSString * IdStrS;
+static NSString * HeadStr = @"E7"; // 头部
+static NSString * IdStrS; // ID
 static NSString * TailStr = @"0D"; // 尾部
+
 /********开关查询以及指令**********/
 static NSString * SwitchState;
 static NSString * SwitchinstructionStr = @"00130001"; // 定时开关指令
-static NSString * SwitchqueryStr = @"00260000";// 查询开关状态指令
-//static NSString * Strr; // 指令参数，全局
+static NSString * SwitchqueryStr = @"00260000"; // 查询开关状态指令
+
 /********倒计时查询&&定时指令**********/
 static NSString * CountdownqQueryStr = @"002F0000"; // 查询(倒计时)
 static NSString * countdownStr = @"002E000C"; // 设置定时

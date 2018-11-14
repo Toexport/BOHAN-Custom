@@ -38,6 +38,7 @@
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
     [self PostData];
     [self addRefresh];
+//    self.datas = @[Localize(@"1"),Localize(@"2"),Localize(@"3"),Localize(@"4"),Localize(@"5"),Localize(@"6"),Localize(@"7")];
 //     [self QueryData];
 }
 
@@ -73,9 +74,6 @@
     [SVProgressHUD dismiss];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;

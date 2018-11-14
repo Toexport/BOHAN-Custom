@@ -599,8 +599,7 @@ typedef void(^doneBlock)(NSDate *);
     
 }
 
--(void)yearChange:(NSInteger)row {
-    
+- (void)yearChange:(NSInteger)row {
     monthIndex = row%12;
     
     //年份状态变化
@@ -654,7 +653,6 @@ typedef void(^doneBlock)(NSDate *);
 
 
 - (IBAction)doneAction:(UIButton *)btn {
-    
     _startDate = [self.scrollToDate dateWithFormatter:_dateFormatter];
     self.doneBlock(_startDate);
     [self dismiss];

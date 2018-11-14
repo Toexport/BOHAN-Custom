@@ -25,7 +25,7 @@
 #define KEY_USERNAME  @"com.company.app.username"
 #define KEY_PASSWORD  @"com.company.app.password"
 // 添加设备
-#define KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4  @"com.company.app.titlenameipportname1name2name3name4Id"
+#define KEY_TitleName_IP_PORT_Name1_Name2_Name3_Name4  @"com.company.app.titlenameipportname1name2name3name4"
 #define KEY_TitleName  @"com.company.app.titlename"
 #define KEY_IP  @"com.company.app.username.ip"
 #define KEY_PORT  @"com.company.app.username.port"
@@ -33,8 +33,6 @@
 #define KEY_Name2  @"com.company.app.name2"
 #define KEY_Name3  @"com.company.app.name3"
 #define KEY_Name4  @"com.company.app.name4"
-#define key_Id @"com.company.app.Id"
-
 
 
 #define iPhone4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)

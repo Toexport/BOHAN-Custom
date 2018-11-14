@@ -28,10 +28,10 @@
     BOOL open;
 }
 
-@property (weak, nonatomic) IBOutlet UITableView *mainTable;
-@property (copy, nonatomic) NSArray *datas;
+@property (weak, nonatomic) IBOutlet UITableView * mainTable;
+@property (copy, nonatomic) NSArray * datas;
 @property (assign, nonatomic) NSInteger selectedItemIndex;
-@property (nonatomic, weak) NSTimer *timer;//定时器
+@property (nonatomic, weak) NSTimer * timer;//定时器
 @property (nonatomic, strong) NSString * TimeUrl;
 @property (nonatomic, strong) NSString * TimeStr;
 @property (nonatomic, strong) NSString * SwitchState; // 开关状态
@@ -49,6 +49,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [self UI];
     [self PostData];
 }
+
 - (void)CountdownS {
     self.datas = @[Localize(@"5 Minutes"), Localize(@"10 Minutes"), Localize(@"Custom Time")];
     formatter = [[NSDateFormatter alloc] init];
@@ -94,6 +95,8 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     ZPLog(@"开关1状态---%@",State1);
     Switch1 =  [AllStr substringWithRange:NSMakeRange(2, 12)]; // 开关数据1
     ZPLog(@"开关1数据---%@",Switch1);
+    YMDHMS2 = [NSString stringWithFormat:@"%@",Switch1];
+    
         
 /**************2**************/
     State2 = [AllStr substringWithRange:NSMakeRange(14, 2)]; // 开关状态1
@@ -106,14 +109,16 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     ZPLog(@"开关3状态---%@",State3);
     Switch3 =  [AllStr substringWithRange:NSMakeRange(30, 12)]; // 开关数据1
     ZPLog(@"开关3数据---%@",Switch3);
-    
-/**************3**************/
+        
+/**************4**************/
     State4 = [AllStr substringWithRange:NSMakeRange(42, 2)]; // 开关状态1
     ZPLog(@"开关4状态---%@",State4);
     Switch4 =  [AllStr substringWithRange:NSMakeRange(44, 12)]; // 开关数据1
     ZPLog(@"开关4数据---%@",Switch4);
+        
     }
     ZPLog(@"——————所有数据---%@",newMessage);
+    [SVProgressHUD dismiss];
 }
 
 // 定时开关
@@ -125,7 +130,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     NSString * But3Str = [SwitchS substringWithRange:NSMakeRange(5, 1)];
     NSString * But4Str = [SwitchS substringWithRange:NSMakeRange(4, 1)];
     if ([content isEqualToString:@"000000"]) {
-       [SVProgressHUD showInfoWithStatus:Localize(@"Please choose countdown time")];
+        [SVProgressHUD showInfoWithStatus:Localize(@"Please choose countdown time")];
         return;
     }
     if (time.text.length >= 7) {
@@ -137,13 +142,14 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     
     if (self.type == 111) { // 开关1
         if ([But1Str isEqualToString:@"1"]) {
-            _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOpen,Switch,State2,Switch,State3,Switch,State4];
+            _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOpen,AllStr,State2,Switch,State3,Switch,State4];
         }else
             if ([But1Str isEqualToString:@"0"]) {
                 _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOff,Switch,State2,Switch,State3,Switch,State4];
             }
         [self TimingSet];
     }else
+        
         if (self.type == 222) { // 开关2
             if ([But2Str isEqualToString:@"1"]) {
                 _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,_TimeUrl,SetOpen,Switch,State3,Switch,State4];
@@ -153,6 +159,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
                 }
             [self TimingSet];
         }else
+            
             if (self.type == 333) {
                 if ([But3Str isEqualToString:@"1"]) {
                     _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,_TimeUrl,SetOpen,Switch,State4];
@@ -162,6 +169,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
                     }
                 [self TimingSet];
             }else
+                
                 if (self.type == 444) {
                     if ([But4Str isEqualToString:@"1"]) {
                         _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,Switch,State3,_TimeUrl,SetOpen];
@@ -261,7 +269,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 - (void)timeAction {
     lastSecend = MAX(0, [startDate timeIntervalSinceDate:[NSDate date]]);
     NSComparisonResult result =[startDate compare:[NSDate date]];
-    if (lastSecend <=0 || result != NSOrderedDescending) {
+    if (lastSecend <= 0 || result != NSOrderedDescending) {
         open = !open;
         [self stopTimer];
     }
@@ -282,7 +290,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 }
 
 #pragma mark - UITableView delegate
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.datas.count;
 }
 
@@ -292,12 +300,13 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:countCellIdentifier];
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:countCellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:countCellIdentifier];
         cell.textLabel.font = [UIFont systemFontOfSize:13];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
     cell.textLabel.text = self.datas[indexPath.row];
     if (self.selectedItemIndex == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -313,19 +322,20 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 2) {
         [formatter setDateFormat:@"HH:mm"];
-        WSDatePickerView *datepicker = [[WSDatePickerView alloc] initWithDateStyle:DateStyleShowHourMinute scrollToDate:[formatter dateFromString:[time.text substringToIndex:5]] CompleteBlock:^(NSDate *selectDate) {
+        WSDatePickerView * datepicker = [[WSDatePickerView alloc] initWithDateStyle:DateStyleShowHourMinute scrollToDate:[formatter dateFromString:[time.text substringToIndex:5]] CompleteBlock:^(NSDate *selectDate) {
             if (self.selectedItemIndex != indexPath.row) {
                 self.selectedItemIndex = indexPath.row;
                 [tableView reloadData];
             }
             [self->formatter setDateFormat:@"HH:mm:ss"];
-            NSString *string = [self->formatter stringFromDate:selectDate];
+            NSString * string = [self->formatter stringFromDate:selectDate];
             [self->time setText:string];
         }];
         datepicker.hideBackgroundYearLabel = YES;
         datepicker.dateLabelColor = [UIColor colorWithHexString: @"3c94f2"];
         datepicker.doneButtonColor = [UIColor colorWithHexString: @"3c94f2"];
         [datepicker show];
+        
     }else {
         if (indexPath.row == 0) {
             [time setText:@"00:05"];
@@ -394,5 +404,68 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         closeBtn.layer.borderColor = [UIColor colorWithHexString:@"BBBBBB"].CGColor;
     }
 }
+
+//// 获取当前年月日时间
+//- (void)yyyyMMddHHmm {
+//    NSDate *currentDate = [NSDate date];
+//    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+//    //IOS 8 之后
+//    NSUInteger integer = NSCalendarUnitYear | NSCalendarUnitMonth |NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+//    NSDateComponents *dataCom = [currentCalendar components:integer fromDate:currentDate];
+//    NSInteger year = [dataCom year]; // 年
+//    NSInteger month = [dataCom month]; // 月
+//    NSInteger day = [dataCom day]; // 日
+//    NSInteger hour = [dataCom hour]; // 时
+//    NSInteger minute = [dataCom minute]; // 分
+//    NSInteger second = [dataCom second]; // 秒
+//    YEAR = [[NSNumber numberWithInteger:year] stringValue];
+//    if (month >= 10) {
+//        MONTH = [[NSNumber numberWithInteger:month] stringValue];
+//    }else {
+//        MONTH = [NSString stringWithFormat:@"0%ld",(long)month];
+//    }
+//    if (day >= 10) {
+//        DAY = [[NSNumber numberWithInteger:day] stringValue];
+//    }else {
+//        DAY = [NSString stringWithFormat:@"0%ld",(long)day];
+//    }
+//    if (hour >= 10) {
+//        HOUR = [[NSNumber numberWithInteger:hour] stringValue];
+//    }else {
+//        HOUR = [NSString stringWithFormat:@"0%ld",(long)hour];
+//    }
+//    if (minute >= 10) {
+//        MINUTE = [[NSNumber numberWithInteger:minute] stringValue];
+//    }else {
+//        MINUTE = [NSString stringWithFormat:@"0%ld",(long)minute];
+//    }
+//    if (second >= 10) {
+//        SECOND = [[NSNumber numberWithInteger:second] stringValue];
+//    }else {
+//        SECOND = [NSString stringWithFormat:@"0%ld",(long)second];
+//    }
+//    NSString * Ymdhms = [NSString stringWithFormat:@"%@%@%@%@%@%@",YEAR,MONTH,DAY,HOUR,MINUTE,SECOND];
+//    NSString * YMDHMS = [Ymdhms substringFromIndex:2];
+//    YMDHMS1 = [NSString stringWithFormat:@"%@",YMDHMS];
+//}
+//
+//// 将字符串转换成时间差
+//- (void)pleaseInsertStarTimeo:(NSString *)time1 andInsertEndTime:(NSString *)time2{
+//    // 1.将时间转换为date
+//    NSString * createdAtString = YMDHMS1;
+//    NSString * createdAtString1 = YMDHMS2;
+//    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+//    formatter.dateFormat = @"yyyyMMddHHmmss";
+//    NSDate * date2 = [formatter dateFromString:createdAtString1];
+//    NSDate * date1 = [formatter dateFromString:createdAtString];
+//    NSDate * date3 = [NSDate dateWithTimeIntervalSinceNow:ABS(date2.timeIntervalSinceNow-date1.timeIntervalSinceNow)];
+//    NSInteger count = ABS(date2.timeIntervalSinceNow-date1.timeIntervalSinceNow);
+//    NSInteger hours = count /3600;
+//    NSInteger mnitues = count %3600/60;
+//    NSInteger second = count %3600/600;
+//    NSString * string = [NSString stringWithFormat:@"%.02ld:%.02ld:%.02ld",(long)hours,(long)mnitues,(long)second];
+//    ZPLog(@"%@",string);
+//    AllStr = [NSString stringWithFormat:@"%@",string];
+//    }
 
 @end

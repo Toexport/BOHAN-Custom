@@ -685,7 +685,6 @@
 		C4C36ACF218716D80079D6AE /* WSDaePickerView */ = {
 			isa = PBXGroup;
 			children = (
-				C4C36AD0218716D80079D6AE /* WSDatePickerView.strings */,
 				C4C36AD3218716D80079D6AE /* NSDate+Extension.h */,
 				C4C36AD9218716D80079D6AE /* NSDate+Extension.m */,
 				C4C36AD5218716D80079D6AE /* UIView+Extension.h */,
@@ -693,6 +692,7 @@
 				C4C36AD4218716D80079D6AE /* WSDatePickerView.h */,
 				C4C36AD8218716D80079D6AE /* WSDatePickerView.m */,
 				C4C36AD6218716D80079D6AE /* WSDatePickerView.xib */,
+				C4C36AD0218716D80079D6AE /* WSDatePickerView.strings */,
 			);
 			path = WSDaePickerView;
 			sourceTree = "<group>";
