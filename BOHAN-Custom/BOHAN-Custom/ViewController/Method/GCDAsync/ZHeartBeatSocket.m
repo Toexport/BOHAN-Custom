@@ -54,6 +54,10 @@ typedef NS_ENUM (NSInteger, BHSocketLinkStyle) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatSocket) name:@"CreatGcdSocket" object:nil];
 }
 
+- (void)updateDelegate:(id)delegate {
+    _delegate = delegate;
+}
+
 - (void)disContennct {
     _isInContentPerform = YES;
     [self.asyncSocket disconnect];
@@ -103,14 +107,16 @@ typedef NS_ENUM (NSInteger, BHSocketLinkStyle) {
      *此处是一个心跳请求链接（自己的服务器），Timeout时间随意
      */
 //    NSString * strrrr = @"E770181102000100260000C20D";
-    NSString * strrrr = [NSString stringWithFormat:@"%@%@",IdStrS,SwitchqueryStr];
-    NSString * string = [Utils hexStringFromString:strrrr];
-    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
-    NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,IdStrS,SwitchqueryStr,CheckCode,TailStr];
-    [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
-    [BHSocket readDataWithTimeout:-1 tag:0];
-    NSLog(@"heart live-----------------");
-    NSLog(@"%@",_asyncSocket);
+    if (IdStrS) {
+        NSString * strrrr = [NSString stringWithFormat:@"%@%@",IdStrS,SwitchqueryStr];
+        NSString * string = [Utils hexStringFromString:strrrr];
+        NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+        NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,IdStrS,SwitchqueryStr,CheckCode,TailStr];
+        [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+        [BHSocket readDataWithTimeout:-1 tag:0];
+        NSLog(@"heart live-----------------");
+        NSLog(@"%@",_asyncSocket);
+    }
 }
 
 #pragma mark - <GCDasyncSocketDelegate>

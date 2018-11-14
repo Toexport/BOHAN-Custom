@@ -50,6 +50,7 @@
 // 强引用
 #define MyStrongSelf __weak typeof(self) strongSelf = weakSelf;
 
+#define BHUpdeteDelegate [[ZHeartBeatSocket shareZheartBeatSocket] initZheartBeatSocketWithDelegate:self];
 //主字体颜色
 #define kTextColor [UIColor getColor:@"5c5c5c"]
 

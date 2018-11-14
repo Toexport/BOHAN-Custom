@@ -47,7 +47,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [self CountdownS];
     [self ShiftData];
     [self UI];
-    [self PostData];
+//    [self PostData];
 }
 
 - (void)CountdownS {
@@ -67,6 +67,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 //  生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    BHUpdeteDelegate;
     [self loadData];
     [self ShiftData];
     [self UI];
@@ -95,9 +96,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     ZPLog(@"开关1状态---%@",State1);
     Switch1 =  [AllStr substringWithRange:NSMakeRange(2, 12)]; // 开关数据1
     ZPLog(@"开关1数据---%@",Switch1);
-    YMDHMS2 = [NSString stringWithFormat:@"%@",Switch1];
     
-        
 /**************2**************/
     State2 = [AllStr substringWithRange:NSMakeRange(14, 2)]; // 开关状态1
     ZPLog(@"开关2状态---%@",State2);
@@ -142,7 +141,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     
     if (self.type == 111) { // 开关1
         if ([But1Str isEqualToString:@"1"]) {
-            _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOpen,AllStr,State2,Switch,State3,Switch,State4];
+            _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOpen,SwitchS,State2,Switch,State3,Switch,State4];
         }else
             if ([But1Str isEqualToString:@"0"]) {
                 _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOff,Switch,State2,Switch,State3,Switch,State4];

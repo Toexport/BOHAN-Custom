@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)runTimerWhenAppEnterBackGround;  //如果需要在APP进入后台开启NStimer
 - (void)disContennct;                    //断开连接
 - (void)stopBeatHart;                    //取消刷新
+- (void)heartbeat;                       //刷新数据
+- (void)updateDelegate:(id)delegate;     //更新代理
 
 @end
 

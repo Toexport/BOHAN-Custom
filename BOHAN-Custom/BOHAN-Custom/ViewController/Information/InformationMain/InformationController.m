@@ -42,6 +42,12 @@
 //     [self QueryData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    BHUpdeteDelegate;
+    [[ZHeartBeatSocket shareZheartBeatSocket] heartbeat];
+}
+
 // 刷新
 - (void)addRefresh {
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(QueryData)];
