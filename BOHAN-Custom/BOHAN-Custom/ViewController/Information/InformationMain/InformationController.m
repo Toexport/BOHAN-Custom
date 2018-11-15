@@ -36,7 +36,7 @@
     [self rightBarTitle:Localize(@"Exit") action:@selector(LogOut)];
     [self.tableview registerNib:[UINib nibWithNibName:@"InformationViewCell" bundle:nil] forCellReuseIdentifier:@"InformationViewCell"];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;  //隐藏tableview多余的线条
-    [self PostData];
+//    [self PostData];
     [self addRefresh];
 //    self.datas = @[Localize(@"1"),Localize(@"2"),Localize(@"3"),Localize(@"4"),Localize(@"5"),Localize(@"6"),Localize(@"7")];
 //     [self QueryData];
@@ -57,7 +57,7 @@
 }
 
 - (IBAction)GetData:(UIButton *)sender {
-    [self PostData];
+//    [self PostData];
 }
 
 - (void)QueryData {
@@ -122,6 +122,7 @@
     return cell;
 }
 
+
 // 接收数据
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
        NSString * newMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -147,11 +148,13 @@
             if (!self.isCanSelect && IdStrS) {
                 self.isCanSelect = YES;
                 [self addRefresh];
-                [self PostData];
+//                [self PostData];
             }
         }
     [BHSocket readDataWithTimeout:-1 tag:0];
 }
+
+
 
 - (void)changeSwichStase:(UISwitch *)swich {
     NSString * State = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制

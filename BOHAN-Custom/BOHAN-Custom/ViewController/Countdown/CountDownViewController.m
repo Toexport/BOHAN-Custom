@@ -46,14 +46,13 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     self.title = Localize(@"Countdown");
     [self CountdownS];
     [self ShiftData];
+//    [self ymdhms];
     [self UI];
 }
 
 - (void)CountdownS {
     self.datas = @[Localize(@"5 Minutes"), Localize(@"10 Minutes"), Localize(@"Custom Time")];
     formatter = [[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-//    formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     _selectedItemIndex = NSIntegerMax;
     _mainTable.tintColor = [UIColor colorWithHexString:@"f03c4c"];
     [progressView setPersentage:0];
@@ -109,7 +108,9 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         Switch4 =  [AllStr substringWithRange:NSMakeRange(44, 12)]; // 开关数据1
         ZPLog(@"开关4数据---%@",Switch4);
         [self updateConfig];
+        [self GetsTime];
     }
+    
     ZPLog(@"——————所有数据---%@",newMessage);
     [SVProgressHUD dismiss];
 }
@@ -154,6 +155,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         [SVProgressHUD showInfoWithStatus:Localize(@"Please choose countdown time")];
         return;
     }
+    
     if (time.text.length >= 7) {
         _TimeUrl = [time.text substringToIndex:5];
     }else
@@ -241,7 +243,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 }
 
 // 取消
-- (void)canceOperation {// 取消是s对的
+- (void)canceOperation {
     NSString * SwitchNo = [NSString stringWithFormat:@"%@FF%@FF%@FF%@FF",Switch,Switch,Switch,Switch];
     NSString * strUrl = [SwitchNo stringByReplacingOccurrencesOfString:@":" withString:@""];  //去掉:
     NSString * str = [NSString stringWithFormat:@"%@%@%@",self.deviceNo,countdownStr,strUrl];
@@ -261,6 +263,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     CountdownView * view = [[[NSBundle mainBundle] loadNibNamed:@"CountdownView" owner:nil options:nil] firstObject];
     view.doneBlock = ^(NSString *selectDate) {
         self->time.text = selectDate;
+        ZPLog(@"%@",selectDate);
     };
     view.buttonAction = ^(UIButton *sender) {
         [self SetCountdown];
@@ -304,10 +307,8 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [status setText:Localize(@"设备打开/关闭")];
     startDate = nil;
     [self showConfig];
-    [_timer pauseTimer];// 说了你肯定那个地方写问题了，算嘛，难道是错的嘛？还是那个取消你看嘛，在当前界面就不能取消，你点击了取消，返回再进去就没有了
+    [_timer pauseTimer];
     [_timer invalidate];
-//    181114225628
-//    181114225137
     _timer = nil;
 }
 
@@ -380,6 +381,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
             open = YES;
         }
     }
+    
     //        开关2
     if (self.type == 222) {
         if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"85"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"89"] || [self.SwitchStr isEqualToString:@"8D"] || [self.SwitchStr isEqualToString:@"8C"]) {
@@ -388,6 +390,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
             open = YES;
         }
     }
+    
     //        开关3
     if (self.type == 333) {
         if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"83"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"89"] || [self.SwitchStr isEqualToString:@"8A"] || [self.SwitchStr isEqualToString:@"8B"]) {
@@ -396,6 +399,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
             open = YES;
         }
     }
+    
     //        开关4
     if (self.type == 444) {
         if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"83"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"85"] || [self.SwitchStr isEqualToString:@"86"] || [self.SwitchStr isEqualToString:@"87"]) {
@@ -427,5 +431,67 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     }
 }
 
+- (void)GetsTime {
+    NSDate *currentDate = [NSDate date];
+    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+//    //IOS 8 之后
+    NSUInteger integer = NSCalendarUnitYear | NSCalendarUnitMonth |NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    NSDateComponents * dataCom = [currentCalendar components:integer fromDate:currentDate];
+    NSInteger year = [dataCom year]; // 年
+    NSInteger month = [dataCom month]; // 月
+    NSInteger day = [dataCom day]; // 日
+    NSInteger week = [dataCom weekday]; // 星期
+    NSInteger hour = [dataCom hour]; // 时
+    NSInteger minute = [dataCom minute]; // 分
+    NSInteger second = [dataCom second]; // 秒
+    NSString * Year = [[NSNumber numberWithInteger:year] stringValue];
+    string1 = [Year substringFromIndex:2]; // 去掉首字符
+    if (month >= 10) {
+        string2 = [[NSNumber numberWithInteger:month] stringValue];
+    }else {
+        string2 = [NSString stringWithFormat:@"0%ld",(long)month];
+    }
+    if (day >= 10) {
+        string3 = [[NSNumber numberWithInteger:day] stringValue];
+    }else {
+        string3 = [NSString stringWithFormat:@"0%ld",(long)day];
+    }
+    if (week >= 10) {
+        string4 = [[NSNumber numberWithInteger:week] stringValue];
+    }else {
+        string4 = [NSString stringWithFormat:@"0%ld",(long)week];
+    }
+    if (hour >= 10) {
+        string5 = [[NSNumber numberWithInteger:hour] stringValue];
+    }else{
+        string5 = [NSString stringWithFormat:@"0%ld",(long)hour];
+    }
+    if (minute >= 10) {
+        string6 = [[NSNumber numberWithInteger:minute] stringValue];
+    }else {
+        string6 = [NSString stringWithFormat:@"0%ld",(long)minute];
+    }
+    if (second >= 10) {
+        string7 = [[NSNumber numberWithInteger:second] stringValue];
+    }else {
+        string7 = [NSString stringWithFormat:@"0%ld",(long)second];
+    }
+    Ymdhms = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",string1,string2,string3,string4,string5,string6,string7];
+    ZPLog(@"%@",Ymdhms);
+    [self CheckTime];
+}
+
+// 校验时间
+- (void)CheckTime {
+    NSString * str = [NSString stringWithFormat:@"%@%@%@",self.deviceNo,CheckTimeStr,Ymdhms];
+    NSString * string = [Utils hexStringFromString:str];
+    NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
+    NSString * CollectionStr = [NSString stringWithFormat:@"%@%@%@%@%@%@",HeadStr,self.deviceNo,CheckTimeStr,Ymdhms,CheckCode,TailStr];
+    [BHSocket writeData:[CollectionStr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+    [BHSocket readDataWithTimeout:-1 tag:0];
+    ZPLog(@"%@",CollectionStr);
+}
 
 @end
+
+

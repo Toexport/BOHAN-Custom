@@ -108,8 +108,8 @@ typedef NS_ENUM (NSInteger, BHSocketLinkStyle) {
      */
 //    NSString * strrrr = @"E770181102000100260000C20D";
     if (IdStrS) {
-        NSString * strrrr = [NSString stringWithFormat:@"%@%@",IdStrS,SwitchqueryStr];
-        NSString * string = [Utils hexStringFromString:strrrr];
+        NSString * str = [NSString stringWithFormat:@"%@%@",IdStrS,SwitchqueryStr];
+        NSString * string = [Utils hexStringFromString:str];
         NSString * CheckCode = [string substringFromIndex:2]; // 去掉首字符
         NSString * Strr = [NSString stringWithFormat:@"%@%@%@%@%@",HeadStr,IdStrS,SwitchqueryStr,CheckCode,TailStr];
         [BHSocket writeData:[Strr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];

@@ -20,6 +20,15 @@
     NSString * Switch2;   // 开关数据2
     NSString * Switch3;  // 开关数据3
     NSString * Switch4; // 开关数据4
+    NSString * Ymdhms;
+    
+    NSString * string1;
+    NSString * string2;
+    NSString * string3;
+    NSString * string4;
+    NSString * string5;
+    NSString * string6;
+    NSString * string7;
     
     }
 @property (nonatomic, copy) NSString * deviceNo; // 设备Id
