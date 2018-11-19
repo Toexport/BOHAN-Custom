@@ -6,6 +6,7 @@
 //  Copyright © 2018年 Bohan. All rights reserved.
 //
 
+
 #import "CountdownView.h"
 #import "WSDatePickerView.h"
 #import "FileHeader.pch"
@@ -35,7 +36,6 @@
 
 // 获取当前年月日时间
 - (void)yyyyMMddHHmm {
-    
     NSDate *currentDate = [NSDate date];
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
     //IOS 8 之后
@@ -47,54 +47,47 @@
     NSInteger hour = [dataCom hour]; // 时
     NSInteger minute = [dataCom minute]; // 分
     
-    self.string1 = [[NSNumber numberWithInteger:year] stringValue];
-    self.string11 = [[NSNumber numberWithInteger:year] stringValue];
-//    YYYYTextField.text = [NSString stringWithString:self.string1];
-    YearTextField.text = [NSString stringWithString:self.string11];
+    self.GetYearStr = [[NSNumber numberWithInteger:year] stringValue];
+    self.TakeYearStr = [[NSNumber numberWithInteger:year] stringValue];
+    YearTextField.text = [NSString stringWithString:self.TakeYearStr];
     if(month >= 10) {
-        self.string2 = [[NSNumber numberWithInteger:month] stringValue];
-        self.string22 = [[NSNumber numberWithInteger:month] stringValue];
+        self.GetMonthStr = [[NSNumber numberWithInteger:month] stringValue];
+        self.TakeMonthStr = [[NSNumber numberWithInteger:month] stringValue];
     }else {
-        self.string2 = [NSString stringWithFormat:@"0%ld",(long)month];
-        self.string22 = [NSString stringWithFormat:@"0%ld",(long)month];
+        self.GetMonthStr = [NSString stringWithFormat:@"0%ld",(long)month];
+        self.TakeMonthStr = [NSString stringWithFormat:@"0%ld",(long)month];
     }
-//    mmTextField.text = [NSString stringWithString:self.string2];
-    MonthTextField.text = [NSString stringWithString:self.string22];
+    MonthTextField.text = [NSString stringWithString:self.TakeMonthStr];
     
     if (day >= 10) {
-        self.string3 = [[NSNumber numberWithInteger:day] stringValue];
-        self.string33 = [[NSNumber numberWithInteger:day] stringValue];
+        self.GetDayStr = [[NSNumber numberWithInteger:day] stringValue];
+        self.TakeDayStr = [[NSNumber numberWithInteger:day] stringValue];
     }else {
-        self.string3 = [NSString stringWithFormat:@"0%ld",(long)day];
-        self.string33 = [NSString stringWithFormat:@"0%ld",(long)day];
+        self.GetDayStr = [NSString stringWithFormat:@"0%ld",(long)day];
+        self.TakeDayStr = [NSString stringWithFormat:@"0%ld",(long)day];
     }
-//    DDTextField.text = [NSString stringWithString:self.string3];
-    DayTextField.text = [NSString stringWithString:self.string3];
+    DayTextField.text = [NSString stringWithString:self.TakeDayStr];
     
     if (hour >= 10) {
-        self.string4 = [[NSNumber numberWithInteger:hour] stringValue];
-        self.string44 = [[NSNumber numberWithInteger:hour] stringValue];
+        self.GetHoursStr = [[NSNumber numberWithInteger:hour] stringValue];
+        self.TakeHoursStr = [[NSNumber numberWithInteger:hour] stringValue];
     }else{
-        self.string4 = [NSString stringWithFormat:@"0%ld",(long)hour];
-        self.string44 = [NSString stringWithFormat:@"0%ld",(long)hour];
+        self.GetHoursStr = [NSString stringWithFormat:@"0%ld",(long)hour];
+        self.TakeHoursStr = [NSString stringWithFormat:@"0%ld",(long)hour];
     }
-//    HHTextField.text = [NSString stringWithString:self.string4];
-    HoursTextField.text = [NSString stringWithString:self.string44];
+    HoursTextField.text = [NSString stringWithString:self.TakeHoursStr];
     if (minute >= 10) {
-        self.string5 = [[NSNumber numberWithInteger:minute] stringValue];
-        self.string55 = [[NSNumber numberWithInteger:minute] stringValue];
+        self.GetMinutesStr = [[NSNumber numberWithInteger:minute] stringValue];
+        self.TakeMinutesStr = [[NSNumber numberWithInteger:minute] stringValue];
     }else {
-        self.string5 = [NSString stringWithFormat:@"0%ld",(long)minute];
-        self.string55 = [NSString stringWithFormat:@"0%ld",(long)minute];
+        self.GetMinutesStr = [NSString stringWithFormat:@"0%ld",(long)minute];
+        self.TakeMinutesStr = [NSString stringWithFormat:@"0%ld",(long)minute];
     }
-//    MMTextField.text = [NSString stringWithString:self.string5];
-    MinutesTextField.text = [NSString stringWithString:self.string55];
+    MinutesTextField.text = [NSString stringWithString:self.TakeMinutesStr];
     NSString * string = [NSString stringWithFormat:@"%@%@%@%@%@",YearTextField.text,MonthTextField.text,DayTextField.text,HoursTextField.text,MinutesTextField.text];
     str1 = [NSString stringWithFormat:@"%@",string];
     ZPLog(@"%@",str1);
-    
 }
-
 
 // 选中时间按钮
 - (IBAction)SelectediTemBut:(UIButton *)sender {
@@ -106,30 +99,30 @@
     [formatters setDateFormat:@"yyyy-MM-dd HH:mm"];
     WSDatePickerView *datepicker = [[WSDatePickerView alloc] initWithDateStyle:DateStyleShowYearMonthDayHourMinute scrollToDate:[formatters dateFromString:string] CompleteBlock:^(NSDate *selectDate) {
         [self yyyyMMddHHmm];
-        [self->formatters setDateFormat:@"yyyy"];// 解决问题
+        [self->formatters setDateFormat:@"yyyy"];
         [self->YearTextField setText:[self->formatters stringFromDate:selectDate]];
-        self.string1 = self->YearTextField.text;
-        self->YearTextField.text = [NSString stringWithString:self.string1];
+        self.GetYearStr = self->YearTextField.text;
+        self->YearTextField.text = [NSString stringWithString:self.GetYearStr];
         
         [self->formatters setDateFormat:@"MM"];
         [self->MonthTextField setText:[self->formatters stringFromDate:selectDate]];
-        self.string2 = self->MonthTextField.text;
-        self->MonthTextField.text = [NSString stringWithString:self.string2];
+        self.GetMonthStr = self->MonthTextField.text;
+        self->MonthTextField.text = [NSString stringWithString:self.GetMonthStr];
         
         [self->formatters setDateFormat:@"dd"];
         [self->DayTextField setText:[self->formatters stringFromDate:selectDate]];
-        self.string3 = self->DayTextField.text;
-        self->DayTextField.text = [NSString stringWithString:self.string3];
+        self.GetDayStr = self->DayTextField.text;
+        self->DayTextField.text = [NSString stringWithString:self.GetDayStr];
         
         [self->formatters setDateFormat:@"HH"];
         [self->HoursTextField setText:[self->formatters stringFromDate:selectDate]];
-        self.string4 = self->HoursTextField.text;
-        self->HoursTextField.text = [NSString stringWithString:self.string4];
+        self.GetHoursStr = self->HoursTextField.text;
+        self->HoursTextField.text = [NSString stringWithString:self.GetHoursStr];
         
         [self->formatters setDateFormat:@"mm"];
         [self->MinutesTextField setText:[self->formatters stringFromDate:selectDate]];
-        self.string5 = self->MinutesTextField.text;
-        self->MinutesTextField.text = [NSString stringWithString:self.string5];
+        self.GetMinutesStr = self->MinutesTextField.text;
+        self->MinutesTextField.text = [NSString stringWithString:self.GetMinutesStr];
         NSString * string1 = [NSString stringWithFormat:@"%@%@%@%@%@",self->YearTextField.text,self->MonthTextField.text,self->DayTextField.text,self->HoursTextField.text,self->MinutesTextField.text];
         self->str2 = [NSString stringWithFormat:@"%@",string1];
         ZPLog(@"%@",self->str2);
@@ -137,7 +130,7 @@
             [SVProgressHUD showInfoWithStatus:Localize(@"Set time Cannot be less than pre-order Time")];
             return ;
         }else {
-        [self pleaseInsertStarTimeo:self->str1 andInsertEndTime:self->str2];
+            [self pleaseInsertStarTimeo:self->str1 andInsertEndTime:self->str2];
         }
     }];
     datepicker.hideBackgroundYearLabel = YES;

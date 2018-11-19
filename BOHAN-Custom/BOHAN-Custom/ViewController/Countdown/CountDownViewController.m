@@ -83,11 +83,11 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     if (newMessage.length > 56) {
         NSString * AllStr = [newMessage substringWithRange:NSMakeRange(24, 56)];
         ZPLog(@"所有开关数据---%@",AllStr);
-        
         /**************1**************/
         State1 = [AllStr substringWithRange:NSMakeRange(0, 2)]; // 开关状态1
         ZPLog(@"开关1状态---%@",State1);
         Switch1 =  [AllStr substringWithRange:NSMakeRange(2, 12)]; // 开关数据1
+
         ZPLog(@"开关1数据---%@",Switch1);
         
         /**************2**************/
@@ -137,7 +137,6 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
             return ;
         }
     }
-    
     totalSecend = MAX(0, [startDate timeIntervalSinceDate:[NSDate date]]);
     [self showConfig];
     [self setUpTimer];
@@ -145,7 +144,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 
 // 定时开关
 - (void)SetCountdown {
-    NSString *content = [time.text stringByReplacingOccurrencesOfString:@":" withString:@""];
+    NSString * content = [time.text stringByReplacingOccurrencesOfString:@":" withString:@""];
     NSString * SwitchS = [Utils getBinaryByHex:self.SwitchStr]; // 把拿到的开关状态转16进制
     NSString * But1Str = [SwitchS substringWithRange:NSMakeRange(7, 1)];
     NSString * But2Str = [SwitchS substringWithRange:NSMakeRange(6, 1)];
@@ -159,49 +158,50 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     if (time.text.length >= 7) {
         _TimeUrl = [time.text substringToIndex:5];
     }else
-        if (time.text.length >= 5) {
-            _TimeUrl = [time.text substringToIndex:5];
-        }
+    if (time.text.length >= 5) {
+        _TimeUrl = [time.text substringToIndex:5];
+    }
     
     if (self.type == 111) { // 开关1
-        if ([But1Str isEqualToString:@"1"]) {
-            _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOpen,Switch,State2,Switch,State3,Switch,State4];
-        }else
-            if ([But1Str isEqualToString:@"0"]) {
-                _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOff,Switch,State2,Switch,State3,Switch,State4];
-            }
-        [self TimingSet];
+    if ([But1Str isEqualToString:@"1"]) {
+        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOpen,Switch,State2,Switch,State3,Switch,State4];
     }else
+    if ([But1Str isEqualToString:@"0"]) {
+        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",_TimeUrl,SetOff,Switch,State2,Switch,State3,Switch,State4];
+    }
+    [self TimingSet];
         
-        if (self.type == 222) { // 开关2
-            if ([But2Str isEqualToString:@"1"]) {
-                _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,_TimeUrl,SetOpen,Switch,State3,Switch,State4];
-            }else
-                if ([But2Str isEqualToString:@"0"]) {
-                    _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,_TimeUrl,SetOff,Switch,State3,Switch,State4];
-                }
-            [self TimingSet];
-        }else
-            
-            if (self.type == 333) {
-                if ([But3Str isEqualToString:@"1"]) {
-                    _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,_TimeUrl,SetOpen,Switch,State4];
-                }else
-                    if ([But3Str isEqualToString:@"0"]) {
-                        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,_TimeUrl,SetOff,Switch,State4];
-                    }
-                [self TimingSet];
-            }else
-                
-                if (self.type == 444) {
-                    if ([But4Str isEqualToString:@"1"]) {
-                        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,Switch,State3,_TimeUrl,SetOpen];
-                    }else
-                        if ([But4Str isEqualToString:@"0"]) {
-                            _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,Switch,State3,_TimeUrl,SetOff];
-                        }
-                    [self TimingSet];
-                }
+    }else
+    if (self.type == 222) { // 开关2
+    if ([But2Str isEqualToString:@"1"]) {
+        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,_TimeUrl,SetOpen,Switch,State3,Switch,State4];
+    }else
+    if ([But2Str isEqualToString:@"0"]) {
+        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,_TimeUrl,SetOff,Switch,State3,Switch,State4];
+    }
+    [self TimingSet];
+        
+    }else
+    if (self.type == 333) {
+    if ([But3Str isEqualToString:@"1"]) {
+        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,_TimeUrl,SetOpen,Switch,State4];
+    }else
+    if ([But3Str isEqualToString:@"0"]) {
+        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,_TimeUrl,SetOff,Switch,State4];
+    }
+    [self TimingSet];
+        
+    }else
+    if (self.type == 444) {
+    if ([But4Str isEqualToString:@"1"]) {
+        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,Switch,State3,_TimeUrl,SetOpen];
+    }else
+    if ([But4Str isEqualToString:@"0"]) {
+        _TimeStr = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@",Switch,State1,Switch,State2,Switch,State3,_TimeUrl,SetOff];
+    }
+    [self TimingSet];
+        
+    }
 }
 
 // 定时器设置
@@ -242,7 +242,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     }
 }
 
-// 取消
+//  取消
 - (void)canceOperation {
     NSString * SwitchNo = [NSString stringWithFormat:@"%@FF%@FF%@FF%@FF",Switch,Switch,Switch,Switch];
     NSString * strUrl = [SwitchNo stringByReplacingOccurrencesOfString:@":" withString:@""];  //去掉:
@@ -258,7 +258,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     [SVProgressHUD showSuccessWithStatus:Localize(@"Cancel Success")];
 }
 
-//新增UI
+//  新增UI
 - (void)UI {
     CountdownView * view = [[[NSBundle mainBundle] loadNibNamed:@"CountdownView" owner:nil options:nil] firstObject];
     view.doneBlock = ^(NSString *selectDate) {
@@ -271,15 +271,15 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     _mainTable.tableFooterView = view;
 }
 
-// 延时开关
+//  延时开关
 - (IBAction)DelayClosingBut:(UIButton *)sender {
     [self SetCountdown];
 }
 
 - (void)setUpTimer {
-    //说明已经过了时间,不再开启定时器
+//    说明已经过了时间,不再开启定时器
     NSComparisonResult result =[startDate compare:[NSDate date]];
-    if (result != NSOrderedDescending) {//是不是上面没有写这个StartDate进去啊
+    if (result != NSOrderedDescending) {
         [self stopTimer];
         return;
     }
@@ -342,7 +342,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 }
 
 #pragma mark 按钮的点击事件
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2) {
         [formatter setDateFormat:@"HH:mm"];
         WSDatePickerView * datepicker = [[WSDatePickerView alloc] initWithDateStyle:DateStyleShowHourMinute scrollToDate:[formatter dateFromString:[time.text substringToIndex:5]] CompleteBlock:^(NSDate *selectDate) {
@@ -358,7 +358,6 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         datepicker.dateLabelColor = [UIColor colorWithHexString: @"3c94f2"];
         datepicker.doneButtonColor = [UIColor colorWithHexString: @"3c94f2"];
         [datepicker show];
-        
     }else {
         if (indexPath.row == 0) {
             [time setText:@"00:05"];
@@ -373,7 +372,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 }
 
 - (void)ShiftData {
-    //         开关1
+//       开关1
     if (self.type == 111) {
         if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"86"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"8A"] || [self.SwitchStr isEqualToString:@"8C"] || [self.SwitchStr isEqualToString:@"8E"]) {
             open = NO;
@@ -382,7 +381,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         }
     }
     
-    //        开关2
+//      开关2
     if (self.type == 222) {
         if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"85"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"89"] || [self.SwitchStr isEqualToString:@"8D"] || [self.SwitchStr isEqualToString:@"8C"]) {
             open = NO;
@@ -391,7 +390,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         }
     }
     
-    //        开关3
+//      开关3
     if (self.type == 333) {
         if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"83"] || [self.SwitchStr isEqualToString:@"88"] || [self.SwitchStr isEqualToString:@"89"] || [self.SwitchStr isEqualToString:@"8A"] || [self.SwitchStr isEqualToString:@"8B"]) {
             open = NO;
@@ -400,7 +399,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         }
     }
     
-    //        开关4
+//      开关4
     if (self.type == 444) {
         if ([self.SwitchStr isEqualToString:@"80"] || [self.SwitchStr isEqualToString:@"81"] || [self.SwitchStr isEqualToString:@"82"] || [self.SwitchStr isEqualToString:@"83"] || [self.SwitchStr isEqualToString:@"84"] || [self.SwitchStr isEqualToString:@"85"] || [self.SwitchStr isEqualToString:@"86"] || [self.SwitchStr isEqualToString:@"87"]) {
             open = NO;
@@ -410,7 +409,7 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     }
     
     if (!open) {
-        //        开启
+//      开启
         closeBtn.layer.borderColor = [UIColor colorWithHexString:@"39B3FF"].CGColor;
         closeBtn.layer.borderWidth = 1;
         closeBtn.backgroundColor = [UIColor whiteColor];
@@ -434,8 +433,8 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
 - (void)GetsTime {
     NSDate *currentDate = [NSDate date];
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
-//    //IOS 8 之后
-    NSUInteger integer = NSCalendarUnitYear | NSCalendarUnitMonth |NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+//  IOS 8 之后
+    NSUInteger integer = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents * dataCom = [currentCalendar components:integer fromDate:currentDate];
     NSInteger year = [dataCom year]; // 年
     NSInteger month = [dataCom month]; // 月
@@ -456,11 +455,6 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
     }else {
         string3 = [NSString stringWithFormat:@"0%ld",(long)day];
     }
-    if (week >= 10) {
-        string4 = [[NSNumber numberWithInteger:week] stringValue];
-    }else {
-        string4 = [NSString stringWithFormat:@"0%ld",(long)week];
-    }
     if (hour >= 10) {
         string5 = [[NSNumber numberWithInteger:hour] stringValue];
     }else{
@@ -475,6 +469,66 @@ static NSString *countCellIdentifier = @"countCellIdentifier";
         string7 = [[NSNumber numberWithInteger:second] stringValue];
     }else {
         string7 = [NSString stringWithFormat:@"0%ld",(long)second];
+    }
+    
+//   星期
+    NSString * WeekStr = [NSString stringWithFormat:@"%ld",(long)week];
+    ZPLog(@"%@",WeekStr);
+    if ([WeekStr containsString:@"1"]) {
+        week = 0;
+        if (week >= 10) {
+            string4 = [[NSNumber numberWithInteger:week] stringValue];
+        }else {
+            string4 = [NSString stringWithFormat:@"0%ld",(long)week];
+        }
+    }
+    if ([WeekStr containsString:@"2"]) {
+        week = 1;
+        if (week >= 10) {
+            string4 = [[NSNumber numberWithInteger:week] stringValue];
+        }else {
+            string4 = [NSString stringWithFormat:@"0%ld",(long)week];
+        }
+    }
+    if ([WeekStr containsString:@"3"]) {
+        week = 2;
+        if (week >= 10) {
+            string4 = [[NSNumber numberWithInteger:week] stringValue];
+        }else {
+            string4 = [NSString stringWithFormat:@"0%ld",(long)week];
+        }
+    }
+    if ([WeekStr containsString:@"4"]) {
+        week = 3;
+        if (week >= 10) {
+            string4 = [[NSNumber numberWithInteger:week] stringValue];
+        }else {
+            string4 = [NSString stringWithFormat:@"0%ld",(long)week];
+        }
+    }
+    if ([WeekStr containsString:@"5"]) {
+        week = 4;
+        if (week >= 10) {
+            string4 = [[NSNumber numberWithInteger:week] stringValue];
+        }else {
+            string4 = [NSString stringWithFormat:@"0%ld",(long)week];
+        }
+    }
+    if ([WeekStr containsString:@"6"]) {
+        week = 5;
+        if (week >= 10) {
+            string4 = [[NSNumber numberWithInteger:week] stringValue];
+        }else {
+            string4 = [NSString stringWithFormat:@"0%ld",(long)week];
+        }
+    }
+    if ([WeekStr containsString:@"7"]) {
+        week = 6;
+        if (week >= 10) {
+            string4 = [[NSNumber numberWithInteger:week] stringValue];
+        }else {
+            string4 = [NSString stringWithFormat:@"0%ld",(long)week];
+        }
     }
     Ymdhms = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",string1,string2,string3,string4,string5,string6,string7];
     ZPLog(@"%@",Ymdhms);

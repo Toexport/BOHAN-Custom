@@ -20,7 +20,7 @@
     NSString * Switch2;   // 开关数据2
     NSString * Switch3;  // 开关数据3
     NSString * Switch4; // 开关数据4
-    NSString * Ymdhms;
+    NSString * Ymdhms; 
     
     NSString * string1;
     NSString * string2;

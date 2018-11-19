@@ -22,15 +22,16 @@ typedef void(^doneBlock)(NSString *selectDate);
 typedef void(^ButtonClick)(UIButton * sender);
 @property (nonatomic,copy) ButtonClick buttonAction;
 
-@property (nonatomic, strong) NSString * string1;
-@property (nonatomic, strong) NSString * string2;
-@property (nonatomic, strong) NSString * string3;
-@property (nonatomic, strong) NSString * string4;
-@property (nonatomic, strong) NSString * string5;
+@property (nonatomic, strong) NSString * GetYearStr;
+@property (nonatomic, strong) NSString * GetMonthStr;
+@property (nonatomic, strong) NSString * GetDayStr;
+@property (nonatomic, strong) NSString * GetHoursStr;
+@property (nonatomic, strong) NSString * GetMinutesStr;
 
-@property (nonatomic, strong) NSString * string11;
-@property (nonatomic, strong) NSString * string22;
-@property (nonatomic, strong) NSString * string33;
-@property (nonatomic, strong) NSString * string44;
-@property (nonatomic, strong) NSString * string55;
+@property (nonatomic, strong) NSString * TakeYearStr;
+@property (nonatomic, strong) NSString * TakeMonthStr;
+@property (nonatomic, strong) NSString * TakeDayStr;
+@property (nonatomic, strong) NSString * TakeHoursStr;
+@property (nonatomic, strong) NSString * TakeMinutesStr;
+
 @end
